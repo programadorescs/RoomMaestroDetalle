@@ -1,0 +1,44 @@
+<resources>
+    <string name="app_name">RoomMaestroDetalle</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <!-- ESte es un id de prueba para la publicidad -->
+    <string name="id_admob_intersticial">ca-app-pub-3940256099942544/1033173712</string>
+    <string name="app_version">v1.0.0</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="menu_producto">Productos</string>
+    <string name="contentDescripcion">-</string>
+    <string name="fecha_hora_digito">2022-07-07 12.12.12</string>
+    <string name="buscar">Buscar</string>
+    <string name="costo">Costo</string>
+    <string name="descripcion">Descripcion</string>
+    <string name="precio">Precio</string>
+    <string name="existencia">Existencia</string>
+    <string name="detalle">Detalle</string>
+    <string name="cantidad">Cantidad</string>
+    <string name="registrar_actualizar">Registrar | Actualizar producto</string>
+    <string name="precio_de_venta">Precio de venta</string>
+    <string name="carrito">Carrito [0]</string>
+    <string name="confirmar">Confirmar</string>
+    <string name="importe">Importe:</string>
+    <string name="hasta">Hasta</string>
+    <string name="desde">Desde</string>
+    <string name="pedido">Pedido:</string>
+    <string name="descripcion_app">App de ejemplo multitabla con room y patron mvvm</string>
+    <string name="titulo_app">Multitabla con room</string>
+    <string name="version">Version</string>
+    <string name="acerca_de_la_app">Acerca de la app</string>
+    <string name="titulo_autor">Developer</string>
+    <string name="jack_el_programador">Jack el programador</string>
+    <string name="email">jackelprogramador@gmail.com</string>
+</resources>

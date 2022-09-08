@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="pe.pcs.roommaestrodetalle.ui.fragment.CatalogoProductoFragment"
+        android:label="Catalogo de productos"
+        tools:layout="@layout/fragment_catalogo_producto" >
+        <action
+            android:id="@+id/action_nav_home_to_registrarPedidoFragment"
+            app:destination="@id/registrarPedidoFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/registrarPedidoFragment"
+        android:name="pe.pcs.roommaestrodetalle.ui.fragment.RegistrarPedidoFragment"
+        android:label="Registrar pedido"
+        tools:layout="@layout/fragment_registrar_pedido" />
+
+    <fragment
+        android:id="@+id/nav_producto"
+        android:name="pe.pcs.roommaestrodetalle.ui.fragment.ProductoFragment"
+        android:label="@string/menu_producto"
+        tools:layout="@layout/fragment_producto" >
+        <action
+            android:id="@+id/action_nav_producto_to_operacionProductoFragment"
+            app:destination="@id/operacionProductoFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/operacionProductoFragment"
+        android:name="pe.pcs.roommaestrodetalle.ui.fragment.OperacionProductoFragment"
+        android:label="@string/registrar_actualizar"
+        tools:layout="@layout/fragment_operacion_producto" />
+
+    <fragment
+        android:id="@+id/nav_reporte_pedido"
+        android:name="pe.pcs.roommaestrodetalle.ui.fragment.ReportePedidoFragment"
+        android:label="Reporte de pedidos"
+        tools:layout="@layout/fragment_reporte_pedido" >
+        <action
+            android:id="@+id/action_nav_reporte_pedido_to_reporteDetallePedidoFragment"
+            app:destination="@id/reporteDetallePedidoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/reporteDetallePedidoFragment"
+        android:name="pe.pcs.roommaestrodetalle.ui.fragment.ReporteDetallePedidoFragment"
+        android:label="Detalle del pedido"
+        tools:layout="@layout/fragment_reporte_detalle_pedido" />
+
+    <fragment
+        android:id="@+id/nav_acerca_de"
+        android:name="pe.pcs.roommaestrodetalle.ui.fragment.AcercaDeFragment"
+        android:label="Acerca de"
+        tools:layout="@layout/fragment_acerca_de" />
+
+</navigation>

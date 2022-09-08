@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/ic_local"
+            android:title="@string/menu_home" />
+        <item
+            android:id="@+id/nav_producto"
+            android:icon="@drawable/ic_package_for_delivery"
+            android:title="@string/menu_producto" />
+    </group>
+
+    <item android:title="Reportes">
+        <menu>
+            <item
+                android:id="@+id/nav_reporte_pedido"
+                android:icon="@drawable/ic_receipt"
+                android:title="Pedido realizado" />
+        </menu>
+    </item>
+
+    <item android:title="App">
+        <menu>
+            <item
+                android:id="@+id/nav_acerca_de"
+                android:icon="@drawable/ic_info"
+                android:title="Acerca de" />
+        </menu>
+    </item>
+
+</menu>
