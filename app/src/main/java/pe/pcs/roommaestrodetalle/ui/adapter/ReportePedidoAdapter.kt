@@ -31,7 +31,7 @@ class ReportePedidoAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RpaViewHolder {
         return RpaViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.items_pedido_realizado, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.items_pedido, parent, false)
         )
     }
 

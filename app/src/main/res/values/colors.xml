@@ -20,8 +20,11 @@
     <color name="colorVibrantLight">#b8e0f0</color>
     <color name="colorMutedLight">#a8c0c8</color>
 
+    <color name="grisUltraClaroColor">#fafafa</color>
+    <color name="grisClaroColor">#f5f5f5</color>
     <color name="grisColor">#d2dbe0</color>
     <color name="grisOscuroColor">#82929a</color>
+    <color name="colorFondoVentana">#EEEEEE</color>
 
     <color name="negro_semitransparente">#B2000000</color>
     <color name="blanco">#ffffff</color>
@@ -29,7 +32,11 @@
     <color name="colorPrimaryText">#212121</color>
     <color name="colorFondoFragment">#F7F7F7</color>
 
+    <color name="colorTransparente_90">#E6FFFFFF</color>
+    <color name="colorTransparente_80">#CCFFFFFF</color>
+    <color name="colorTransparente_70">#B3FFFFFF</color>
     <color name="colorTransparente_50">#80FFFFFF</color>
     <color name="colorTransparente_30">#4DFFFFFF</color>
+    <color name="colorTransparente_15">#26FFFFFF</color>
     <color name="colorTransparente_0">#00FFFFFF</color>
 </resources>

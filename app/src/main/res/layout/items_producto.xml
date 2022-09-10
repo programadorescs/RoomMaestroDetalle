@@ -8,15 +8,16 @@
         android:id="@+id/cv_matrix"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="4dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
         android:clickable="true"
         android:focusable="true"
         android:foreground="?android:attr/selectableItemBackground"
         android:theme="@style/Theme.MaterialComponents.Light"
         app:cardCornerRadius="10dp"
+        app:cardElevation="6dp"
         app:cardForegroundColor="@android:color/transparent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -47,10 +48,10 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="4dp"
                     android:ellipsize="end"
+                    android:fontFamily="@font/roboto_condensed_regular"
                     android:maxLines="1"
                     android:text="TITULO"
                     android:textSize="16sp"
-                    android:fontFamily="@font/roboto_condensed_regular"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/ib_editar"
                     app:layout_constraintStart_toStartOf="parent"
@@ -110,10 +111,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
+                        android:fontFamily="@font/comfortaa_regular"
                         android:text="Costo:"
-                        android:textStyle="bold"
                         android:textSize="12sp"
-                        android:fontFamily="@font/comfortaa_regular" />
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/tv_costo"
@@ -121,10 +122,10 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
                         android:ellipsize="end"
+                        android:fontFamily="@font/roboto_condensed_regular"
                         android:maxLines="1"
                         android:text="Costo"
                         android:textSize="14sp"
-                        android:fontFamily="@font/roboto_condensed_regular"
                         android:textStyle="bold" />
 
                 </LinearLayout>
@@ -140,11 +141,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
+                        android:fontFamily="@font/comfortaa_regular"
                         android:text="Precio:"
-                        android:textStyle="bold"
                         android:textAlignment="textEnd"
                         android:textSize="12sp"
-                        android:fontFamily="@font/comfortaa_regular" />
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/tv_precio"
@@ -152,11 +153,11 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
                         android:ellipsize="end"
+                        android:fontFamily="@font/roboto_condensed_regular"
                         android:maxLines="1"
                         android:text="Precio"
                         android:textAlignment="textEnd"
                         android:textSize="14sp"
-                        android:fontFamily="@font/roboto_condensed_regular"
                         android:textStyle="bold" />
 
                 </LinearLayout>

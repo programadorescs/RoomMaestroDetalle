@@ -41,4 +41,5 @@
     <string name="titulo_autor">Developer</string>
     <string name="jack_el_programador">Jack el programador</string>
     <string name="email">jackelprogramador@gmail.com</string>
+    <string name="registrar_editar">Registrar | Editar</string>
 </resources>
