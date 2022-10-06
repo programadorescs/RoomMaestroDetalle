@@ -3,8 +3,6 @@ package pe.pcs.roommaestrodetalle.ui.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import pe.pcs.roommaestrodetalle.R
 import pe.pcs.roommaestrodetalle.core.UtilsCommon
@@ -13,22 +11,14 @@ import pe.pcs.roommaestrodetalle.databinding.ItemsCarritoBinding
 
 class CarritoAdapter(
     private val iOnClickListener: IOnClickListener
-): ListAdapter<DetallePedidoModel, CarritoAdapter.BindViewHolder>(DiffCallback) {
+): RecyclerView.Adapter<CarritoAdapter.BindViewHolder>() {
+
+    private var lista: List<DetallePedidoModel> = listOf()
 
     interface  IOnClickListener {
         fun clickMas(entidad: DetallePedidoModel)
         fun clickMenos(entidad: DetallePedidoModel)
         fun clickElimnar(entidad: DetallePedidoModel)
-    }
-
-    private object DiffCallback: DiffUtil.ItemCallback<DetallePedidoModel>() {
-        override fun areItemsTheSame(oldItem: DetallePedidoModel, newItem: DetallePedidoModel): Boolean {
-            return oldItem.idproducto == newItem.idproducto && oldItem.cantidad == newItem.cantidad
-        }
-
-        override fun areContentsTheSame(oldItem: DetallePedidoModel, newItem: DetallePedidoModel): Boolean {
-            return oldItem == newItem
-        }
     }
 
     inner class BindViewHolder(view: View): RecyclerView.ViewHolder(view) {
@@ -48,12 +38,21 @@ class CarritoAdapter(
     }
 
     override fun onBindViewHolder(holder: BindViewHolder, position: Int) {
-        val entidad = getItem(position)
+        val entidad = lista[position]
 
         holder.enlazar(entidad)
 
         holder.binding.ibMas.setOnClickListener { iOnClickListener.clickMas(entidad) }
         holder.binding.ibMenos.setOnClickListener { iOnClickListener.clickMenos(entidad) }
         holder.binding.ibEliminar.setOnClickListener { iOnClickListener.clickElimnar(entidad) }
+    }
+
+    override fun getItemCount(): Int {
+        return lista.size
+    }
+
+    fun setData(_lista: List<DetallePedidoModel>) {
+        this.lista = _lista
+        notifyDataSetChanged()
     }
 }

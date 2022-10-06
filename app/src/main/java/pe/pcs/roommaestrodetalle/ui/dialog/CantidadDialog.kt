@@ -1,7 +1,6 @@
 package pe.pcs.roommaestrodetalle.ui.dialog
 
 import android.app.Dialog
-import android.content.Context
 import android.os.Bundle
 import android.text.InputType
 import android.view.LayoutInflater
@@ -12,7 +11,6 @@ import pe.pcs.roommaestrodetalle.databinding.CuadroCantidadBinding
 
 class CantidadDialog: DialogFragment() {
 
-    private lateinit var mContexto: Context
     private var titulo: String = ""
     private var mensaje: String = ""
     private var precio: Double = 0.0
@@ -22,10 +20,9 @@ class CantidadDialog: DialogFragment() {
     companion object {
         private var cantidad: Int = 1
 
-        fun newInstance(contexto: Context, mTitulo: String, mMensaje: String, mPrecio: Double, myListener: IEnviarListener): CantidadDialog {
+        fun newInstance(mTitulo: String, mMensaje: String, mPrecio: Double, myListener: IEnviarListener): CantidadDialog {
             val instancia = CantidadDialog()
             instancia.isCancelable = false
-            instancia.mContexto = contexto
             instancia.titulo = mTitulo
             instancia.mensaje = mMensaje
             instancia.precio = mPrecio
@@ -41,7 +38,7 @@ class CantidadDialog: DialogFragment() {
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        //return super.onCreateDialog(savedInstanceState)
+
         binding = CuadroCantidadBinding.inflate(LayoutInflater.from(requireContext()))
 
         binding.etPrecio.inputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL

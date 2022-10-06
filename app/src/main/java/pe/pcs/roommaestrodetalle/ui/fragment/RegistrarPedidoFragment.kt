@@ -11,7 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import pe.pcs.roommaestrodetalle.core.AdmobUtil
+import pe.pcs.roommaestrodetalle.core.UtilsAdmob
 import pe.pcs.roommaestrodetalle.core.UtilsCommon
 import pe.pcs.roommaestrodetalle.core.UtilsDate
 import pe.pcs.roommaestrodetalle.core.UtilsMessage
@@ -19,7 +19,6 @@ import pe.pcs.roommaestrodetalle.data.model.DetallePedidoModel
 import pe.pcs.roommaestrodetalle.data.model.PedidoModel
 import pe.pcs.roommaestrodetalle.databinding.FragmentRegistrarPedidoBinding
 import pe.pcs.roommaestrodetalle.ui.adapter.CarritoAdapter
-import pe.pcs.roommaestrodetalle.ui.adapter.DetalleCarritoAdapter
 import pe.pcs.roommaestrodetalle.ui.viewmodel.PedidoViewModel
 
 class RegistrarPedidoFragment : Fragment(), CarritoAdapter.IOnClickListener { //DetalleCarritoAdapter.OnClickListener
@@ -48,7 +47,7 @@ class RegistrarPedidoFragment : Fragment(), CarritoAdapter.IOnClickListener { //
         })
 
         viewModel.listaCarrito.observe(viewLifecycleOwner, Observer {
-            (binding.rvLista.adapter as CarritoAdapter).submitList(it)
+            (binding.rvLista.adapter as CarritoAdapter).setData(it)
         })
 
         viewModel.totalImporte.observe(viewLifecycleOwner, Observer {
@@ -72,9 +71,9 @@ class RegistrarPedidoFragment : Fragment(), CarritoAdapter.IOnClickListener { //
                 setPositiveButton("Aceptar") { dialog, _ ->
 
                     // Mostrar anuncio
-                    AdmobUtil.interstitial?.show(requireActivity())
+                    UtilsAdmob.interstitial?.show(requireActivity())
                     // Carga un nuevo anuncio para el siguiente click
-                    AdmobUtil.initInterstitial()
+                    UtilsAdmob.initInterstitial()
 
                     viewModel.limpiarCarrito()
                     viewModel.operacionExitosa.postValue(false)

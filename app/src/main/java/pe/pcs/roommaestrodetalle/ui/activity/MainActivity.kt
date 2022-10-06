@@ -1,8 +1,6 @@
 package pe.pcs.roommaestrodetalle.ui.activity
 
 import android.os.Bundle
-import android.view.Menu
-import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.navigation.NavigationView
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -12,7 +10,7 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import pe.pcs.roommaestrodetalle.R
-import pe.pcs.roommaestrodetalle.core.AdmobUtil
+import pe.pcs.roommaestrodetalle.core.UtilsAdmob
 import pe.pcs.roommaestrodetalle.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -47,7 +45,7 @@ class MainActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)
 
         // Pedimos preparar una publicidad
-        AdmobUtil.initInterstitial()
+        UtilsAdmob.initInterstitial()
     }
 
     override fun onSupportNavigateUp(): Boolean {

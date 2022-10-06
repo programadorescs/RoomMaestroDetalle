@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import pe.pcs.roommaestrodetalle.R
 import pe.pcs.roommaestrodetalle.core.UtilsCommon
 import pe.pcs.roommaestrodetalle.data.model.PedidoModel
+import pe.pcs.roommaestrodetalle.databinding.ItemsPedidoBinding
 import pe.pcs.roommaestrodetalle.databinding.ItemsPedidoRealizadoBinding
 
 class ReportePedidoAdapter(
@@ -20,7 +21,7 @@ class ReportePedidoAdapter(
     }
 
     inner class RpaViewHolder(view: View): RecyclerView.ViewHolder(view) {
-        val binding = ItemsPedidoRealizadoBinding.bind(view)
+        val binding = ItemsPedidoBinding.bind(view)
 
         fun enlazar(entidad: PedidoModel) {
             binding.tvTitulo.text = "Pedido: ${entidad.id.toString()}"

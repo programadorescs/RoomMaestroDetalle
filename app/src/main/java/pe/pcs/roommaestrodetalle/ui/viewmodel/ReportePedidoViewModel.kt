@@ -5,8 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import pe.pcs.roommaestrodetalle.data.model.DetallePedidoModel
 import pe.pcs.roommaestrodetalle.data.model.PedidoModel
+import pe.pcs.roommaestrodetalle.data.model.ReporteDetallePedidoModel
 import pe.pcs.roommaestrodetalle.data.repository.PedidoRepository
 
 class ReportePedidoViewModel: ViewModel() {
@@ -16,8 +16,8 @@ class ReportePedidoViewModel: ViewModel() {
     private val _listaPedido = MutableLiveData<List<PedidoModel>>()
     val listaPedido: LiveData<List<PedidoModel>> = _listaPedido
 
-    private val _listaDetalle = MutableLiveData<List<DetallePedidoModel>>()
-    val listaDetalle: LiveData<List<DetallePedidoModel>> = _listaDetalle
+    private val _listaDetalle = MutableLiveData<List<ReporteDetallePedidoModel>>()
+    val listaDetalle: LiveData<List<ReporteDetallePedidoModel>> = _listaDetalle
 
     private val _itemPedido = MutableLiveData<PedidoModel?>()
     val itemPedido: LiveData<PedidoModel?> = _itemPedido
@@ -46,7 +46,7 @@ class ReportePedidoViewModel: ViewModel() {
 
         viewModelScope.launch {
             try {
-                _listaPedido.postValue(repository.getListarPorFecha(desde, hasta))
+                _listaPedido.postValue(repository.listarPedidoPorFecha(desde, hasta))
             } catch (e: Exception) {
                 _mErrorStatus.postValue(e.message)
             } finally {
@@ -60,7 +60,7 @@ class ReportePedidoViewModel: ViewModel() {
 
         viewModelScope.launch {
             try {
-                _listaDetalle.postValue(repository.getListarDetallePedido(idPedido))
+                _listaDetalle.postValue(repository.listarDetallePedido(idPedido))
             } catch (e: Exception) {
                 _mErrorStatus.postValue(e.message)
             } finally {

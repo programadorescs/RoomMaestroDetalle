@@ -4,10 +4,6 @@ plugins {
 
     // Agregar para trabajar con kapt
     id 'kotlin-kapt'
-    // necesario para el servicio de google
-    //id 'com.google.gms.google-services'
-    // Necesario para crashlytics
-    //id 'com.google.firebase.crashlytics'
 }
 
 android {
@@ -17,8 +13,8 @@ android {
         applicationId "pe.pcs.roommaestrodetalle"
         minSdk 23
         targetSdk 33
-        versionCode 1
-        versionName "1.0"
+        versionCode 3
+        versionName "1.0.3"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -45,13 +41,13 @@ android {
 dependencies {
 
     implementation 'androidx.core:core-ktx:1.8.0'
-    implementation 'androidx.appcompat:appcompat:1.5.0'
+    implementation 'androidx.appcompat:appcompat:1.5.1'
     implementation 'com.google.android.material:material:1.6.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.5.1'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1'
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.5.1'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.5.1'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.5.2'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.5.2'
 
     //Room
     implementation 'androidx.room:room-ktx:2.5.0-alpha03'
@@ -60,9 +56,6 @@ dependencies {
     // AdMob
     implementation 'com.google.android.gms:play-services-ads:21.2.0'
     implementation 'com.google.firebase:firebase-analytics:21.1.1'
-
-    // Crashlytics
-    //implementation 'com.google.firebase:firebase-crashlytics:18.2.9'
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'

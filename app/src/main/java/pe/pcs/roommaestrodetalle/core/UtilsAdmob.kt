@@ -7,7 +7,7 @@ import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import pe.pcs.roommaestrodetalle.R
 import pe.pcs.roommaestrodetalle.RoomMaestroDetalleApp
 
-abstract class AdmobUtil {
+abstract class UtilsAdmob {
 
     companion object {
         var interstitial: InterstitialAd? = null

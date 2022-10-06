@@ -19,20 +19,16 @@ class PedidoRepository {
         return productoDao.getListarPorNombre(dato)
     }
 
-    suspend fun getListarTodo(): List<PedidoModel> {
-        return pedidoDao.getListarTodoPedido()
-    }
-
-    suspend fun getListarPorFecha(desde: String, hasta: String): List<PedidoModel> {
-        return pedidoDao.getListarPedidoPorFecha(desde, hasta)
-    }
-
-    suspend fun getListarDetallePedido(id: Int): List<DetallePedidoModel> {
-        return pedidoDao.getListarDetallePedido(id)
+    suspend fun listarPedidoPorFecha(desde: String, hasta: String): List<PedidoModel> {
+        return pedidoDao.listarPedidoPorFecha(desde, hasta)
     }
 
     suspend fun insertarPedido(pedido: PedidoModel, detalle: List<DetallePedidoModel>) {
         pedidoDao.insertarTransaccion(pedido, detalle)
+    }
+
+    suspend fun listarDetallePedido(id: Int): List<ReporteDetallePedidoModel> {
+        return pedidoDao.listarDetallePedido(id)
     }
 
 }

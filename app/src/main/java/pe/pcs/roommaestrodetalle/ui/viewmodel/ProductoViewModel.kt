@@ -45,48 +45,6 @@ class ProductoViewModel: ViewModel() {
         }
     }
 
-    fun insertar(producto: ProductoModel) {
-        _progressBar.postValue(true)
-
-        viewModelScope.launch {
-            val result = withContext(Dispatchers.IO) {
-                try {
-                    val rpta = repositorio.insertar(producto)
-                    lista.postValue(repositorio.getListarTodo())
-                    rpta
-                } catch (e: Exception) {
-                    mErrorStatus.postValue(e.message)
-                    0
-                } finally {
-                    _progressBar.postValue(false)
-                }
-            }
-
-            operacionExitosa.postValue(result > 0)
-        }
-    }
-
-    fun actualizar(producto: ProductoModel) {
-        _progressBar.postValue(true)
-
-        viewModelScope.launch {
-            val result = withContext(Dispatchers.IO) {
-                try {
-                    val rpta = repositorio.actualizar(producto)
-                    lista.postValue(repositorio.getListarTodo())
-                    rpta
-                } catch (e: Exception) {
-                    mErrorStatus.postValue(e.message)
-                    0
-                } finally {
-                    _progressBar.postValue(false)
-                }
-            }
-
-            operacionExitosa.postValue(result > 0)
-        }
-    }
-
     fun grabar(producto: ProductoModel) {
         _progressBar.postValue(true)
 

@@ -30,12 +30,13 @@ interface PedidoDao {
         }
     }
 
-    @Query("SELECT id, fecha, total FROM pedido")
-    suspend fun getListarTodoPedido(): List<PedidoModel>
+    @Query("SELECT id, fecha, total FROM pedido WHERE date(fecha) >= :desde AND date(fecha) <= :hasta  order by id desc")
+    suspend fun listarPedidoPorFecha(desde: String, hasta: String): List<PedidoModel>
 
-    @Query("SELECT id, fecha, total FROM pedido WHERE date(fecha) >= :desde AND date(fecha) <= :hasta")
-    suspend fun getListarPedidoPorFecha(desde: String, hasta: String): List<PedidoModel>
+    @Transaction
+    @Query("SELECT producto.descripcion, cantidad, detalle_pedido.precio, importe " +
+            "FROM detalle_pedido, producto " +
+            "WHERE producto.id = detalle_pedido.idproducto AND idpedido = :codigo")
+    suspend fun listarDetallePedido(codigo: Int): List<ReporteDetallePedidoModel>
 
-    @Query("SELECT id, idpedido, idproducto,descripcion, cantidad, precio, importe FROM detalle_pedido WHERE idpedido = :codigo")
-    suspend fun getListarDetallePedido(codigo: Int): List<DetallePedidoModel>
 }

@@ -13,6 +13,8 @@
         <entry key="..\:/Proyectos Android/Programadores_CS/RoomMaestroDetalle/app/src/main/res/drawable/ic_info.xml" value="0.17" />
         <entry key="..\:/Proyectos Android/Programadores_CS/RoomMaestroDetalle/app/src/main/res/drawable/ic_launcher_background.xml" value="0.17" />
         <entry key="..\:/Proyectos Android/Programadores_CS/RoomMaestroDetalle/app/src/main/res/drawable/ic_local.xml" value="0.17" />
+        <entry key="..\:/Proyectos Android/Programadores_CS/RoomMaestroDetalle/app/src/main/res/drawable/ic_remove_circle.xml" value="0.17" />
+        <entry key="..\:/Proyectos Android/Programadores_CS/RoomMaestroDetalle/app/src/main/res/drawable/ic_remove_circle_outline.xml" value="0.17" />
         <entry key="..\:/Proyectos Android/Programadores_CS/RoomMaestroDetalle/app/src/main/res/drawable/ic_remove_shopping.xml" value="0.17" />
         <entry key="..\:/Proyectos Android/Programadores_CS/RoomMaestroDetalle/app/src/main/res/drawable/ic_save.xml" value="0.17" />
         <entry key="..\:/Proyectos Android/Programadores_CS/RoomMaestroDetalle/app/src/main/res/drawable/ic_search.xml" value="0.17" />
@@ -35,12 +37,12 @@
         <entry key="..\:/Proyectos Android/Programadores_CS/RoomMaestroDetalle/app/src/main/res/layout/items_catalogo.xml" value="0.5453237410071943" />
         <entry key="..\:/Proyectos Android/Programadores_CS/RoomMaestroDetalle/app/src/main/res/layout/items_detalle_pedido_realizado.xml" value="0.5" />
         <entry key="..\:/Proyectos Android/Programadores_CS/RoomMaestroDetalle/app/src/main/res/layout/items_detalle_venta_realizada.xml" value="0.33" />
-        <entry key="..\:/Proyectos Android/Programadores_CS/RoomMaestroDetalle/app/src/main/res/layout/items_pedido.xml" value="0.67" />
+        <entry key="..\:/Proyectos Android/Programadores_CS/RoomMaestroDetalle/app/src/main/res/layout/items_pedido.xml" value="0.596244131455399" />
         <entry key="..\:/Proyectos Android/Programadores_CS/RoomMaestroDetalle/app/src/main/res/layout/items_pedido_realizado.xml" value="0.5" />
-        <entry key="..\:/Proyectos Android/Programadores_CS/RoomMaestroDetalle/app/src/main/res/layout/items_producto.xml" value="0.67" />
+        <entry key="..\:/Proyectos Android/Programadores_CS/RoomMaestroDetalle/app/src/main/res/layout/items_producto.xml" value="0.5712143928035982" />
         <entry key="..\:/Proyectos Android/Programadores_CS/RoomMaestroDetalle/app/src/main/res/layout/items_venta_realizada.xml" value="0.33" />
         <entry key="..\:/Proyectos Android/Programadores_CS/RoomMaestroDetalle/app/src/main/res/layout/layout_buscar.xml" value="0.20416666666666666" />
-        <entry key="..\:/Proyectos Android/Programadores_CS/RoomMaestroDetalle/app/src/main/res/layout/layout_editar.xml" value="0.75" />
+        <entry key="..\:/Proyectos Android/Programadores_CS/RoomMaestroDetalle/app/src/main/res/layout/layout_editar.xml" value="0.47095179233621753" />
         <entry key="..\:/Proyectos Android/Programadores_CS/RoomMaestroDetalle/app/src/main/res/layout/layout_fondo_superior.xml" value="0.203125" />
         <entry key="..\:/Proyectos Android/Programadores_CS/RoomMaestroDetalle/app/src/main/res/layout/layout_registrar_editar.xml" value="0.4429378531073446" />
         <entry key="..\:/Proyectos Android/Programadores_CS/RoomMaestroDetalle/app/src/main/res/layout/nav_header_main.xml" value="0.33" />

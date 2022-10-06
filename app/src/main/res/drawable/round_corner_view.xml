@@ -6,9 +6,9 @@ xmlns:android="http://schemas.android.com/apk/res/android"
     <corners android:radius="10dp" />
 
     <!-- This is the border color #ccc -->
-    <stroke android:width="2dp" android:color="@color/grisClaroColor" />
+    <stroke android:width="2dp" android:color="@color/colorVibrantLight" />
 
     <!--- This is the background color #ccc -->
-    <solid android:color="@color/grisClaroColor" />
+    <solid android:color="@color/colorVibrantLight" />
 
 </shape>

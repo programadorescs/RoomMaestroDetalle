@@ -6,17 +6,17 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import pe.pcs.roommaestrodetalle.R
 import pe.pcs.roommaestrodetalle.core.UtilsCommon
-import pe.pcs.roommaestrodetalle.data.model.DetallePedidoModel
+import pe.pcs.roommaestrodetalle.data.model.ReporteDetallePedidoModel
 import pe.pcs.roommaestrodetalle.databinding.ItemsDetallePedidoRealizadoBinding
 
 class ReporteDetallePedidoAdapter(
-    private val lista: List<DetallePedidoModel>
+    private val lista: List<ReporteDetallePedidoModel>
 ): RecyclerView.Adapter<ReporteDetallePedidoAdapter.RdpaViewHolder>() {
 
     inner class RdpaViewHolder(view: View): RecyclerView.ViewHolder(view) {
         val binding = ItemsDetallePedidoRealizadoBinding.bind(view)
 
-        fun enlazar(entidad: DetallePedidoModel) {
+        fun enlazar(entidad: ReporteDetallePedidoModel) {
             binding.tvDescripcion.text = entidad.descripcion
             binding.tvPrecio.text = UtilsCommon.formatearDoubleString(entidad.precio)
             binding.tvCantidad.text = "x ${entidad.cantidad}"

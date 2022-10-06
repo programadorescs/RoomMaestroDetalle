@@ -105,7 +105,6 @@ class CatalogoProductoFragment : Fragment(), CatalogoAdapter.IClickListener, Can
             viewModel.setItemProducto(entidad)
 
             CantidadDialog.newInstance(
-                requireContext(),
                 "",
                 "Selecc. cantidad y precio",
                 entidad.precio,
