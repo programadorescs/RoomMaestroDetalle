@@ -6,70 +6,52 @@
     android:layout_height="match_parent"
     tools:context=".ui.fragment.ProductoFragment">
 
+    <include layout="@layout/layout_buscar" />
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <FrameLayout
-            android:id="@+id/fl_cabecera"
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:background="@drawable/background_rounded_container_invertido"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_buscar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            app:startIconDrawable="@drawable/ic_search_24"
+            app:boxCornerRadiusBottomEnd="15dp"
+            app:boxCornerRadiusBottomStart="15dp"
+            app:boxCornerRadiusTopEnd="15dp"
+            app:boxCornerRadiusTopStart="15dp"
+            app:boxStrokeWidth="0dp"
+            app:boxStrokeWidthFocused="0dp"
+            app:boxBackgroundColor="@color/colorVibrantLight"
+            app:boxStrokeColor="@color/negro_semitransparente"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_buscar"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/til_buscar"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="16dp"
-                    app:boxBackgroundColor="@color/colorVibrantLight"
-                    app:boxCornerRadiusBottomEnd="15dp"
-                    app:boxCornerRadiusBottomStart="15dp"
-                    app:boxCornerRadiusTopEnd="15dp"
-                    app:boxCornerRadiusTopStart="15dp"
-                    app:boxStrokeWidth="0dp"
-                    app:boxStrokeWidthFocused="0dp"
-                    app:endIconMode="clear_text"
-                    app:hintEnabled="false"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:startIconDrawable="@drawable/ic_search">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/et_buscar"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColorHint="@color/negro_semitransparente"
-                        android:hint="@string/buscar" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </FrameLayout>
-
+                android:layout_height="wrap_content"
+                android:hint="@string/buscar"
+                android:textColorHint="@color/negro_semitransparente" />
+        </com.google.android.material.textfield.TextInputLayout>
 
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_lista"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="24dp"
             android:clipToPadding="false"
             android:paddingBottom="80dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fl_cabecera" />
+            app:layout_constraintTop_toBottomOf="@+id/til_buscar" />
 
         <ProgressBar
             android:id="@+id/progressBar"

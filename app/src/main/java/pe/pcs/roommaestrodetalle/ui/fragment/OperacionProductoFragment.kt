@@ -7,13 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import dagger.hilt.android.AndroidEntryPoint
 import pe.pcs.roommaestrodetalle.core.UtilsCommon
 import pe.pcs.roommaestrodetalle.core.UtilsMessage
 import pe.pcs.roommaestrodetalle.data.model.ProductoModel
 import pe.pcs.roommaestrodetalle.databinding.FragmentOperacionProductoBinding
 import pe.pcs.roommaestrodetalle.ui.viewmodel.ProductoViewModel
 
-
+@AndroidEntryPoint
 class OperacionProductoFragment : Fragment() {
 
     private lateinit var binding: FragmentOperacionProductoBinding
@@ -35,11 +36,10 @@ class OperacionProductoFragment : Fragment() {
                 binding.etDescripcion.setText(it.descripcion)
                 binding.etCosto.setText(it.costo.toString())
                 binding.etPrecio.setText(it.precio.toString())
-                binding.etExistencia.setText(it.existencia.toString())
             }
         })
 
-        viewModel.mErrorStatus.observe(viewLifecycleOwner, Observer {
+        viewModel.msgError.observe(viewLifecycleOwner, Observer {
             if(!it.isNullOrEmpty()) {
                 UtilsMessage.showAlertOk(
                     "ERROR",
@@ -47,7 +47,7 @@ class OperacionProductoFragment : Fragment() {
                     requireContext()
                 )
 
-                viewModel.mErrorStatus.postValue("")
+                viewModel.limpiarMsgError()
             }
         })
 
@@ -64,8 +64,7 @@ class OperacionProductoFragment : Fragment() {
         binding.fabGrabar.setOnClickListener {
             if(binding.etDescripcion.text.toString().isEmpty() ||
                 binding.etCosto.text.toString().isEmpty() ||
-                binding.etPrecio.text.toString().isEmpty() ||
-                binding.etExistencia.text.toString().isEmpty()) {
+                binding.etPrecio.text.toString().isEmpty()) {
                 UtilsMessage.showAlertOk(
                     "ADVERTENCIA",
                     "Todos los datos son requeridos.",
@@ -79,7 +78,6 @@ class OperacionProductoFragment : Fragment() {
                 descripcion = binding.etDescripcion.text.toString().trim()
                 costo = binding.etCosto.text.toString().toDouble()
                 precio = binding.etPrecio.text.toString().toDouble()
-                existencia = binding.etExistencia.text.toString().toInt()
             }
 
             viewModel.grabar(entidad)

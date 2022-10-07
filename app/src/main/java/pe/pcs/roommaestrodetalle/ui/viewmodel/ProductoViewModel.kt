@@ -4,15 +4,18 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import pe.pcs.roommaestrodetalle.data.model.ProductoModel
-import pe.pcs.roommaestrodetalle.data.repository.ProductoRepositorio
+import pe.pcs.roommaestrodetalle.data.repository.ProductoRepository
+import javax.inject.Inject
 
-class ProductoViewModel: ViewModel() {
-
-    private val repositorio = ProductoRepositorio()
+@HiltViewModel
+class ProductoViewModel @Inject constructor(
+    private val repository : ProductoRepository
+) : ViewModel() {
 
     var lista = MutableLiveData<List<ProductoModel>>()
 
@@ -22,7 +25,8 @@ class ProductoViewModel: ViewModel() {
     private val _progressBar = MutableLiveData<Boolean>()
     var progressBar: LiveData<Boolean> = _progressBar
 
-    var mErrorStatus = MutableLiveData<String?>()
+    private var _msgError = MutableLiveData<String?>()
+    val msgError: LiveData<String?> = _msgError
 
     var operacionExitosa = MutableLiveData<Boolean>()
 
@@ -31,14 +35,18 @@ class ProductoViewModel: ViewModel() {
         _itemProducto.postValue(item)
     }
 
+    fun limpiarMsgError() {
+        _msgError.postValue("")
+    }
+
     fun listar(dato: String) {
         _progressBar.postValue(true)
 
         viewModelScope.launch {
             try {
-                lista.postValue(repositorio.getListarPorNombre(dato))
+                lista.postValue(repository.getListarPorNombre(dato))
             } catch (e: Exception) {
-                mErrorStatus.postValue(e.message)
+                _msgError.postValue(e.message)
             } finally {
                 _progressBar.postValue(false)
             }
@@ -52,14 +60,14 @@ class ProductoViewModel: ViewModel() {
             val result = withContext(Dispatchers.IO) {
                 try {
                     val rpta = if(producto.id == 0)
-                        repositorio.insertar(producto)
+                        repository.insertar(producto)
                     else
-                        repositorio.actualizar(producto)
+                        repository.actualizar(producto)
 
-                    lista.postValue(repositorio.getListarTodo())
+                    lista.postValue(repository.getListarTodo())
                     rpta.toLong()
                 } catch (e: Exception) {
-                    mErrorStatus.postValue(e.message)
+                    _msgError.postValue(e.message)
                     0
                 } finally {
                     _progressBar.postValue(false)
@@ -76,11 +84,11 @@ class ProductoViewModel: ViewModel() {
         viewModelScope.launch {
             val result = withContext(Dispatchers.IO) {
                 try {
-                    val rpta = repositorio.eliminar(producto)
-                    lista.postValue(repositorio.getListarTodo())
+                    val rpta = repository.eliminar(producto)
+                    lista.postValue(repository.getListarTodo())
                     rpta
                 } catch (e: Exception) {
-                    mErrorStatus.postValue(e.message)
+                    _msgError.postValue(e.message)
                     0
                 } finally {
                     _progressBar.postValue(false)

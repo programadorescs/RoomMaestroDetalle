@@ -4,12 +4,13 @@ import android.app.Application
 import android.content.Context
 import androidx.room.Room
 import com.google.android.gms.ads.MobileAds
-import pe.pcs.roommaestrodetalle.data.database.PedidoDB
+import dagger.hilt.android.HiltAndroidApp
+import pe.pcs.roommaestrodetalle.data.database.AppDatabase
 
+@HiltAndroidApp
 class RoomMaestroDetalleApp: Application() {
 
     companion object {
-        lateinit var db: PedidoDB
         private var instancia: RoomMaestroDetalleApp? = null
 
         fun getAppContext(): Context {
@@ -27,12 +28,6 @@ class RoomMaestroDetalleApp: Application() {
 
         // AdMob
         MobileAds.initialize(this)
-
-        db = Room.databaseBuilder(
-            this,
-            PedidoDB::class.java,
-            "pedidoDB"
-        ).build()
     }
 
 }

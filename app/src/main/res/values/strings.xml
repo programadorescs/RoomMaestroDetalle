@@ -9,7 +9,7 @@
 
     <!-- ESte es un id de prueba para la publicidad -->
     <string name="id_admob_intersticial">ca-app-pub-3940256099942544/1033173712</string>
-    <string name="app_version">v1.0.3</string>
+    <string name="app_version">v1.0.4</string>
 
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
@@ -26,7 +26,7 @@
     <string name="existencia">Existencia</string>
     <string name="detalle">Detalle</string>
     <string name="cantidad">Cantidad</string>
-    <string name="registrar_actualizar">Registrar | Actualizar producto</string>
+    <string name="registrar_actualizar">Producto</string>
     <string name="precio_de_venta">Precio de venta</string>
     <string name="carrito">Carrito [0]</string>
     <string name="confirmar">Confirmar</string>
@@ -42,4 +42,8 @@
     <string name="jack_el_programador">Jack el programador</string>
     <string name="email">jackelprogramador@gmail.com</string>
     <string name="registrar_editar">Registrar | Editar</string>
+    <string name="cliente">Cliente</string>
+    <string name="monto_numero">0.00</string>
+    <string name="titulo">TITULO</string>
+    <string name="contentDescription">-</string>
 </resources>

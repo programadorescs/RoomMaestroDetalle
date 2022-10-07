@@ -13,15 +13,15 @@ import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import dagger.hilt.android.AndroidEntryPoint
 import pe.pcs.roommaestrodetalle.R
 import pe.pcs.roommaestrodetalle.core.UtilsMessage
 import pe.pcs.roommaestrodetalle.data.model.ProductoModel
 import pe.pcs.roommaestrodetalle.databinding.FragmentProductoBinding
 import pe.pcs.roommaestrodetalle.ui.adapter.ProductAdapter
-import pe.pcs.roommaestrodetalle.ui.adapter.ProductoAdapter
 import pe.pcs.roommaestrodetalle.ui.viewmodel.ProductoViewModel
 
-
+@AndroidEntryPoint
 class ProductoFragment : Fragment(), ProductAdapter.IOnClickListener { //ProductoAdapter.IClickListener
 
     private lateinit var binding: FragmentProductoBinding
@@ -40,25 +40,23 @@ class ProductoFragment : Fragment(), ProductAdapter.IOnClickListener { //Product
 
         binding.rvLista.layoutManager = LinearLayoutManager(requireContext())
 
-        //binding.rvLista.adapter = ProductoAdapter(this)
         binding.rvLista.adapter = ProductAdapter(this)
 
         viewModel.lista.observe(viewLifecycleOwner, Observer {
-            //(binding.rvLista.adapter as ProductoAdapter).differ.submitList(it)
-            (binding.rvLista.adapter as ProductAdapter).submitList(it)
+             (binding.rvLista.adapter as ProductAdapter).submitList(it)
         })
 
         viewModel.progressBar.observe(viewLifecycleOwner, Observer {
             binding.progressBar.isVisible = it
         })
 
-        viewModel.mErrorStatus.observe(viewLifecycleOwner, Observer {
+        viewModel.msgError.observe(viewLifecycleOwner, Observer {
             if(!it.isNullOrEmpty()) {
                 UtilsMessage.showAlertOk(
                     "ERROR", it, requireContext()
                 )
 
-                viewModel.mErrorStatus.postValue("")
+                viewModel.limpiarMsgError()
             }
         })
 

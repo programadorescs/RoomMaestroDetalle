@@ -30,7 +30,10 @@ interface PedidoDao {
         }
     }
 
-    @Query("SELECT id, fecha, total FROM pedido WHERE date(fecha) >= :desde AND date(fecha) <= :hasta  order by id desc")
+    @Query("UPDATE Pedido SET estado='anulado' WHERE id=:id")
+    suspend fun anularPedido(id: Int): Int
+
+    @Query("SELECT * FROM pedido WHERE date(fecha) >= :desde AND date(fecha) <= :hasta  order by id desc")
     suspend fun listarPedidoPorFecha(desde: String, hasta: String): List<PedidoModel>
 
     @Transaction

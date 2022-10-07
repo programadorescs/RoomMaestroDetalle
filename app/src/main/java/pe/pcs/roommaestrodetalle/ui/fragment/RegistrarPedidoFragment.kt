@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import dagger.hilt.android.AndroidEntryPoint
 import pe.pcs.roommaestrodetalle.core.UtilsAdmob
 import pe.pcs.roommaestrodetalle.core.UtilsCommon
 import pe.pcs.roommaestrodetalle.core.UtilsDate
@@ -21,7 +22,8 @@ import pe.pcs.roommaestrodetalle.databinding.FragmentRegistrarPedidoBinding
 import pe.pcs.roommaestrodetalle.ui.adapter.CarritoAdapter
 import pe.pcs.roommaestrodetalle.ui.viewmodel.PedidoViewModel
 
-class RegistrarPedidoFragment : Fragment(), CarritoAdapter.IOnClickListener { //DetalleCarritoAdapter.OnClickListener
+@AndroidEntryPoint
+class RegistrarPedidoFragment : Fragment(), CarritoAdapter.IOnClickListener {
 
     private lateinit var binding: FragmentRegistrarPedidoBinding
     private val viewModel: PedidoViewModel by activityViewModels()
@@ -39,7 +41,6 @@ class RegistrarPedidoFragment : Fragment(), CarritoAdapter.IOnClickListener { //
 
         binding.rvLista.layoutManager = LinearLayoutManager(requireContext())
 
-        //binding.rvLista.adapter = DetalleCarritoAdapter(this)
         binding.rvLista.adapter = CarritoAdapter(this)
 
         viewModel.progressBar.observe(viewLifecycleOwner, Observer {
@@ -54,7 +55,7 @@ class RegistrarPedidoFragment : Fragment(), CarritoAdapter.IOnClickListener { //
             binding.tvImporte.text = UtilsCommon.formatearDoubleString(it)
         })
 
-        viewModel.mErrorStatus.observe(viewLifecycleOwner, Observer {
+        viewModel.msgError.observe(viewLifecycleOwner, Observer {
             if(!it.isNullOrEmpty()) {
                 UtilsMessage.showAlertOk("ERROR", it, requireContext())
                 viewModel.limpiarMsgError()
@@ -78,6 +79,8 @@ class RegistrarPedidoFragment : Fragment(), CarritoAdapter.IOnClickListener { //
                     viewModel.limpiarCarrito()
                     viewModel.operacionExitosa.postValue(false)
 
+                    binding.etCliente.setText("")
+
                     Navigation.findNavController(requireView()).popBackStack()
                     dialog.cancel()
 
@@ -86,10 +89,14 @@ class RegistrarPedidoFragment : Fragment(), CarritoAdapter.IOnClickListener { //
         })
 
         binding.fabCarrito.setOnClickListener {
-            if(viewModel.listaCarrito.value!!.size >= 0) {
+            UtilsCommon.ocultarTeclado(it)
+
+            if(viewModel.listaCarrito.value!!.isNotEmpty()) {
                 val pedido = PedidoModel().apply {
                     fecha = UtilsDate.obtenerFechaActual()
                     total = viewModel.totalImporte.value!!
+                    cliente = binding.etCliente.text.toString().trim().ifEmpty { "Publico general" }
+                    estado = "vigente"
                 }
 
                 viewModel.registrarPedido(pedido, viewModel.listaCarrito.value!!)
@@ -118,11 +125,13 @@ class RegistrarPedidoFragment : Fragment(), CarritoAdapter.IOnClickListener { //
             setTitle("QUITAR")
             setMessage("¿Desea quitar el registro: ${entidad.descripcion}?")
 
-            setPositiveButton("Si") {dialog, _ ->
+            setPositiveButton("SI") {dialog, _ ->
                 viewModel.quitarProductoCarrito(entidad)
 
-                if(viewModel.listaCarrito.value?.size!! == 0)
+                if(viewModel.listaCarrito.value?.size!! == 0) {
+                    binding.etCliente.setText("")
                     Navigation.findNavController(requireView()).popBackStack()
+                }
 
                 dialog.dismiss()
             }

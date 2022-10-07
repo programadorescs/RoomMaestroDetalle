@@ -13,8 +13,8 @@
         android:id="@+id/scrollView2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginRight="16dp"
-        android:layout_marginLeft="16dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
         android:layout_marginTop="100dp"
         android:background="@drawable/background_rounded_container_body"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -97,30 +97,6 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/precio"
                     android:inputType="numberDecimal" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/til_existencia"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="16dp"
-                app:boxCornerRadiusBottomEnd="13dp"
-                app:boxCornerRadiusBottomStart="13dp"
-                app:boxCornerRadiusTopEnd="13dp"
-                app:boxCornerRadiusTopStart="13dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/til_precio">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_existencia"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/existencia"
-                    android:inputType="number" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <ProgressBar

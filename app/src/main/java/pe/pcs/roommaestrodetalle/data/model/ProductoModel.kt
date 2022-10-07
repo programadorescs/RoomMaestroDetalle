@@ -10,6 +10,5 @@ data class ProductoModel(
     @ColumnInfo(name = "id") var id: Int = 0,
     @ColumnInfo(name = "descripcion") var descripcion: String = "",
     @ColumnInfo(name = "costo") var costo: Double = 0.0,
-    @ColumnInfo(name = "precio") var precio: Double = 0.0,
-    @ColumnInfo(name = "existencia") var existencia: Int = 0
+    @ColumnInfo(name = "precio") var precio: Double = 0.0
 )

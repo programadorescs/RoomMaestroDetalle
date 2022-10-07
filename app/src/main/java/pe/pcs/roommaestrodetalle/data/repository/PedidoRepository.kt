@@ -1,19 +1,27 @@
 package pe.pcs.roommaestrodetalle.data.repository
 
-import pe.pcs.roommaestrodetalle.RoomMaestroDetalleApp.Companion.db
+import pe.pcs.roommaestrodetalle.data.dao.PedidoDao
+import pe.pcs.roommaestrodetalle.data.dao.ProductoDao
 import pe.pcs.roommaestrodetalle.data.model.DetallePedidoModel
 import pe.pcs.roommaestrodetalle.data.model.PedidoModel
 import pe.pcs.roommaestrodetalle.data.model.ProductoModel
 import pe.pcs.roommaestrodetalle.data.model.ReporteDetallePedidoModel
+import javax.inject.Inject
 
-class PedidoRepository {
-
-    // Instanciar el dao (pedidoDao())
-    private val pedidoDao = db.pedidoDao()
-    private val productoDao = db.productoDao()
-
+class PedidoRepository @Inject constructor(
+    private val pedidoDao : PedidoDao,
+    private val productoDao : ProductoDao
+) {
     // Implementamos las funciones suspendidas del dao
     // Estas funciones devolveran listas u objetos
+
+    suspend fun insertarPedido(pedido: PedidoModel, detalle: List<DetallePedidoModel>) {
+        pedidoDao.insertarTransaccion(pedido, detalle)
+    }
+
+    suspend fun anularPedido(id: Int) {
+        pedidoDao.anularPedido(id)
+    }
 
     suspend fun listarProducto(dato: String): List<ProductoModel> {
         return productoDao.getListarPorNombre(dato)
@@ -21,10 +29,6 @@ class PedidoRepository {
 
     suspend fun listarPedidoPorFecha(desde: String, hasta: String): List<PedidoModel> {
         return pedidoDao.listarPedidoPorFecha(desde, hasta)
-    }
-
-    suspend fun insertarPedido(pedido: PedidoModel, detalle: List<DetallePedidoModel>) {
-        pedidoDao.insertarTransaccion(pedido, detalle)
     }
 
     suspend fun listarDetallePedido(id: Int): List<ReporteDetallePedidoModel> {

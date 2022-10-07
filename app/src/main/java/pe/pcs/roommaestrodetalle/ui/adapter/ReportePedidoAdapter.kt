@@ -8,7 +8,6 @@ import pe.pcs.roommaestrodetalle.R
 import pe.pcs.roommaestrodetalle.core.UtilsCommon
 import pe.pcs.roommaestrodetalle.data.model.PedidoModel
 import pe.pcs.roommaestrodetalle.databinding.ItemsPedidoBinding
-import pe.pcs.roommaestrodetalle.databinding.ItemsPedidoRealizadoBinding
 
 class ReportePedidoAdapter(
     private val lista: List<PedidoModel>,
@@ -27,6 +26,7 @@ class ReportePedidoAdapter(
             binding.tvTitulo.text = "Pedido: ${entidad.id.toString()}"
             binding.tvFecha.text = entidad.fecha
             binding.tvTotal.text = UtilsCommon.formatearDoubleString(entidad.total)
+            binding.tvCliente.text = entidad.cliente
         }
     }
 

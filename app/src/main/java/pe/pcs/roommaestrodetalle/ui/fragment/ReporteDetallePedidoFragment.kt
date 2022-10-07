@@ -9,13 +9,14 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import dagger.hilt.android.AndroidEntryPoint
 import pe.pcs.roommaestrodetalle.core.UtilsCommon
 import pe.pcs.roommaestrodetalle.core.UtilsMessage
 import pe.pcs.roommaestrodetalle.databinding.FragmentReporteDetallePedidoBinding
 import pe.pcs.roommaestrodetalle.ui.adapter.ReporteDetallePedidoAdapter
 import pe.pcs.roommaestrodetalle.ui.viewmodel.ReportePedidoViewModel
 
-
+@AndroidEntryPoint
 class ReporteDetallePedidoFragment : Fragment() {
 
     private lateinit var binding: FragmentReporteDetallePedidoBinding
@@ -38,7 +39,7 @@ class ReporteDetallePedidoFragment : Fragment() {
             binding.progressBar.isVisible = it
         })
 
-        viewModel.mErrorStatus.observe(viewLifecycleOwner, Observer {
+        viewModel.msgError.observe(viewLifecycleOwner, Observer {
             if(!it.isNullOrEmpty()) {
                 UtilsMessage.showAlertOk(
                     "ERROR", it, requireContext()

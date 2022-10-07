@@ -13,6 +13,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import dagger.hilt.android.AndroidEntryPoint
 import pe.pcs.roommaestrodetalle.R
 import pe.pcs.roommaestrodetalle.core.UtilsDate
 import pe.pcs.roommaestrodetalle.core.UtilsMessage
@@ -21,7 +22,7 @@ import pe.pcs.roommaestrodetalle.databinding.FragmentReportePedidoBinding
 import pe.pcs.roommaestrodetalle.ui.adapter.ReportePedidoAdapter
 import pe.pcs.roommaestrodetalle.ui.viewmodel.ReportePedidoViewModel
 
-
+@AndroidEntryPoint
 class ReportePedidoFragment : Fragment(), ReportePedidoAdapter.IClickListener {
 
     private lateinit var binding: FragmentReportePedidoBinding
@@ -40,11 +41,11 @@ class ReportePedidoFragment : Fragment(), ReportePedidoAdapter.IClickListener {
 
         binding.rvLista.layoutManager = LinearLayoutManager(requireContext())
 
-        viewModel.progressBar.observe(viewLifecycleOwner, Observer {
+        viewModel.progressBar.observe(viewLifecycleOwner) {
             binding.progressBar.isVisible = it
-        })
+        }
 
-        viewModel.mErrorStatus.observe(viewLifecycleOwner, Observer {
+        viewModel.msgError.observe(viewLifecycleOwner) {
             if(!it.isNullOrEmpty()) {
                 UtilsMessage.showAlertOk(
                     "ERROR", it, requireContext()
@@ -52,11 +53,18 @@ class ReportePedidoFragment : Fragment(), ReportePedidoAdapter.IClickListener {
 
                 viewModel.limpiarMsgError()
             }
-        })
+        }
 
-        viewModel.listaPedido.observe(viewLifecycleOwner, Observer {
+        viewModel.listaPedido.observe(viewLifecycleOwner) {
             binding.rvLista.adapter = ReportePedidoAdapter(it, this)
-        })
+        }
+
+        viewModel.operacionExitosa.observe(viewLifecycleOwner) {
+            if(it) {
+                UtilsMessage.showToast("¡Felicidades, registro anulado correctamente!")
+                viewModel.operacionExitosa.postValue(false)
+            }
+        }
 
         binding.etDesde.setOnClickListener {
             UtilsDate.mostrarCalendario(binding.etDesde, parentFragmentManager)
@@ -119,14 +127,22 @@ class ReportePedidoFragment : Fragment(), ReportePedidoAdapter.IClickListener {
     }
 
     override fun clickAnular(entidad: PedidoModel) {
+        if(entidad.estado.trim().lowercase() == "anulado") {
+            UtilsMessage.showToast("El pedido ya esta anulado")
+            return
+        }
+
         MaterialAlertDialogBuilder(requireContext()).apply {
             setCancelable(false)
             setTitle("ANULAR PEDIDO")
-            setMessage("¿Esta seguro de querer anular el registro: ${entidad.id}?")
+            setMessage("¿Esta seguro de querer anular el Pedido: ${entidad.id}?")
 
             setPositiveButton("SI") { dialog, _ ->
-
-
+                viewModel.anularPedido(
+                    entidad.id,
+                    binding.etDesde.text.toString(),
+                    binding.etHasta.text.toString()
+                )
                 dialog.dismiss()
             }
 

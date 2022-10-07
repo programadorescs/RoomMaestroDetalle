@@ -13,6 +13,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
+import dagger.hilt.android.AndroidEntryPoint
 import pe.pcs.roommaestrodetalle.R
 import pe.pcs.roommaestrodetalle.core.UtilsCommon
 import pe.pcs.roommaestrodetalle.core.UtilsMessage
@@ -23,7 +24,7 @@ import pe.pcs.roommaestrodetalle.ui.adapter.CatalogoAdapter
 import pe.pcs.roommaestrodetalle.ui.dialog.CantidadDialog
 import pe.pcs.roommaestrodetalle.ui.viewmodel.PedidoViewModel
 
-
+@AndroidEntryPoint
 class CatalogoProductoFragment : Fragment(), CatalogoAdapter.IClickListener, CantidadDialog.IEnviarListener {
 
     private lateinit var binding: FragmentCatalogoProductoBinding
@@ -50,7 +51,7 @@ class CatalogoProductoFragment : Fragment(), CatalogoAdapter.IClickListener, Can
             binding.progressBar.isVisible = it
         })
 
-        viewModel.mErrorStatus.observe(viewLifecycleOwner, Observer {
+        viewModel.msgError.observe(viewLifecycleOwner, Observer {
             if(!it.isNullOrEmpty()) {
                 UtilsMessage.showAlertOk("ERROR", it, requireContext())
                 viewModel.limpiarMsgError()

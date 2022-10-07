@@ -16,7 +16,7 @@ import pe.pcs.roommaestrodetalle.data.model.ProductoModel
     version = 1,
     exportSchema = false
 )
-abstract class PedidoDB: RoomDatabase() {
+abstract class AppDatabase: RoomDatabase() {
 
     // Aqui estara toas las funciones que engloban a las interfaces Dao
 

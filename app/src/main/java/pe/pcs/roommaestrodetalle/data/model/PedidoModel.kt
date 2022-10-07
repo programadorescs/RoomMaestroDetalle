@@ -9,7 +9,7 @@ data class PedidoModel(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id") var id: Int = 0,
     @ColumnInfo(name = "fecha") var fecha: String = "",
-    @ColumnInfo(name = "total") var total: Double = 0.0
-    //@ColumnInfo(name = "serie") var serie: String = "",
-    //@ColumnInfo(name = "correlativo") var correlativo: Int = 0
+    @ColumnInfo(name = "total") var total: Double = 0.0,
+    @ColumnInfo(name = "cliente") var cliente: String = "",
+    @ColumnInfo(name = "estado") var estado: String = ""
 )

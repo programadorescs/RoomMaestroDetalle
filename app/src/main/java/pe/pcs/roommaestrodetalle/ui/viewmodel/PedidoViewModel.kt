@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -11,10 +12,12 @@ import pe.pcs.roommaestrodetalle.data.model.DetallePedidoModel
 import pe.pcs.roommaestrodetalle.data.model.PedidoModel
 import pe.pcs.roommaestrodetalle.data.model.ProductoModel
 import pe.pcs.roommaestrodetalle.data.repository.PedidoRepository
+import javax.inject.Inject
 
-class PedidoViewModel: ViewModel() {
-
-    private val repository = PedidoRepository()
+@HiltViewModel
+class PedidoViewModel @Inject constructor(
+    private val repository : PedidoRepository
+): ViewModel() {
 
     var listaProducto = MutableLiveData<List<ProductoModel>>()
 
@@ -33,8 +36,8 @@ class PedidoViewModel: ViewModel() {
     private val _progressBar = MutableLiveData<Boolean>()
     var progressBar: LiveData<Boolean> = _progressBar
 
-    private var _mErrorStatus = MutableLiveData<String?>()
-    val mErrorStatus: LiveData<String?> = _mErrorStatus
+    private var _msgError = MutableLiveData<String?>()
+    val msgError: LiveData<String?> = _msgError
 
     var operacionExitosa = MutableLiveData<Boolean>()
 
@@ -43,7 +46,7 @@ class PedidoViewModel: ViewModel() {
     }
 
     fun limpiarMsgError() {
-        _mErrorStatus.postValue("")
+        _msgError.postValue("")
     }
 
     // Para el item seleccionado
@@ -142,7 +145,7 @@ class PedidoViewModel: ViewModel() {
             try {
                 listaProducto.postValue(repository.listarProducto(dato))
             } catch (e: Exception) {
-                _mErrorStatus.postValue(e.message)
+                _msgError.postValue(e.message)
             } finally {
                 _progressBar.postValue(false)
             }
@@ -158,7 +161,7 @@ class PedidoViewModel: ViewModel() {
                     repository.insertarPedido(pedido, detallePedido)
                     true
                 } catch (e: Exception) {
-                    _mErrorStatus.postValue(e.message)
+                    _msgError.postValue(e.message)
                     false
                 } finally {
                     _progressBar.postValue(false)
