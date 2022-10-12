@@ -15,6 +15,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:fontFamily="@font/roboto_condensed_regular"
+        android:textColor="@color/colorPrimaryText"
         android:maxLines="1"
         android:text="@string/descripcion"
         android:textSize="16sp"
@@ -59,7 +60,6 @@
         android:layout_marginBottom="8dp"
         android:fontFamily="@font/roboto_condensed_regular"
         android:text="Importe"
-        android:textColor="@color/purple_200"
         android:textSize="14sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -71,11 +71,10 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:background="@color/grisOscuroColor"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_precio" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

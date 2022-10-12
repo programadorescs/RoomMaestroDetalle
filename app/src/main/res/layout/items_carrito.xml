@@ -77,7 +77,7 @@
         android:text="Importe"
         android:textSize="16sp"
         android:fontFamily="@font/roboto_condensed_regular"
-        android:textColor="@color/purple_200"
+        android:textColor="@color/purple_500"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/v_separador"
         app:layout_constraintEnd_toStartOf="@+id/ib_eliminar"

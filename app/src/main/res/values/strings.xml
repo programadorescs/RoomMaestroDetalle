@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">RoomMaestroDetalle</string>
+    <string name="app_name">Room MD</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Android Studio</string>
@@ -9,7 +9,7 @@
 
     <!-- ESte es un id de prueba para la publicidad -->
     <string name="id_admob_intersticial">ca-app-pub-3940256099942544/1033173712</string>
-    <string name="app_version">v1.0.4</string>
+    <string name="app_version">v1.0.5</string>
 
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
