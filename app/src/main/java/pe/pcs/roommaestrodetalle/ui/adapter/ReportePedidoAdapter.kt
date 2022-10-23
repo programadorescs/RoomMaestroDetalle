@@ -1,5 +1,6 @@
 package pe.pcs.roommaestrodetalle.ui.adapter
 
+import android.graphics.Typeface
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
@@ -37,11 +38,13 @@ class ReportePedidoAdapter(
             binding.tvFecha.text = entidad.fecha
             binding.tvTotal.text = UtilsCommon.formatearDoubleString(entidad.total)
             binding.tvCliente.text = entidad.cliente
+            binding.tvEstado.text = if (entidad.estado.lowercase() == "anulado") entidad.estado.uppercase() else entidad.estado
 
-            if (entidad.estado.lowercase() == "anulado")
-                binding.clTitulo.setBackgroundColor(
+            /*if (entidad.estado.lowercase() == "anulado") {
+                binding.tvEstado.setTextColor(
                     ContextCompat.getColor(RoomMaestroDetalleApp.getAppContext(), R.color.teal_200)
                 )
+            }*/
 
             binding.btAnular.setOnClickListener {
                 iOnClickListener.clickAnular(entidad)

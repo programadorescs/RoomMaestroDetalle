@@ -15,8 +15,8 @@ android {
         applicationId "pe.pcs.roommaestrodetalle"
         minSdk 23
         targetSdk 33
-        versionCode 7
-        versionName "1.0.7"
+        versionCode 8
+        versionName "1.0.8"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -44,7 +44,7 @@ dependencies {
 
     implementation 'androidx.core:core-ktx:1.9.0'
     implementation 'androidx.appcompat:appcompat:1.5.1'
-    implementation 'com.google.android.material:material:1.6.1'
+    implementation 'com.google.android.material:material:1.7.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.5.1'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1'
@@ -52,8 +52,8 @@ dependencies {
     implementation 'androidx.navigation:navigation-ui-ktx:2.5.2'
 
     //Room
-    implementation 'androidx.room:room-ktx:2.5.0-beta01' //2.5.0-alpha03
-    kapt 'androidx.room:room-compiler:2.5.0-beta01' //2.5.0-alpha03
+    implementation 'androidx.room:room-ktx:2.5.0-beta01'
+    kapt 'androidx.room:room-compiler:2.5.0-beta01'
 
     // AdMob
     implementation 'com.google.android.gms:play-services-ads:21.3.0'

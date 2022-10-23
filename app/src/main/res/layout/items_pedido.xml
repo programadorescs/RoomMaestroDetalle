@@ -157,47 +157,17 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
                         android:fontFamily="@font/comfortaa_regular"
-                        android:text="SubTotal:"
+                        android:text="Estado:"
                         android:textSize="12sp"
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/tv_subtotal"
+                        android:id="@+id/tv_estado"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
                         android:fontFamily="@font/roboto_condensed_regular"
-                        android:text="S/ 00.00"
-                        android:textSize="14sp"
-                        android:textStyle="bold" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1.0"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/textView25"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
-                        android:fontFamily="@font/comfortaa_regular"
-                        android:gravity="center"
-                        android:text="Igv:"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/tv_igv"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
-                        android:fontFamily="@font/roboto_condensed_regular"
-                        android:gravity="center"
-                        android:text="S/ 00.00"
+                        android:text="El estado"
                         android:textSize="14sp"
                         android:textStyle="bold" />
 
