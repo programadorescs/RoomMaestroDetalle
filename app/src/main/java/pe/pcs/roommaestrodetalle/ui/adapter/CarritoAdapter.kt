@@ -21,19 +21,23 @@ class CarritoAdapter(
         fun clickElimnar(entidad: DetallePedidoModel)
     }
 
-    inner class BindViewHolder(view: View): RecyclerView.ViewHolder(view) {
-        val binding = ItemsCarritoBinding.bind(view)
+    inner class BindViewHolder(private val binding: ItemsCarritoBinding): RecyclerView.ViewHolder(binding.root) {
 
         fun enlazar(entidad: DetallePedidoModel) {
             binding.tvDescripcion.text = entidad.descripcion
             binding.tvCantidad.text = entidad.cantidad.toString()
             binding.tvImporte.text = UtilsCommon.formatearDoubleString(entidad.cantidad * entidad.precio)
+
+
+            binding.ibMas.setOnClickListener { iOnClickListener.clickMas(entidad) }
+            binding.ibMenos.setOnClickListener { iOnClickListener.clickMenos(entidad) }
+            binding.ibEliminar.setOnClickListener { iOnClickListener.clickElimnar(entidad) }
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BindViewHolder {
         return BindViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.items_carrito, parent, false)
+            ItemsCarritoBinding.inflate(LayoutInflater.from(parent.context))
         )
     }
 
@@ -41,10 +45,6 @@ class CarritoAdapter(
         val entidad = lista[position]
 
         holder.enlazar(entidad)
-
-        holder.binding.ibMas.setOnClickListener { iOnClickListener.clickMas(entidad) }
-        holder.binding.ibMenos.setOnClickListener { iOnClickListener.clickMenos(entidad) }
-        holder.binding.ibEliminar.setOnClickListener { iOnClickListener.clickElimnar(entidad) }
     }
 
     override fun getItemCount(): Int {

@@ -18,7 +18,6 @@ object RoomModule {
 
     private const val DATABASE_NAME = "pedido_db"
 
-    // Crear una instancia singleton
     @Singleton
     @Provides
     fun provideRoom(@ApplicationContext context: Context): AppDatabase {

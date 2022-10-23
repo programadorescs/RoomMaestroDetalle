@@ -9,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -18,11 +17,11 @@ import pe.pcs.roommaestrodetalle.R
 import pe.pcs.roommaestrodetalle.core.UtilsMessage
 import pe.pcs.roommaestrodetalle.data.model.ProductoModel
 import pe.pcs.roommaestrodetalle.databinding.FragmentProductoBinding
-import pe.pcs.roommaestrodetalle.ui.adapter.ProductAdapter
+import pe.pcs.roommaestrodetalle.ui.adapter.ProductoAdapter
 import pe.pcs.roommaestrodetalle.ui.viewmodel.ProductoViewModel
 
 @AndroidEntryPoint
-class ProductoFragment : Fragment(), ProductAdapter.IOnClickListener { //ProductoAdapter.IClickListener
+class ProductoFragment : Fragment(), ProductoAdapter.IOnClickListener {
 
     private lateinit var binding: FragmentProductoBinding
     private val viewModel: ProductoViewModel by activityViewModels()
@@ -40,17 +39,17 @@ class ProductoFragment : Fragment(), ProductAdapter.IOnClickListener { //Product
 
         binding.rvLista.layoutManager = LinearLayoutManager(requireContext())
 
-        binding.rvLista.adapter = ProductAdapter(this)
+        binding.rvLista.adapter = ProductoAdapter(this)
 
-        viewModel.lista.observe(viewLifecycleOwner, Observer {
-             (binding.rvLista.adapter as ProductAdapter).submitList(it)
-        })
+        viewModel.lista.observe(viewLifecycleOwner) {
+             (binding.rvLista.adapter as ProductoAdapter).submitList(it)
+        }
 
-        viewModel.progressBar.observe(viewLifecycleOwner, Observer {
+        viewModel.progressBar.observe(viewLifecycleOwner) {
             binding.progressBar.isVisible = it
-        })
+        }
 
-        viewModel.msgError.observe(viewLifecycleOwner, Observer {
+        viewModel.msgError.observe(viewLifecycleOwner) {
             if(!it.isNullOrEmpty()) {
                 UtilsMessage.showAlertOk(
                     "ERROR", it, requireContext()
@@ -58,14 +57,14 @@ class ProductoFragment : Fragment(), ProductAdapter.IOnClickListener { //Product
 
                 viewModel.limpiarMsgError()
             }
-        })
+        }
 
-        viewModel.operacionExitosa.observe(viewLifecycleOwner, Observer {
+        viewModel.operacionExitosa.observe(viewLifecycleOwner) {
             if(it) {
                 UtilsMessage.showToast("¡Felicidades, registro anulado correctamente!")
                 viewModel.operacionExitosa.postValue(false)
             }
-        })
+        }
 
         binding.fabNuevo.setOnClickListener {
             flagRetorno = true

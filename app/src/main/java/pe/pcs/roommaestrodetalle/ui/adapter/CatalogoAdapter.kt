@@ -1,53 +1,51 @@
 package pe.pcs.roommaestrodetalle.ui.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import pe.pcs.roommaestrodetalle.R
 import pe.pcs.roommaestrodetalle.core.UtilsCommon
 import pe.pcs.roommaestrodetalle.data.model.ProductoModel
 import pe.pcs.roommaestrodetalle.databinding.ItemsCatalogoBinding
 
 class CatalogoAdapter(
-    private val lista: List<ProductoModel>,
-    private val iClickListener: IClickListener
-): RecyclerView.Adapter<CatalogoAdapter.CaViewHolder>() {
+    private val iOnClickListener: IOnClickListener
+): ListAdapter<ProductoModel, CatalogoAdapter.BindViewHolder>(DiffCallback) {
 
-    interface IClickListener {
+    interface IOnClickListener {
         fun clickItem(entidad: ProductoModel)
     }
 
-    inner class CaViewHolder(view: View): RecyclerView.ViewHolder(view) {
-        val binding = ItemsCatalogoBinding.bind(view)
+    private object DiffCallback: DiffUtil.ItemCallback<ProductoModel>() {
+        override fun areItemsTheSame(oldItem: ProductoModel, newItem: ProductoModel): Boolean {
+            return oldItem.id == newItem.id
+        }
 
+        override fun areContentsTheSame(oldItem: ProductoModel, newItem: ProductoModel): Boolean {
+            return oldItem == newItem
+        }
+    }
+
+    inner class BindViewHolder(private val binding: ItemsCatalogoBinding): RecyclerView.ViewHolder(binding.root) {
         fun enlazar(entidad: ProductoModel) {
             binding.tvTitulo.text = entidad.descripcion
             binding.tvPrecio.text = UtilsCommon.formatearDoubleString(entidad.precio)
+
+            binding.ibAgregar.setOnClickListener { iOnClickListener.clickItem(entidad) }
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CaViewHolder {
-        // Pasamos la vista que sera inflada
-        return CaViewHolder(
-            LayoutInflater.from(parent.context).inflate(
-                R.layout.items_catalogo, parent, false
-            )
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BindViewHolder {
+        return BindViewHolder(
+            ItemsCatalogoBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         )
     }
 
-    override fun onBindViewHolder(holder: CaViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: BindViewHolder, position: Int) {
         // Otener cada item de la lista
-        val item = lista[position]
+        val item = getItem(position)
 
         holder.enlazar(item)
-
-        holder.binding.ibAgregar.setOnClickListener {
-            iClickListener.clickItem(item)
-        }
-    }
-
-    override fun getItemCount(): Int {
-        return lista.size
     }
 }

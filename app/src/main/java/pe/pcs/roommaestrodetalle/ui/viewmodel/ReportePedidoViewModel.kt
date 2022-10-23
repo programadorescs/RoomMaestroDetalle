@@ -1,6 +1,5 @@
 package pe.pcs.roommaestrodetalle.ui.viewmodel
 
-import android.os.Message
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

@@ -18,7 +18,7 @@ import pe.pcs.roommaestrodetalle.data.model.ProductoModel
 )
 abstract class AppDatabase: RoomDatabase() {
 
-    // Aqui estara toas las funciones que engloban a las interfaces Dao
+    // Aqui estaran todas las funciones que engloban a las interfaces Dao
 
     abstract fun productoDao() : ProductoDao
 

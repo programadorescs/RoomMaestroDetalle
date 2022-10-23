@@ -16,12 +16,11 @@ class ProductoRepository @Inject constructor(
         return productoDao.getListarPorNombre(dato)
     }
 
-    suspend fun insertar(entity: ProductoModel): Long {
-        return productoDao.insertar(entity)
-    }
-
-    suspend fun actualizar(entity: ProductoModel): Int {
-        return productoDao.actualizar(entity)
+    suspend fun grabar(entity: ProductoModel): Int {
+        return if(entity.id == 0)
+            productoDao.insertar(entity).toInt()
+        else
+            productoDao.actualizar(entity)
     }
 
     suspend fun eliminar(entity: ProductoModel): Int {

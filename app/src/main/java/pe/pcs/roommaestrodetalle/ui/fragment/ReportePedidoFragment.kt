@@ -9,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -23,7 +22,7 @@ import pe.pcs.roommaestrodetalle.ui.adapter.ReportePedidoAdapter
 import pe.pcs.roommaestrodetalle.ui.viewmodel.ReportePedidoViewModel
 
 @AndroidEntryPoint
-class ReportePedidoFragment : Fragment(), ReportePedidoAdapter.IClickListener {
+class ReportePedidoFragment : Fragment(), ReportePedidoAdapter.IOnClickListener {
 
     private lateinit var binding: FragmentReportePedidoBinding
     private val viewModel: ReportePedidoViewModel by activityViewModels()
@@ -41,6 +40,12 @@ class ReportePedidoFragment : Fragment(), ReportePedidoAdapter.IClickListener {
 
         binding.rvLista.layoutManager = LinearLayoutManager(requireContext())
 
+        binding.rvLista.adapter = ReportePedidoAdapter(this)
+
+        viewModel.listaPedido.observe(viewLifecycleOwner) {
+            (binding.rvLista.adapter as ReportePedidoAdapter).submitList(it)
+        }
+
         viewModel.progressBar.observe(viewLifecycleOwner) {
             binding.progressBar.isVisible = it
         }
@@ -53,10 +58,6 @@ class ReportePedidoFragment : Fragment(), ReportePedidoAdapter.IClickListener {
 
                 viewModel.limpiarMsgError()
             }
-        }
-
-        viewModel.listaPedido.observe(viewLifecycleOwner) {
-            binding.rvLista.adapter = ReportePedidoAdapter(it, this)
         }
 
         viewModel.operacionExitosa.observe(viewLifecycleOwner) {

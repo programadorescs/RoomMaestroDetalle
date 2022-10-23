@@ -25,7 +25,7 @@ import pe.pcs.roommaestrodetalle.ui.dialog.CantidadDialog
 import pe.pcs.roommaestrodetalle.ui.viewmodel.PedidoViewModel
 
 @AndroidEntryPoint
-class CatalogoProductoFragment : Fragment(), CatalogoAdapter.IClickListener, CantidadDialog.IEnviarListener {
+class CatalogoProductoFragment : Fragment(), CatalogoAdapter.IOnClickListener, CantidadDialog.IEnviarListener {
 
     private lateinit var binding: FragmentCatalogoProductoBinding
     private val viewModel: PedidoViewModel by activityViewModels()
@@ -43,9 +43,11 @@ class CatalogoProductoFragment : Fragment(), CatalogoAdapter.IClickListener, Can
 
         binding.rvLista.layoutManager = LinearLayoutManager(requireContext())
 
-        viewModel.listaProducto.observe(viewLifecycleOwner, Observer {
-            binding.rvLista.adapter = CatalogoAdapter(it, this)
-        })
+        binding.rvLista.adapter = CatalogoAdapter(this)
+
+        viewModel.listaProducto.observe(viewLifecycleOwner) {
+            (binding.rvLista.adapter as CatalogoAdapter).submitList(it)
+        }
 
         viewModel.progressBar.observe(viewLifecycleOwner, Observer {
             binding.progressBar.isVisible = it
@@ -61,6 +63,11 @@ class CatalogoProductoFragment : Fragment(), CatalogoAdapter.IClickListener, Can
         viewModel.totalItem.observe(viewLifecycleOwner, Observer {
             binding.fabCarrito.text = "Carrito [ ${it} ]"
         })
+
+        binding.tilBuscar.setEndIconOnClickListener {
+            binding.etBuscar.setText("")
+            UtilsCommon.ocultarTeclado(it)
+        }
 
         binding.etBuscar.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}

@@ -1,56 +1,67 @@
 package pe.pcs.roommaestrodetalle.ui.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import pe.pcs.roommaestrodetalle.R
+import pe.pcs.roommaestrodetalle.RoomMaestroDetalleApp
 import pe.pcs.roommaestrodetalle.core.UtilsCommon
 import pe.pcs.roommaestrodetalle.data.model.PedidoModel
 import pe.pcs.roommaestrodetalle.databinding.ItemsPedidoBinding
 
 class ReportePedidoAdapter(
-    private val lista: List<PedidoModel>,
-    private val iClickListener: IClickListener
-): RecyclerView.Adapter<ReportePedidoAdapter.RpaViewHolder>() {
+    private val iOnClickListener: IOnClickListener
+): ListAdapter<PedidoModel, ReportePedidoAdapter.BindViewHolder>(DiffCallback) {
 
-    interface IClickListener {
+    interface IOnClickListener {
         fun clickAnular(entidad: PedidoModel)
         fun clickDetalle(entidad: PedidoModel)
     }
 
-    inner class RpaViewHolder(view: View): RecyclerView.ViewHolder(view) {
-        val binding = ItemsPedidoBinding.bind(view)
+    private object DiffCallback: DiffUtil.ItemCallback<PedidoModel>() {
+        override fun areItemsTheSame(oldItem: PedidoModel, newItem: PedidoModel): Boolean {
+            return oldItem.id == newItem.id
+        }
 
+        override fun areContentsTheSame(oldItem: PedidoModel, newItem: PedidoModel): Boolean {
+            return oldItem == newItem
+        }
+    }
+
+    inner class BindViewHolder(private val binding: ItemsPedidoBinding): RecyclerView.ViewHolder(binding.root) {
         fun enlazar(entidad: PedidoModel) {
             binding.tvTitulo.text = "Pedido: ${entidad.id.toString()}"
             binding.tvFecha.text = entidad.fecha
             binding.tvTotal.text = UtilsCommon.formatearDoubleString(entidad.total)
             binding.tvCliente.text = entidad.cliente
+
+            if (entidad.estado.lowercase() == "anulado")
+                binding.clTitulo.setBackgroundColor(
+                    ContextCompat.getColor(RoomMaestroDetalleApp.getAppContext(), R.color.teal_200)
+                )
+
+            binding.btAnular.setOnClickListener {
+                iOnClickListener.clickAnular(entidad)
+            }
+
+            binding.btDetalle.setOnClickListener {
+                iOnClickListener.clickDetalle(entidad)
+            }
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RpaViewHolder {
-        return RpaViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.items_pedido, parent, false)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BindViewHolder {
+        return BindViewHolder(
+            ItemsPedidoBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         )
     }
 
-    override fun onBindViewHolder(holder: RpaViewHolder, position: Int) {
-        val item = lista[position]
+    override fun onBindViewHolder(holder: BindViewHolder, position: Int) {
+        val item = getItem(position)
 
         holder.enlazar(item)
-
-        holder.binding.btAnular.setOnClickListener {
-            iClickListener.clickAnular(item)
-        }
-
-        holder.binding.btDetalle.setOnClickListener {
-            iClickListener.clickDetalle(item)
-        }
-    }
-
-    override fun getItemCount(): Int {
-        return lista.size
     }
 }

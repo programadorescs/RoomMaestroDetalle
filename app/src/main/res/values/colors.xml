@@ -6,12 +6,20 @@
     <color name="purple_700">#106080</color>
     <color name="teal_200">#6890a0</color>
     <color name="teal_700">#406870</color>
-    -->
+
     <color name="purple_200">#3f6f8c</color>
     <color name="purple_500">#04445f</color>
     <color name="purple_700">#04445f</color>
     <color name="teal_200">#5fcbe6</color>
     <color name="teal_700">#006c84</color>
+    -->
+
+    <!-- <color name="purple_200">#A8DADC</color> -->
+    <color name="purple_200">#457B9D</color>
+    <color name="purple_500">#1D3557</color>
+    <color name="purple_700">#1D3557</color>
+    <color name="teal_200">#ff7071</color>
+    <color name="teal_700">#E63946</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 

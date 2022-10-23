@@ -59,10 +59,7 @@ class ProductoViewModel @Inject constructor(
         viewModelScope.launch {
             val result = withContext(Dispatchers.IO) {
                 try {
-                    val rpta = if(producto.id == 0)
-                        repository.insertar(producto)
-                    else
-                        repository.actualizar(producto)
+                    val rpta = repository.grabar(producto)
 
                     lista.postValue(repository.getListarTodo())
                     rpta.toLong()
