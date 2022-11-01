@@ -2,6 +2,7 @@ package pe.pcs.roommaestrodetalle.data.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.Ignore
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "pedido")
@@ -11,5 +12,6 @@ data class PedidoModel(
     @ColumnInfo(name = "fecha") var fecha: String = "",
     @ColumnInfo(name = "total") var total: Double = 0.0,
     @ColumnInfo(name = "cliente") var cliente: String = "",
-    @ColumnInfo(name = "estado") var estado: String = ""
+    @ColumnInfo(name = "estado") var estado: String = "",
+    @Ignore var detalles: List<DetallePedidoModel>? = null
 )

@@ -31,8 +31,8 @@ class ProductoAdapter(
     inner class BindViewHolder(private val binding: ItemsProductoBinding): RecyclerView.ViewHolder(binding.root) {
         fun enlazar(entidad: ProductoModel) {
             binding.tvTitulo.text = entidad.descripcion
-            binding.tvCosto.text = UtilsCommon.formatearDosDecimales(entidad.costo).toString()
-            binding.tvPrecio.text = UtilsCommon.formatearDosDecimales(entidad.precio).toString()
+            binding.tvCosto.text = UtilsCommon.formatearDoubleString(entidad.costo)
+            binding.tvPrecio.text = UtilsCommon.formatearDoubleString(entidad.precio)
 
             binding.ibEditar.setOnClickListener {
                 iOnClickListener.clickEditar(entidad)
@@ -46,7 +46,6 @@ class ProductoAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BindViewHolder {
         return BindViewHolder(
-            //LayoutInflater.from(parent.context).inflate(R.layout.items_producto, parent, false)
             ItemsProductoBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         )
     }

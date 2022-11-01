@@ -91,12 +91,13 @@ class RegistrarPedidoFragment : Fragment(), CarritoAdapter.IOnClickListener {
         binding.fabCarrito.setOnClickListener {
             UtilsCommon.ocultarTeclado(it)
 
-            if(viewModel.listaCarrito.value!!.isNotEmpty()) {
+            if(!viewModel.listaCarrito.value.isNullOrEmpty()) {
                 val pedido = PedidoModel().apply {
                     fecha = UtilsDate.obtenerFechaActual()
                     total = viewModel.totalImporte.value!!
                     cliente = binding.etCliente.text.toString().trim().ifEmpty { "Publico general" }
                     estado = "vigente"
+                    detalles = viewModel.listaCarrito.value
                 }
 
                 viewModel.registrarPedido(pedido, viewModel.listaCarrito.value!!)

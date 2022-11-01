@@ -60,12 +60,13 @@
                 <ImageButton
                     android:id="@+id/ib_editar"
                     style="@style/Base.Widget.AppCompat.Button.Borderless.Colored"
-                    android:layout_width="40sp"
+                    android:layout_width="48sp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="1dp"
                     android:layout_marginEnd="8dp"
                     android:layout_marginBottom="1dp"
                     android:src="@drawable/ic_edit"
+                    android:contentDescription="@string/contentDescription"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/ib_eliminar"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -73,11 +74,12 @@
                 <ImageButton
                     android:id="@+id/ib_eliminar"
                     style="@style/Base.Widget.AppCompat.Button.Borderless.Colored"
-                    android:layout_width="40sp"
+                    android:layout_width="48sp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="1dp"
                     android:layout_marginEnd="8dp"
                     android:src="@drawable/ic_delete"
+                    android:contentDescription="@string/contentDescription"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -121,7 +123,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
                         android:fontFamily="@font/comfortaa_regular"
-                        android:text="Costo:"
+                        android:text="@string/costo"
                         android:textSize="12sp"
                         android:textStyle="bold" />
 
@@ -133,7 +135,7 @@
                         android:ellipsize="end"
                         android:fontFamily="@font/roboto_condensed_regular"
                         android:maxLines="1"
-                        android:text="Costo"
+                        android:text="@string/costo"
                         android:textSize="14sp"
                         android:textStyle="bold" />
 
@@ -151,7 +153,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
                         android:fontFamily="@font/comfortaa_regular"
-                        android:text="Precio:"
+                        android:text="@string/precio"
                         android:textAlignment="textEnd"
                         android:textSize="12sp"
                         android:textStyle="bold" />
@@ -164,7 +166,7 @@
                         android:ellipsize="end"
                         android:fontFamily="@font/roboto_condensed_regular"
                         android:maxLines="1"
-                        android:text="Precio"
+                        android:text="@string/precio"
                         android:textAlignment="textEnd"
                         android:textSize="14sp"
                         android:textStyle="bold" />

@@ -15,8 +15,12 @@ class PedidoRepository @Inject constructor(
     // Implementamos las funciones suspendidas del dao
     // Estas funciones devolveran listas u objetos
 
-    suspend fun insertarPedido(pedido: PedidoModel, detalle: List<DetallePedidoModel>) {
+    /*suspend fun insertarPedido(pedido: PedidoModel, detalle: List<DetallePedidoModel>) {
         pedidoDao.insertarTransaccion(pedido, detalle)
+    }*/
+
+    suspend fun insertarPedido(pedido: PedidoModel) {
+        pedidoDao.insertarTransaccion(pedido)
     }
 
     suspend fun anularPedido(id: Int) {
@@ -24,7 +28,7 @@ class PedidoRepository @Inject constructor(
     }
 
     suspend fun listarProducto(dato: String): List<ProductoModel> {
-        return productoDao.getListarPorNombre(dato)
+        return productoDao.listarPorDescripcion(dato)
     }
 
     suspend fun listarPedidoPorFecha(desde: String, hasta: String): List<PedidoModel> {

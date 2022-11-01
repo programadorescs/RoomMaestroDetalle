@@ -42,7 +42,7 @@ class CantidadDialog: DialogFragment() {
         binding = CuadroCantidadBinding.inflate(LayoutInflater.from(requireContext()))
 
         binding.etPrecio.inputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL
-        binding.etPrecio.setText(UtilsCommon.formatearDosDecimales(precio).toString())
+        binding.etPrecio.setText(UtilsCommon.formatearDoubleString(precio))
 
         binding.ibMenos.setOnClickListener {
             if(cantidad > 1){
@@ -64,11 +64,11 @@ class CantidadDialog: DialogFragment() {
 
             setPositiveButton("Aceptar") { dialog, _ ->
                 if(binding.etPrecio.text.isNullOrEmpty()){
-                    binding.etPrecio.setText(UtilsCommon.formatearDosDecimales(precio).toString())
+                    binding.etPrecio.setText(UtilsCommon.formatearDoubleString(precio))
                 }
 
                 if(binding.etPrecio.text.toString().toDouble() == 0.0){
-                    binding.etPrecio.setText(UtilsCommon.formatearDosDecimales(precio).toString())
+                    binding.etPrecio.setText(UtilsCommon.formatearDoubleString(precio))
                 }
 
                 iEnviarListener.enviarItem(binding.tvCantidad.text.toString().toInt(), binding.etPrecio.text.toString().toDouble())

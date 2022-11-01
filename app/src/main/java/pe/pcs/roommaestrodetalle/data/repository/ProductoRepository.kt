@@ -8,12 +8,12 @@ class ProductoRepository @Inject constructor(
     private val productoDao : ProductoDao
 ) {
 
-    suspend fun getListarTodo(): List<ProductoModel> {
-        return productoDao.getListarTodo()
+    suspend fun listarTodo(): List<ProductoModel> {
+        return productoDao.listarTodo()
     }
 
-    suspend fun getListarPorNombre(dato: String): List<ProductoModel> {
-        return productoDao.getListarPorNombre(dato)
+    suspend fun listarPorDescripcion(dato: String): List<ProductoModel> {
+        return productoDao.listarPorDescripcion(dato)
     }
 
     suspend fun grabar(entity: ProductoModel): Int {

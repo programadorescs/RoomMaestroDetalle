@@ -7,10 +7,10 @@ import pe.pcs.roommaestrodetalle.data.model.ProductoModel
 interface ProductoDao {
 
     @Query("SELECT * FROM producto ORDER BY descripcion ASC")
-    suspend fun getListarTodo(): List<ProductoModel>
+    suspend fun listarTodo(): List<ProductoModel>
 
     @Query("SELECT * FROM producto WHERE descripcion LIKE '%' || :dato || '%'")
-    suspend fun getListarPorNombre(dato: String): List<ProductoModel>
+    suspend fun listarPorDescripcion(dato: String): List<ProductoModel>
 
     @Insert
     suspend fun insertar(producto: ProductoModel): Long

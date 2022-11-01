@@ -4,8 +4,6 @@ import android.widget.EditText
 import androidx.fragment.app.FragmentManager
 import com.google.android.material.datepicker.MaterialDatePicker
 import java.text.SimpleDateFormat
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 import java.util.*
 
 object UtilsDate {
@@ -34,16 +32,6 @@ object UtilsDate {
 
     fun obtenerFechaHoraActual(): String {
         return SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ROOT).format(System.currentTimeMillis())
-    }
-
-    fun obtenerFechaActual(): String {
-        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
-        return LocalDateTime.now().format(formatter)
-    }
-
-    fun formatearFecha(fecha: Date): String {
-        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
-        return LocalDateTime.parse(fecha.toString(), formatter).toString()
     }
 
 }

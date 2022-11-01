@@ -20,50 +20,12 @@ object UtilsCommon {
         imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
-    fun limpiarEditTextCheckBox(view: View) {
-        val it: Iterator<View> = view.touchables.iterator()
-        while (it.hasNext()) {
-            val v = it.next()
-            if (v is CheckBox) v.isChecked = false
-            if (v is EditText) v.setText("")
-        }
-    }
-
     fun limpiarEditText(view: View) {
         val it: Iterator<View> = view.touchables.iterator()
         while (it.hasNext()) {
             val v = it.next()
             if (v is EditText) v.setText("")
         }
-    }
-
-    fun padLeftFixed_Three(input: String): String {
-        return if (input.length < 3) "000".substring(input.length) + input else input
-    }
-
-    fun padLeftFixed_Eight(input: String): String {
-        return if (input.length < 8) "00000000".substring(input.length) + input else input
-    }
-
-    fun formatearDecimales(numero: Double, numeroDecimales: Int): Double {
-        return (numero * 10.0.pow(numeroDecimales.toDouble())).roundToLong() / 10.0.pow(numeroDecimales.toDouble())
-    }
-
-    fun redondeoDecimales(numero: Double, numeroDecimales: Int): Double {
-        val redondeado = BigDecimal(numero)
-            .setScale(numeroDecimales, RoundingMode.HALF_UP)
-        return redondeado.toDouble()
-    }
-
-    fun formatearDosDecimales(valor: Double): Double {
-        val formato = DecimalFormat("#0.00")
-
-        val dfs = DecimalFormatSymbols()
-        dfs.decimalSeparator = '.'
-
-        formato.decimalFormatSymbols = dfs
-
-        return formato.format(valor).toDouble()
     }
 
     fun formatearDoubleString(valor: Double): String {

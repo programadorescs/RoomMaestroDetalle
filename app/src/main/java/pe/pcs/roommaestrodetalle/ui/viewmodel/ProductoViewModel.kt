@@ -44,7 +44,7 @@ class ProductoViewModel @Inject constructor(
 
         viewModelScope.launch {
             try {
-                lista.postValue(repository.getListarPorNombre(dato))
+                lista.postValue(repository.listarPorDescripcion(dato))
             } catch (e: Exception) {
                 _msgError.postValue(e.message)
             } finally {
@@ -61,7 +61,7 @@ class ProductoViewModel @Inject constructor(
                 try {
                     val rpta = repository.grabar(producto)
 
-                    lista.postValue(repository.getListarTodo())
+                    lista.postValue(repository.listarTodo())
                     rpta.toLong()
                 } catch (e: Exception) {
                     _msgError.postValue(e.message)
@@ -82,7 +82,7 @@ class ProductoViewModel @Inject constructor(
             val result = withContext(Dispatchers.IO) {
                 try {
                     val rpta = repository.eliminar(producto)
-                    lista.postValue(repository.getListarTodo())
+                    lista.postValue(repository.listarTodo())
                     rpta
                 } catch (e: Exception) {
                     _msgError.postValue(e.message)

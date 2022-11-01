@@ -158,7 +158,8 @@ class PedidoViewModel @Inject constructor(
         viewModelScope.launch {
             val result = withContext(Dispatchers.IO) {
                 try {
-                    repository.insertarPedido(pedido, detallePedido)
+                    //repository.insertarPedido(pedido, detallePedido)
+                    repository.insertarPedido(pedido)
                     true
                 } catch (e: Exception) {
                     _msgError.postValue(e.message)

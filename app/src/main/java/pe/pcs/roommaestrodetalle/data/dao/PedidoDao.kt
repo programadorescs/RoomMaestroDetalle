@@ -18,7 +18,7 @@ interface PedidoDao {
     suspend fun insertarDetallePedido(detallePedidoEntity: DetallePedidoModel): Long
 
     @Transaction
-    suspend fun insertarTransaccion(pedido: PedidoModel, lista: List<DetallePedidoModel>) {
+    suspend fun insertarTransaccion2(pedido: PedidoModel, lista: List<DetallePedidoModel>) {
         val _id = insertarPedido(pedido)
 
         for (i in lista.indices){
@@ -26,6 +26,19 @@ interface PedidoDao {
         }
 
         lista.forEach {
+            insertarDetallePedido(it)
+        }
+    }
+
+    @Transaction
+    suspend fun insertarTransaccion(pedido: PedidoModel) {
+        val _id = insertarPedido(pedido)
+
+        for (i in pedido.detalles!!.indices){
+            pedido.detalles!![i].idpedido = _id.toInt()
+        }
+
+        pedido.detalles!!.forEach {
             insertarDetallePedido(it)
         }
     }
