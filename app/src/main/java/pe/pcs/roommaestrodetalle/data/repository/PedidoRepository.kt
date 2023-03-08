@@ -15,10 +15,6 @@ class PedidoRepository @Inject constructor(
     // Implementamos las funciones suspendidas del dao
     // Estas funciones devolveran listas u objetos
 
-    /*suspend fun insertarPedido(pedido: PedidoModel, detalle: List<DetallePedidoModel>) {
-        pedidoDao.insertarTransaccion(pedido, detalle)
-    }*/
-
     suspend fun insertarPedido(pedido: PedidoModel) {
         pedidoDao.insertarTransaccion(pedido)
     }

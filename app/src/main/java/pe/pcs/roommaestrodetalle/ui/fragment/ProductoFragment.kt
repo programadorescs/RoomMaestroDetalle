@@ -14,7 +14,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import pe.pcs.roommaestrodetalle.R
+import pe.pcs.roommaestrodetalle.core.UtilsCommon
 import pe.pcs.roommaestrodetalle.core.UtilsMessage
+import pe.pcs.roommaestrodetalle.data.ResponseStatus
 import pe.pcs.roommaestrodetalle.data.model.ProductoModel
 import pe.pcs.roommaestrodetalle.databinding.FragmentProductoBinding
 import pe.pcs.roommaestrodetalle.ui.adapter.ProductoAdapter
@@ -45,31 +47,47 @@ class ProductoFragment : Fragment(), ProductoAdapter.IOnClickListener {
              (binding.rvLista.adapter as ProductoAdapter).submitList(it)
         }
 
-        viewModel.progressBar.observe(viewLifecycleOwner) {
-            binding.progressBar.isVisible = it
-        }
-
-        viewModel.msgError.observe(viewLifecycleOwner) {
-            if(!it.isNullOrEmpty()) {
-                UtilsMessage.showAlertOk(
-                    "ERROR", it, requireContext()
-                )
-
-                viewModel.limpiarMsgError()
+        viewModel.status.observe(viewLifecycleOwner) {
+            when(it) {
+                is ResponseStatus.Error -> {
+                    binding.progressBar.isVisible = false
+                    UtilsMessage.showAlertOk(
+                        "ERROR", it.message, requireContext()
+                    )
+                }
+                is ResponseStatus.Loading -> binding.progressBar.isVisible = true
+                is ResponseStatus.Success -> binding.progressBar.isVisible = false
             }
         }
 
-        viewModel.operacionExitosa.observe(viewLifecycleOwner) {
-            if(it) {
-                UtilsMessage.showToast("¡Felicidades, registro anulado correctamente!")
-                viewModel.operacionExitosa.postValue(false)
+        viewModel.statusInt.observe(viewLifecycleOwner) {
+            when(it) {
+                is ResponseStatus.Error -> {
+                    binding.progressBar.isVisible = false
+                    UtilsMessage.showAlertOk(
+                        "ERROR", it.message, requireContext()
+                    )
+                }
+                is ResponseStatus.Loading -> binding.progressBar.isVisible = true
+                is ResponseStatus.Success -> {
+                    binding.progressBar.isVisible = false
+                    if(it.data > 0)
+                        UtilsMessage.showToast("¡Felicidades, registro anulado correctamente!")
+                    else if(it.data != -8)
+                        UtilsMessage.showAlertOk(
+                            "ERROR DESCONOCIDO", "No se puedo realizar la operacion", requireContext()
+                        )
+
+                    it.data = -8
+                }
             }
         }
 
         binding.fabNuevo.setOnClickListener {
             flagRetorno = true
             viewModel.setItemProducto(null)
-            Navigation.findNavController(it).navigate(R.id.action_nav_producto_to_operacionProductoFragment)
+            Navigation.findNavController(it)
+                .navigate(R.id.action_nav_producto_to_operacionProductoFragment)
         }
 
         binding.etBuscar.addTextChangedListener(object : TextWatcher {
@@ -91,11 +109,13 @@ class ProductoFragment : Fragment(), ProductoAdapter.IOnClickListener {
 
         })
 
-        if(viewModel.lista.value == null)
+        if (viewModel.lista.value == null)
             viewModel.listar(binding.etBuscar.text.toString().trim())
     }
 
     override fun clickEliminar(entidad: ProductoModel) {
+        UtilsCommon.ocultarTeclado(requireView())
+
         MaterialAlertDialogBuilder(requireContext()).apply {
             setCancelable(false)
             setTitle("ELIMINAR")
@@ -113,9 +133,11 @@ class ProductoFragment : Fragment(), ProductoAdapter.IOnClickListener {
     }
 
     override fun clickEditar(entidad: ProductoModel) {
+        UtilsCommon.ocultarTeclado(requireView())
         flagRetorno = true
         viewModel.setItemProducto(entidad)
-        Navigation.findNavController(requireView()).navigate(R.id.action_nav_producto_to_operacionProductoFragment)
+        Navigation.findNavController(requireView())
+            .navigate(R.id.action_nav_producto_to_operacionProductoFragment)
     }
 
     companion object {

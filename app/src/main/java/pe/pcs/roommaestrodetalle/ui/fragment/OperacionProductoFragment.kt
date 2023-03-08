@@ -5,11 +5,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import dagger.hilt.android.AndroidEntryPoint
 import pe.pcs.roommaestrodetalle.core.UtilsCommon
 import pe.pcs.roommaestrodetalle.core.UtilsMessage
+import pe.pcs.roommaestrodetalle.data.ResponseStatus
 import pe.pcs.roommaestrodetalle.data.model.ProductoModel
 import pe.pcs.roommaestrodetalle.databinding.FragmentOperacionProductoBinding
 import pe.pcs.roommaestrodetalle.ui.viewmodel.ProductoViewModel
@@ -39,29 +41,35 @@ class OperacionProductoFragment : Fragment() {
             }
         })
 
-        viewModel.msgError.observe(viewLifecycleOwner, Observer {
-            if(!it.isNullOrEmpty()) {
-                UtilsMessage.showAlertOk(
-                    "ERROR",
-                    it,
-                    requireContext()
-                )
+        viewModel.statusInt.observe(viewLifecycleOwner) {
+            when(it) {
+                is ResponseStatus.Loading -> binding.progressBar.isVisible = true
+                is ResponseStatus.Error -> {
+                    binding.progressBar.isVisible = false
+                    UtilsMessage.showAlertOk(
+                        "ERROR", it.message, requireContext()
+                    )
+                }
+                is ResponseStatus.Success -> {
+                    binding.progressBar.isVisible = false
+                    if(it.data > 0) {
+                        UtilsMessage.showToast("¡Felicidades, el registro fue grabado!")
+                        UtilsCommon.limpiarEditText(requireView())
+                        binding.etDescripcion.requestFocus()
+                        viewModel.setItemProducto(null)
+                    } else if(it.data != -8)
+                        UtilsMessage.showAlertOk(
+                            "ERROR DESCONOCIDO", "No se puedo realizar la operacion", requireContext()
+                        )
 
-                viewModel.limpiarMsgError()
+                    it.data = -8
+                }
             }
-        })
-
-        viewModel.operacionExitosa.observe(viewLifecycleOwner, Observer {
-            if(it) {
-                UtilsMessage.showToast("¡Felicidades, el registro fue grabado!")
-                UtilsCommon.limpiarEditText(requireView())
-                binding.etDescripcion.requestFocus()
-                viewModel.operacionExitosa.postValue(false)
-                viewModel.setItemProducto(null)
-            }
-        })
+        }
 
         binding.fabGrabar.setOnClickListener {
+            UtilsCommon.ocultarTeclado(it)
+
             if(binding.etDescripcion.text.toString().isEmpty() ||
                 binding.etCosto.text.toString().isEmpty() ||
                 binding.etPrecio.text.toString().isEmpty()) {

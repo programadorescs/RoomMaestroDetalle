@@ -5,19 +5,18 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import pe.pcs.roommaestrodetalle.data.ResponseStatus
 import pe.pcs.roommaestrodetalle.data.model.ProductoModel
 import pe.pcs.roommaestrodetalle.data.repository.ProductoRepository
 import javax.inject.Inject
 
 @HiltViewModel
 class ProductoViewModel @Inject constructor(
-    private val repository : ProductoRepository
+    private val repository: ProductoRepository
 ) : ViewModel() {
 
-    var lista = MutableLiveData<List<ProductoModel>>()
+    var lista = MutableLiveData<List<ProductoModel>?>()
 
     private var _itemProducto = MutableLiveData<ProductoModel?>()
     val itemProducto: LiveData<ProductoModel?> = _itemProducto
@@ -25,74 +24,56 @@ class ProductoViewModel @Inject constructor(
     private val _progressBar = MutableLiveData<Boolean>()
     var progressBar: LiveData<Boolean> = _progressBar
 
-    private var _msgError = MutableLiveData<String?>()
-    val msgError: LiveData<String?> = _msgError
+    private val _status = MutableLiveData<ResponseStatus<List<ProductoModel>>>()
+    val status: LiveData<ResponseStatus<List<ProductoModel>>> = _status
 
-    var operacionExitosa = MutableLiveData<Boolean>()
+    private val _statusInt = MutableLiveData<ResponseStatus<Int>>()
+    val statusInt: LiveData<ResponseStatus<Int>> = _statusInt
+
 
     // Para el item seleccionado
     fun setItemProducto(item: ProductoModel?) {
         _itemProducto.postValue(item)
     }
 
-    fun limpiarMsgError() {
-        _msgError.postValue("")
+    private fun handleResponseStatus(responseStatus: ResponseStatus<List<ProductoModel>>) {
+        if (responseStatus is ResponseStatus.Success) {
+            lista.value = responseStatus.data
+        }
+
+        _status.value = responseStatus
+    }
+
+    private fun handleResponseStatusInt(responseStatus: ResponseStatus<Int>) {
+        if (responseStatus is ResponseStatus.Success) {
+            _statusInt.value = responseStatus
+        }
+
+        _statusInt.value = responseStatus
     }
 
     fun listar(dato: String) {
-        _progressBar.postValue(true)
-
         viewModelScope.launch {
-            try {
-                lista.postValue(repository.listarPorDescripcion(dato))
-            } catch (e: Exception) {
-                _msgError.postValue(e.message)
-            } finally {
-                _progressBar.postValue(false)
-            }
+            _status.value = ResponseStatus.Loading()
+            handleResponseStatus(repository.listarPorDescripcion(dato))
         }
     }
 
     fun grabar(producto: ProductoModel) {
-        _progressBar.postValue(true)
-
         viewModelScope.launch {
-            val result = withContext(Dispatchers.IO) {
-                try {
-                    val rpta = repository.grabar(producto)
+            _status.value = ResponseStatus.Loading()
 
-                    lista.postValue(repository.listarTodo())
-                    rpta.toLong()
-                } catch (e: Exception) {
-                    _msgError.postValue(e.message)
-                    0
-                } finally {
-                    _progressBar.postValue(false)
-                }
-            }
-
-            operacionExitosa.postValue(result > 0)
+            handleResponseStatusInt(repository.grabar(producto))
+            handleResponseStatus(repository.listarTodo())
         }
     }
 
     fun eliminar(producto: ProductoModel) {
-        _progressBar.postValue(true)
-
         viewModelScope.launch {
-            val result = withContext(Dispatchers.IO) {
-                try {
-                    val rpta = repository.eliminar(producto)
-                    lista.postValue(repository.listarTodo())
-                    rpta
-                } catch (e: Exception) {
-                    _msgError.postValue(e.message)
-                    0
-                } finally {
-                    _progressBar.postValue(false)
-                }
-            }
+            _status.value = ResponseStatus.Loading()
 
-            operacionExitosa.postValue(result > 0)
+            handleResponseStatusInt(repository.eliminar(producto))
+            handleResponseStatus(repository.listarTodo())
         }
     }
 
