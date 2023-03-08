@@ -16,7 +16,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import pe.pcs.roommaestrodetalle.R
 import pe.pcs.roommaestrodetalle.core.UtilsCommon
 import pe.pcs.roommaestrodetalle.core.UtilsMessage
-import pe.pcs.roommaestrodetalle.data.ResponseStatus
+import pe.pcs.roommaestrodetalle.data.EstadoRespuesta
 import pe.pcs.roommaestrodetalle.data.model.ProductoModel
 import pe.pcs.roommaestrodetalle.databinding.FragmentProductoBinding
 import pe.pcs.roommaestrodetalle.ui.adapter.ProductoAdapter
@@ -49,27 +49,27 @@ class ProductoFragment : Fragment(), ProductoAdapter.IOnClickListener {
 
         viewModel.status.observe(viewLifecycleOwner) {
             when(it) {
-                is ResponseStatus.Error -> {
+                is EstadoRespuesta.Error -> {
                     binding.progressBar.isVisible = false
                     UtilsMessage.showAlertOk(
                         "ERROR", it.message, requireContext()
                     )
                 }
-                is ResponseStatus.Loading -> binding.progressBar.isVisible = true
-                is ResponseStatus.Success -> binding.progressBar.isVisible = false
+                is EstadoRespuesta.Loading -> binding.progressBar.isVisible = true
+                is EstadoRespuesta.Success -> binding.progressBar.isVisible = false
             }
         }
 
         viewModel.statusInt.observe(viewLifecycleOwner) {
             when(it) {
-                is ResponseStatus.Error -> {
+                is EstadoRespuesta.Error -> {
                     binding.progressBar.isVisible = false
                     UtilsMessage.showAlertOk(
                         "ERROR", it.message, requireContext()
                     )
                 }
-                is ResponseStatus.Loading -> binding.progressBar.isVisible = true
-                is ResponseStatus.Success -> {
+                is EstadoRespuesta.Loading -> binding.progressBar.isVisible = true
+                is EstadoRespuesta.Success -> {
                     binding.progressBar.isVisible = false
                     if(it.data > 0)
                         UtilsMessage.showToast("¡Felicidades, registro anulado correctamente!")

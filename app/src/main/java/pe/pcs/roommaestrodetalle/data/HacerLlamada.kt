@@ -4,17 +4,17 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.net.UnknownHostException
 
-suspend fun <T> makeCall(
+suspend fun <T> hacerLlamada(
     call: suspend () -> T
-): ResponseStatus<T> {
+): EstadoRespuesta<T> {
     return withContext(Dispatchers.IO) {
         try{
-            ResponseStatus.Success(call())
+            EstadoRespuesta.Success(call())
         } catch (e: UnknownHostException) {
             // UnknownHostException -> Error de internet o red
-            ResponseStatus.Error(e.message.toString())
+            EstadoRespuesta.Error(e.message.toString())
         } catch (e: Exception) {
-            ResponseStatus.Error(e.message.toString())
+            EstadoRespuesta.Error(e.message.toString())
         }
     }
 }
