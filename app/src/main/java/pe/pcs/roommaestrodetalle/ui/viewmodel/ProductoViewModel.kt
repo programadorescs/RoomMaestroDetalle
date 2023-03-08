@@ -21,8 +21,8 @@ class ProductoViewModel @Inject constructor(
     private var _itemProducto = MutableLiveData<ProductoModel?>()
     val itemProducto: LiveData<ProductoModel?> = _itemProducto
 
-    private val _progressBar = MutableLiveData<Boolean>()
-    var progressBar: LiveData<Boolean> = _progressBar
+   /* private val _progressBar = MutableLiveData<Boolean>()
+    var progressBar: LiveData<Boolean> = _progressBar*/
 
     private val _status = MutableLiveData<EstadoRespuesta<List<ProductoModel>>>()
     val status: LiveData<EstadoRespuesta<List<ProductoModel>>> = _status

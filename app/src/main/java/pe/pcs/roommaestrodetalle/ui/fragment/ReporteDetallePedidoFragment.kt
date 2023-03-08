@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import pe.pcs.roommaestrodetalle.core.UtilsCommon
 import pe.pcs.roommaestrodetalle.core.UtilsMessage
+import pe.pcs.roommaestrodetalle.data.EstadoRespuesta
 import pe.pcs.roommaestrodetalle.databinding.FragmentReporteDetallePedidoBinding
 import pe.pcs.roommaestrodetalle.ui.adapter.ReporteDetallePedidoAdapter
 import pe.pcs.roommaestrodetalle.ui.viewmodel.ReportePedidoViewModel
@@ -35,23 +36,22 @@ class ReporteDetallePedidoFragment : Fragment() {
 
         binding.rvLista.layoutManager = LinearLayoutManager(requireContext())
 
-        viewModel.progressBar.observe(viewLifecycleOwner, Observer {
-            binding.progressBar.isVisible = it
-        })
-
-        viewModel.msgError.observe(viewLifecycleOwner, Observer {
-            if(!it.isNullOrEmpty()) {
-                UtilsMessage.showAlertOk(
-                    "ERROR", it, requireContext()
-                )
-
-                viewModel.limpiarMsgError()
-            }
-        })
-
         viewModel.listaDetalle.observe(viewLifecycleOwner, Observer {
-            binding.rvLista.adapter = ReporteDetallePedidoAdapter(it)
+            binding.rvLista.adapter = it?.let { it1 -> ReporteDetallePedidoAdapter(it1) }
         })
+
+        viewModel.statusListaDetalle.observe(viewLifecycleOwner) {
+            when(it) {
+                is EstadoRespuesta.Error -> {
+                    binding.progressBar.isVisible = false
+                    UtilsMessage.showAlertOk(
+                        "ERROR", it.message, requireContext()
+                    )
+                }
+                is EstadoRespuesta.Loading -> binding.progressBar.isVisible = true
+                is EstadoRespuesta.Success -> binding.progressBar.isVisible = false
+            }
+        }
 
         viewModel.itemPedido.observe(viewLifecycleOwner, Observer {
             if(viewModel.itemPedido.value != null) {

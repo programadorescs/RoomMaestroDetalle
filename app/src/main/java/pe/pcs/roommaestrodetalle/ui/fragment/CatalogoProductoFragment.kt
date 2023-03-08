@@ -17,6 +17,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import pe.pcs.roommaestrodetalle.R
 import pe.pcs.roommaestrodetalle.core.UtilsCommon
 import pe.pcs.roommaestrodetalle.core.UtilsMessage
+import pe.pcs.roommaestrodetalle.data.EstadoRespuesta
 import pe.pcs.roommaestrodetalle.data.model.DetallePedidoModel
 import pe.pcs.roommaestrodetalle.data.model.ProductoModel
 import pe.pcs.roommaestrodetalle.databinding.FragmentCatalogoProductoBinding
@@ -49,16 +50,18 @@ class CatalogoProductoFragment : Fragment(), CatalogoAdapter.IOnClickListener, C
             (binding.rvLista.adapter as CatalogoAdapter).submitList(it)
         }
 
-        viewModel.progressBar.observe(viewLifecycleOwner, Observer {
-            binding.progressBar.isVisible = it
-        })
-
-        viewModel.msgError.observe(viewLifecycleOwner, Observer {
-            if(!it.isNullOrEmpty()) {
-                UtilsMessage.showAlertOk("ERROR", it, requireContext())
-                viewModel.limpiarMsgError()
+        viewModel.status.observe(viewLifecycleOwner) {
+            when (it) {
+                is EstadoRespuesta.Error -> {
+                    binding.progressBar.isVisible = false
+                    UtilsMessage.showAlertOk(
+                        "ERROR", it.message, requireContext()
+                    )
+                }
+                is EstadoRespuesta.Loading -> binding.progressBar.isVisible = true
+                is EstadoRespuesta.Success -> binding.progressBar.isVisible = false
             }
-        })
+        }
 
         viewModel.totalItem.observe(viewLifecycleOwner, Observer {
             binding.fabCarrito.text = "Carrito [ ${it} ]"

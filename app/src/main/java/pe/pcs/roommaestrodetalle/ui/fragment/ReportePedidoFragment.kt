@@ -16,6 +16,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import pe.pcs.roommaestrodetalle.R
 import pe.pcs.roommaestrodetalle.core.UtilsDate
 import pe.pcs.roommaestrodetalle.core.UtilsMessage
+import pe.pcs.roommaestrodetalle.data.EstadoRespuesta
 import pe.pcs.roommaestrodetalle.data.model.PedidoModel
 import pe.pcs.roommaestrodetalle.databinding.FragmentReportePedidoBinding
 import pe.pcs.roommaestrodetalle.ui.adapter.ReportePedidoAdapter
@@ -46,24 +47,39 @@ class ReportePedidoFragment : Fragment(), ReportePedidoAdapter.IOnClickListener 
             (binding.rvLista.adapter as ReportePedidoAdapter).submitList(it)
         }
 
-        viewModel.progressBar.observe(viewLifecycleOwner) {
-            binding.progressBar.isVisible = it
-        }
-
-        viewModel.msgError.observe(viewLifecycleOwner) {
-            if(!it.isNullOrEmpty()) {
-                UtilsMessage.showAlertOk(
-                    "ERROR", it, requireContext()
-                )
-
-                viewModel.limpiarMsgError()
+        viewModel.statusListaPedido.observe(viewLifecycleOwner) {
+            when(it) {
+                is EstadoRespuesta.Error -> {
+                    binding.progressBar.isVisible = false
+                    UtilsMessage.showAlertOk(
+                        "ERROR", it.message, requireContext()
+                    )
+                }
+                is EstadoRespuesta.Loading -> binding.progressBar.isVisible = true
+                is EstadoRespuesta.Success -> binding.progressBar.isVisible = false
             }
         }
 
-        viewModel.operacionExitosa.observe(viewLifecycleOwner) {
-            if(it) {
-                UtilsMessage.showToast("¡Felicidades, registro anulado correctamente!")
-                viewModel.operacionExitosa.postValue(false)
+        viewModel.statusInt.observe(viewLifecycleOwner) {
+            when(it) {
+                is EstadoRespuesta.Error -> {
+                    binding.progressBar.isVisible = false
+                    UtilsMessage.showAlertOk(
+                        "ERROR", it.message, requireContext()
+                    )
+                }
+                is EstadoRespuesta.Loading -> binding.progressBar.isVisible = true
+                is EstadoRespuesta.Success -> {
+                    binding.progressBar.isVisible = false
+                    if(it.data > 0)
+                        UtilsMessage.showToast("¡Felicidades, registro anulado correctamente!")
+                    else if(it.data != -8)
+                        UtilsMessage.showAlertOk(
+                            "ERROR DESCONOCIDO", "No se puedo realizar la operacion", requireContext()
+                        )
+
+                    it.data = -8
+                }
             }
         }
 

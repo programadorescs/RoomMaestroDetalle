@@ -5,9 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import pe.pcs.roommaestrodetalle.data.EstadoRespuesta
 import pe.pcs.roommaestrodetalle.data.model.DetallePedidoModel
 import pe.pcs.roommaestrodetalle.data.model.PedidoModel
 import pe.pcs.roommaestrodetalle.data.model.ProductoModel
@@ -19,7 +18,7 @@ class PedidoViewModel @Inject constructor(
     private val repository : PedidoRepository
 ): ViewModel() {
 
-    var listaProducto = MutableLiveData<List<ProductoModel>>()
+    var listaProducto = MutableLiveData<List<ProductoModel>?>()
 
     private var _listaCarrito = MutableLiveData<MutableList<DetallePedidoModel>>()
     var listaCarrito: MutableLiveData<MutableList<DetallePedidoModel>> = _listaCarrito
@@ -33,20 +32,17 @@ class PedidoViewModel @Inject constructor(
     private var _itemProducto = MutableLiveData<ProductoModel?>()
     val itemProducto: LiveData<ProductoModel?> = _itemProducto
 
-    private val _progressBar = MutableLiveData<Boolean>()
-    var progressBar: LiveData<Boolean> = _progressBar
+    /*private val _progressBar = MutableLiveData<Boolean>()
+    var progressBar: LiveData<Boolean> = _progressBar*/
 
-    private var _msgError = MutableLiveData<String?>()
-    val msgError: LiveData<String?> = _msgError
+    private val _status = MutableLiveData<EstadoRespuesta<List<ProductoModel>>>()
+    val status: LiveData<EstadoRespuesta<List<ProductoModel>>> = _status
 
-    var operacionExitosa = MutableLiveData<Boolean>()
+    private val _statusInt = MutableLiveData<EstadoRespuesta<Int>>()
+    val statusInt: LiveData<EstadoRespuesta<Int>> = _statusInt
 
     init {
         _listaCarrito.value = mutableListOf()
-    }
-
-    fun limpiarMsgError() {
-        _msgError.postValue("")
     }
 
     // Para el item seleccionado
@@ -138,38 +134,33 @@ class PedidoViewModel @Inject constructor(
         listaCarrito.postValue(_listaCarrito.value)
     }
 
-    fun listarProducto(dato: String) {
-        _progressBar.postValue(true)
+    private fun handleResponseStatus(responseStatus: EstadoRespuesta<List<ProductoModel>>) {
+        if (responseStatus is EstadoRespuesta.Success) {
+            listaProducto.value = responseStatus.data
+        }
 
+        _status.value = responseStatus
+    }
+
+    private fun handleResponseStatusInt(responseStatus: EstadoRespuesta<Int>) {
+        if (responseStatus is EstadoRespuesta.Success) {
+            _statusInt.value = responseStatus
+        }
+
+        _statusInt.value = responseStatus
+    }
+
+    fun listarProducto(dato: String) {
         viewModelScope.launch {
-            try {
-                listaProducto.postValue(repository.listarProducto(dato))
-            } catch (e: Exception) {
-                _msgError.postValue(e.message)
-            } finally {
-                _progressBar.postValue(false)
-            }
+            _status.value = EstadoRespuesta.Loading()
+            handleResponseStatus(repository.listarProducto(dato))
         }
     }
 
     fun registrarPedido(pedido: PedidoModel, detallePedido: List<DetallePedidoModel>) {
-        _progressBar.postValue(true)
-
         viewModelScope.launch {
-            val result = withContext(Dispatchers.IO) {
-                try {
-                    //repository.insertarPedido(pedido, detallePedido)
-                    repository.insertarPedido(pedido)
-                    true
-                } catch (e: Exception) {
-                    _msgError.postValue(e.message)
-                    false
-                } finally {
-                    _progressBar.postValue(false)
-                }
-            }
-
-            operacionExitosa.postValue(result)
+            _status.value = EstadoRespuesta.Loading()
+            handleResponseStatusInt(repository.insertarPedido(pedido))
         }
     }
 

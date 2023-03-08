@@ -16,6 +16,7 @@ import pe.pcs.roommaestrodetalle.core.UtilsAdmob
 import pe.pcs.roommaestrodetalle.core.UtilsCommon
 import pe.pcs.roommaestrodetalle.core.UtilsDate
 import pe.pcs.roommaestrodetalle.core.UtilsMessage
+import pe.pcs.roommaestrodetalle.data.EstadoRespuesta
 import pe.pcs.roommaestrodetalle.data.model.DetallePedidoModel
 import pe.pcs.roommaestrodetalle.data.model.PedidoModel
 import pe.pcs.roommaestrodetalle.databinding.FragmentRegistrarPedidoBinding
@@ -43,10 +44,6 @@ class RegistrarPedidoFragment : Fragment(), CarritoAdapter.IOnClickListener {
 
         binding.rvLista.adapter = CarritoAdapter(this)
 
-        viewModel.progressBar.observe(viewLifecycleOwner, Observer {
-            binding.progressBar.isVisible = it
-        })
-
         viewModel.listaCarrito.observe(viewLifecycleOwner, Observer {
             (binding.rvLista.adapter as CarritoAdapter).setData(it)
         })
@@ -55,38 +52,47 @@ class RegistrarPedidoFragment : Fragment(), CarritoAdapter.IOnClickListener {
             binding.tvImporte.text = UtilsCommon.formatearDoubleString(it)
         })
 
-        viewModel.msgError.observe(viewLifecycleOwner, Observer {
-            if(!it.isNullOrEmpty()) {
-                UtilsMessage.showAlertOk("ERROR", it, requireContext())
-                viewModel.limpiarMsgError()
-            }
-        })
-
-        viewModel.operacionExitosa.observe(viewLifecycleOwner, Observer {
-            if(!it) return@Observer
-
-            MaterialAlertDialogBuilder(requireContext()).apply {
-                setTitle("CONFORME")
-                setMessage("¡El pedido fue registrado correctamente!")
-                setCancelable(false)
-                setPositiveButton("Aceptar") { dialog, _ ->
-
-                    // Mostrar anuncio
-                    UtilsAdmob.interstitial?.show(requireActivity())
-                    // Carga un nuevo anuncio para el siguiente click
-                    UtilsAdmob.initInterstitial()
-
-                    viewModel.limpiarCarrito()
-                    viewModel.operacionExitosa.postValue(false)
-
-                    binding.etCliente.setText("")
-
-                    Navigation.findNavController(requireView()).popBackStack()
-                    dialog.cancel()
-
+        viewModel.statusInt.observe(viewLifecycleOwner) {
+            when(it) {
+                is EstadoRespuesta.Loading -> binding.progressBar.isVisible = true
+                is EstadoRespuesta.Error -> {
+                    binding.progressBar.isVisible = false
+                    UtilsMessage.showAlertOk(
+                        "ERROR", it.message, requireContext()
+                    )
                 }
-            }.create().show()
-        })
+                is EstadoRespuesta.Success -> {
+                    binding.progressBar.isVisible = false
+                    if(it.data > 0) {
+                        MaterialAlertDialogBuilder(requireContext()).apply {
+                            setTitle("CONFORME")
+                            setMessage("¡El pedido fue registrado correctamente!")
+                            setCancelable(false)
+                            setPositiveButton("Aceptar") { dialog, _ ->
+
+                                // Mostrar anuncio
+                                UtilsAdmob.interstitial?.show(requireActivity())
+                                // Carga un nuevo anuncio para el siguiente click
+                                UtilsAdmob.initInterstitial()
+
+                                viewModel.limpiarCarrito()
+
+                                binding.etCliente.setText("")
+
+                                Navigation.findNavController(requireView()).popBackStack()
+                                dialog.cancel()
+
+                            }
+                        }.create().show()
+                    } else if(it.data != -8)
+                        UtilsMessage.showAlertOk(
+                            "ERROR DESCONOCIDO", "No se puedo realizar la operacion", requireContext()
+                        )
+
+                    it.data = -8
+                }
+            }
+        }
 
         binding.fabCarrito.setOnClickListener {
             UtilsCommon.ocultarTeclado(it)

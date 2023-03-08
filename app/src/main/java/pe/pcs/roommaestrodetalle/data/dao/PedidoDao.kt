@@ -31,7 +31,7 @@ interface PedidoDao {
     }
 
     @Transaction
-    suspend fun insertarTransaccion(pedido: PedidoModel) {
+    suspend fun insertarTransaccion(pedido: PedidoModel): Int {
         val _id = insertarPedido(pedido)
 
         for (i in pedido.detalles!!.indices){
@@ -41,6 +41,8 @@ interface PedidoDao {
         pedido.detalles!!.forEach {
             insertarDetallePedido(it)
         }
+
+        return _id.toInt()
     }
 
     @Query("UPDATE Pedido SET estado='anulado' WHERE id=:id")
