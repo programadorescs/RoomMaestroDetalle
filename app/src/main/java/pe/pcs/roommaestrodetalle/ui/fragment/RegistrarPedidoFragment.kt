@@ -44,13 +44,13 @@ class RegistrarPedidoFragment : Fragment(), CarritoAdapter.IOnClickListener {
 
         binding.rvLista.adapter = CarritoAdapter(this)
 
-        viewModel.listaCarrito.observe(viewLifecycleOwner, Observer {
+        viewModel.listaCarrito.observe(viewLifecycleOwner) {
             (binding.rvLista.adapter as CarritoAdapter).setData(it)
-        })
+        }
 
-        viewModel.totalImporte.observe(viewLifecycleOwner, Observer {
+        viewModel.totalImporte.observe(viewLifecycleOwner) {
             binding.tvImporte.text = UtilsCommon.formatearDoubleString(it)
-        })
+        }
 
         viewModel.statusInt.observe(viewLifecycleOwner) {
             when(it) {
@@ -81,7 +81,6 @@ class RegistrarPedidoFragment : Fragment(), CarritoAdapter.IOnClickListener {
 
                                 Navigation.findNavController(requireView()).popBackStack()
                                 dialog.cancel()
-
                             }
                         }.create().show()
                     } else if(it.data != -8)
@@ -106,7 +105,7 @@ class RegistrarPedidoFragment : Fragment(), CarritoAdapter.IOnClickListener {
                     detalles = viewModel.listaCarrito.value
                 }
 
-                viewModel.registrarPedido(pedido, viewModel.listaCarrito.value!!)
+                viewModel.registrarPedido(pedido)
             } else {
                 UtilsMessage.showAlertOk(
                     "ADVERTENCIA",

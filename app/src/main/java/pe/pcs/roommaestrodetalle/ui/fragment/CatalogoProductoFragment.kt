@@ -10,7 +10,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
@@ -26,7 +25,8 @@ import pe.pcs.roommaestrodetalle.ui.dialog.CantidadDialog
 import pe.pcs.roommaestrodetalle.ui.viewmodel.PedidoViewModel
 
 @AndroidEntryPoint
-class CatalogoProductoFragment : Fragment(), CatalogoAdapter.IOnClickListener, CantidadDialog.IEnviarListener {
+class CatalogoProductoFragment : Fragment(), CatalogoAdapter.IOnClickListener,
+    CantidadDialog.IEnviarListener {
 
     private lateinit var binding: FragmentCatalogoProductoBinding
     private val viewModel: PedidoViewModel by activityViewModels()
@@ -63,9 +63,9 @@ class CatalogoProductoFragment : Fragment(), CatalogoAdapter.IOnClickListener, C
             }
         }
 
-        viewModel.totalItem.observe(viewLifecycleOwner, Observer {
+        viewModel.totalItem.observe(viewLifecycleOwner) {
             binding.fabCarrito.text = "Carrito [ ${it} ]"
-        })
+        }
 
         binding.tilBuscar.setEndIconOnClickListener {
             binding.etBuscar.setText("")
@@ -90,14 +90,19 @@ class CatalogoProductoFragment : Fragment(), CatalogoAdapter.IOnClickListener, C
         binding.fabCarrito.setOnClickListener {
             if (viewModel.listaCarrito.value?.size!! > 0) {
                 flagRetorno = true
-                Navigation.findNavController(it).navigate(R.id.action_nav_home_to_registrarPedidoFragment)
+                Navigation.findNavController(it)
+                    .navigate(R.id.action_nav_home_to_registrarPedidoFragment)
             } else {
-                UtilsMessage.showAlertOk("ADVERTENCIA", "No existe elementos en el carrito", it.context)
+                UtilsMessage.showAlertOk(
+                    "ADVERTENCIA",
+                    "No existe elementos en el carrito",
+                    it.context
+                )
             }
         }
 
         // Muestra la lista
-        if(viewModel.listaProducto.value == null)
+        if (viewModel.listaProducto.value == null)
             viewModel.listarProducto(binding.etBuscar.text.toString().trim())
     }
 
@@ -111,7 +116,7 @@ class CatalogoProductoFragment : Fragment(), CatalogoAdapter.IOnClickListener, C
 
         UtilsCommon.ocultarTeclado(requireView())
 
-        if(!flagCantidad) {
+        if (!flagCantidad) {
             flagCantidad = true
             viewModel.setItemProducto(entidad)
 
@@ -128,17 +133,18 @@ class CatalogoProductoFragment : Fragment(), CatalogoAdapter.IOnClickListener, C
         // Ocurre cada vez que llega un nuevo producto con su cantidad
 
         flagCantidad = false
-        if(cantidad == 0 || precio == 0.0) return
+        if (cantidad == 0 || precio == 0.0) return
 
-        for (det in viewModel.listaCarrito.value!!){
-            if(det.idproducto == viewModel.itemProducto.value?.id){
-                Toast.makeText(context, "Ya existe este elemento en su lista...", Toast.LENGTH_LONG).show()
+        for (det in viewModel.listaCarrito.value!!) {
+            if (det.idproducto == viewModel.itemProducto.value?.id) {
+                Toast.makeText(context, "Ya existe este elemento en su lista...", Toast.LENGTH_LONG)
+                    .show()
                 viewModel.setItemProducto(null)
                 return
             }
         }
 
-        if(viewModel.itemProducto.value == null) return
+        if (viewModel.itemProducto.value == null) return
 
         val entidad = DetallePedidoModel().apply {
             idproducto = viewModel.itemProducto.value!!.id

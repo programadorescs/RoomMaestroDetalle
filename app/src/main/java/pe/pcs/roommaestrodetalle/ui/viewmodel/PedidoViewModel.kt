@@ -32,9 +32,6 @@ class PedidoViewModel @Inject constructor(
     private var _itemProducto = MutableLiveData<ProductoModel?>()
     val itemProducto: LiveData<ProductoModel?> = _itemProducto
 
-    /*private val _progressBar = MutableLiveData<Boolean>()
-    var progressBar: LiveData<Boolean> = _progressBar*/
-
     private val _status = MutableLiveData<EstadoRespuesta<List<ProductoModel>>>()
     val status: LiveData<EstadoRespuesta<List<ProductoModel>>> = _status
 
@@ -157,9 +154,9 @@ class PedidoViewModel @Inject constructor(
         }
     }
 
-    fun registrarPedido(pedido: PedidoModel, detallePedido: List<DetallePedidoModel>) {
+    fun registrarPedido(pedido: PedidoModel) {
         viewModelScope.launch {
-            _status.value = EstadoRespuesta.Loading()
+            _statusInt.value = EstadoRespuesta.Loading()
             handleResponseStatusInt(repository.insertarPedido(pedido))
         }
     }

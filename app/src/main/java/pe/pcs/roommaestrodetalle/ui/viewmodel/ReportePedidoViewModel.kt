@@ -26,9 +26,6 @@ class ReportePedidoViewModel @Inject constructor(
     private val _itemPedido = MutableLiveData<PedidoModel?>()
     val itemPedido: LiveData<PedidoModel?> = _itemPedido
 
-    /*private val _progressBar = MutableLiveData<Boolean>()
-    val progressBar: LiveData<Boolean> = _progressBar*/
-
     private val _statusListaPedido = MutableLiveData<EstadoRespuesta<List<PedidoModel>>>()
     val statusListaPedido: LiveData<EstadoRespuesta<List<PedidoModel>>> = _statusListaPedido
 
@@ -73,7 +70,7 @@ class ReportePedidoViewModel @Inject constructor(
 
     fun anularPedido(id: Int, desde: String, hasta: String) {
         viewModelScope.launch {
-            _statusListaPedido.value = EstadoRespuesta.Loading()
+            _statusInt.value = EstadoRespuesta.Loading()
             handleResponseStatusInt(repository.anularPedido(id))
             handleResponseStatusPedido(repository.listarPedidoPorFecha(desde, hasta))
         }

@@ -21,9 +21,6 @@ class ProductoViewModel @Inject constructor(
     private var _itemProducto = MutableLiveData<ProductoModel?>()
     val itemProducto: LiveData<ProductoModel?> = _itemProducto
 
-   /* private val _progressBar = MutableLiveData<Boolean>()
-    var progressBar: LiveData<Boolean> = _progressBar*/
-
     private val _status = MutableLiveData<EstadoRespuesta<List<ProductoModel>>>()
     val status: LiveData<EstadoRespuesta<List<ProductoModel>>> = _status
 
@@ -61,7 +58,7 @@ class ProductoViewModel @Inject constructor(
 
     fun grabar(producto: ProductoModel) {
         viewModelScope.launch {
-            _status.value = EstadoRespuesta.Loading()
+            _statusInt.value = EstadoRespuesta.Loading()
 
             handleResponseStatusInt(repository.grabar(producto))
             handleResponseStatus(repository.listarTodo())
