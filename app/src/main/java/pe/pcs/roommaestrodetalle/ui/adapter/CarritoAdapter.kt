@@ -1,10 +1,8 @@
 package pe.pcs.roommaestrodetalle.ui.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import pe.pcs.roommaestrodetalle.R
 import pe.pcs.roommaestrodetalle.core.UtilsCommon
 import pe.pcs.roommaestrodetalle.data.model.DetallePedidoModel
 import pe.pcs.roommaestrodetalle.databinding.ItemsCarritoBinding
@@ -18,7 +16,7 @@ class CarritoAdapter(
     interface  IOnClickListener {
         fun clickMas(entidad: DetallePedidoModel)
         fun clickMenos(entidad: DetallePedidoModel)
-        fun clickElimnar(entidad: DetallePedidoModel)
+        fun clickEliminar(entidad: DetallePedidoModel)
     }
 
     inner class BindViewHolder(private val binding: ItemsCarritoBinding): RecyclerView.ViewHolder(binding.root) {
@@ -31,7 +29,7 @@ class CarritoAdapter(
 
             binding.ibMas.setOnClickListener { iOnClickListener.clickMas(entidad) }
             binding.ibMenos.setOnClickListener { iOnClickListener.clickMenos(entidad) }
-            binding.ibEliminar.setOnClickListener { iOnClickListener.clickElimnar(entidad) }
+            binding.ibEliminar.setOnClickListener { iOnClickListener.clickEliminar(entidad) }
         }
     }
 

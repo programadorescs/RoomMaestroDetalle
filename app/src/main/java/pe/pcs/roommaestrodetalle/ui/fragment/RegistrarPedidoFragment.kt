@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -125,7 +124,7 @@ class RegistrarPedidoFragment : Fragment(), CarritoAdapter.IOnClickListener {
         viewModel.setDisminuirCantidadProducto(entidad)
     }
 
-    override fun clickElimnar(entidad: DetallePedidoModel) {
+    override fun clickEliminar(entidad: DetallePedidoModel) {
         MaterialAlertDialogBuilder(requireContext()).apply {
             setCancelable(false)
             setTitle("QUITAR")

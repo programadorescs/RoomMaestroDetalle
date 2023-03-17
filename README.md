@@ -1,5 +1,5 @@
 # Maestro-Detalle en Room usando el patrón MVVM e inyección de dependencia con Dagger Hilt
-Este es un ejemplo de implementación de un maestro-detalle usando la biblioteca de persistencia de Android Room, el patrón de arquitectura MVVM (Modelo-Vista-ViewModel) y Dagger Hilt para la inyección de dependencias.
+Este es un ejemplo de implementación de un maestro-detalle usando la biblioteca de persistencia de Android Room, el patrón de arquitectura MVVM (Modelo-Vista-ViewModel) y Dagger Hilt para la inyección de dependencias. Adicionalmente usaremos Google AdMob para mostrar anuncios intersticiales.
 
 ## Características
 
@@ -70,7 +70,7 @@ La interfaz de usuario se encuentra en el paquete **ui**. Se utiliza un Recycler
 ### Confirmación del pedido
 ![Image text](https://github.com/programadorescs/RoomMaestroDetalle/blob/master/app/src/main/assets/Screenshot_20230309_104446_pe.pcs.roommaestrodetalle.jpg)
 
-### Muestra la publicidad Admod
+### Muestra la publicidad de Google Admob
 ![Image text](https://github.com/programadorescs/RoomMaestroDetalle/blob/master/app/src/main/assets/Screenshot_20230309_104453_pe.pcs.roommaestrodetalle.jpg)
 
 ### Registro o actualizacion de un producto
@@ -79,7 +79,7 @@ La interfaz de usuario se encuentra en el paquete **ui**. Se utiliza un Recycler
 ### Lista de productos
 ![Image text](https://github.com/programadorescs/RoomMaestroDetalle/blob/master/app/src/main/assets/Screenshot_20230309_104543_pe.pcs.roommaestrodetalle.jpg)
 
-### Reporte de pedidos segun fechas
+### Reporte de pedidos según fechas
 ![Image text](https://github.com/programadorescs/RoomMaestroDetalle/blob/master/app/src/main/assets/Screenshot_20230309_104735_pe.pcs.roommaestrodetalle.jpg)
 
 ### Muestra el detalle de un pedido realizado

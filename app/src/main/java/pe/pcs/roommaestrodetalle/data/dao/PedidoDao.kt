@@ -18,19 +18,6 @@ interface PedidoDao {
     suspend fun insertarDetallePedido(detallePedidoEntity: DetallePedidoModel): Long
 
     @Transaction
-    suspend fun insertarTransaccion2(pedido: PedidoModel, lista: List<DetallePedidoModel>) {
-        val _id = insertarPedido(pedido)
-
-        for (i in lista.indices){
-            lista[i].idpedido = _id.toInt()
-        }
-
-        lista.forEach {
-            insertarDetallePedido(it)
-        }
-    }
-
-    @Transaction
     suspend fun insertarTransaccion(pedido: PedidoModel): Int {
         val _id = insertarPedido(pedido)
 
