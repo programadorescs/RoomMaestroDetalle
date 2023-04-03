@@ -51,9 +51,13 @@ class ProductoFragment : Fragment(), ProductoAdapter.IOnClickListener {
             when(it) {
                 is EstadoRespuesta.Error -> {
                     binding.progressBar.isVisible = false
-                    UtilsMessage.showAlertOk(
-                        "ERROR", it.message, requireContext()
-                    )
+
+                    if(it.message.isNotEmpty())
+                        UtilsMessage.showAlertOk(
+                            "ERROR", it.message, requireContext()
+                        )
+
+                    it.message = ""
                 }
                 is EstadoRespuesta.Loading -> binding.progressBar.isVisible = true
                 is EstadoRespuesta.Success -> binding.progressBar.isVisible = false
@@ -64,9 +68,13 @@ class ProductoFragment : Fragment(), ProductoAdapter.IOnClickListener {
             when(it) {
                 is EstadoRespuesta.Error -> {
                     binding.progressBar.isVisible = false
-                    UtilsMessage.showAlertOk(
-                        "ERROR", it.message, requireContext()
-                    )
+
+                    if(it.message.isNotEmpty())
+                        UtilsMessage.showAlertOk(
+                            "ERROR", it.message, requireContext()
+                        )
+
+                    it.message = ""
                 }
                 is EstadoRespuesta.Loading -> binding.progressBar.isVisible = true
                 is EstadoRespuesta.Success -> {

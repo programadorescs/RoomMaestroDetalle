@@ -46,6 +46,7 @@
             android:id="@+id/action_nav_reporte_pedido_to_reporteDetallePedidoFragment"
             app:destination="@id/reporteDetallePedidoFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/reporteDetallePedidoFragment"
         android:name="pe.pcs.roommaestrodetalle.ui.fragment.ReporteDetallePedidoFragment"

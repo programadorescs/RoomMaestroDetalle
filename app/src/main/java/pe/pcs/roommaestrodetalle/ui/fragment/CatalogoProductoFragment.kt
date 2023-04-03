@@ -7,7 +7,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
@@ -17,7 +16,6 @@ import pe.pcs.roommaestrodetalle.R
 import pe.pcs.roommaestrodetalle.core.UtilsCommon
 import pe.pcs.roommaestrodetalle.core.UtilsMessage
 import pe.pcs.roommaestrodetalle.data.EstadoRespuesta
-import pe.pcs.roommaestrodetalle.data.model.DetallePedidoModel
 import pe.pcs.roommaestrodetalle.data.model.ProductoModel
 import pe.pcs.roommaestrodetalle.databinding.FragmentCatalogoProductoBinding
 import pe.pcs.roommaestrodetalle.ui.adapter.CatalogoAdapter
@@ -54,9 +52,13 @@ class CatalogoProductoFragment : Fragment(), CatalogoAdapter.IOnClickListener,
             when (it) {
                 is EstadoRespuesta.Error -> {
                     binding.progressBar.isVisible = false
-                    UtilsMessage.showAlertOk(
-                        "ERROR", it.message, requireContext()
-                    )
+
+                    if(it.message.isNotEmpty())
+                        UtilsMessage.showAlertOk(
+                            "ERROR", it.message, requireContext()
+                        )
+
+                    it.message = ""
                 }
                 is EstadoRespuesta.Loading -> binding.progressBar.isVisible = true
                 is EstadoRespuesta.Success -> binding.progressBar.isVisible = false
@@ -65,6 +67,13 @@ class CatalogoProductoFragment : Fragment(), CatalogoAdapter.IOnClickListener,
 
         viewModel.totalItem.observe(viewLifecycleOwner) {
             binding.fabCarrito.text = "Carrito [ ${it} ]"
+        }
+
+        viewModel.mensaje.observe(viewLifecycleOwner) {
+            if(it.isEmpty()) return@observe
+
+            UtilsMessage.showToast(it)
+            viewModel.setLimpiarMensaje()
         }
 
         binding.tilBuscar.setEndIconOnClickListener {
@@ -133,28 +142,8 @@ class CatalogoProductoFragment : Fragment(), CatalogoAdapter.IOnClickListener,
         // Ocurre cada vez que llega un nuevo producto con su cantidad
 
         flagCantidad = false
-        if (cantidad == 0 || precio == 0.0) return
 
-        for (det in viewModel.listaCarrito.value!!) {
-            if (det.idproducto == viewModel.itemProducto.value?.id) {
-                Toast.makeText(context, "Ya existe este elemento en su lista...", Toast.LENGTH_LONG)
-                    .show()
-                viewModel.setItemProducto(null)
-                return
-            }
-        }
+        viewModel.agregarProductoCarrito(cantidad, precio)
 
-        if (viewModel.itemProducto.value == null) return
-
-        val entidad = DetallePedidoModel().apply {
-            idproducto = viewModel.itemProducto.value!!.id
-            this.descripcion = viewModel.itemProducto.value!!.descripcion
-            this.cantidad = cantidad
-            this.precio = precio
-            this.importe = cantidad * precio
-        }
-
-        viewModel.agregarProductoCarrito(entidad)
-        viewModel.setItemProducto(null)
     }
 }

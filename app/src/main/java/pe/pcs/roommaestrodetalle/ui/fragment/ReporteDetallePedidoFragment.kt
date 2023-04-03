@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import pe.pcs.roommaestrodetalle.core.UtilsCommon
@@ -36,29 +35,34 @@ class ReporteDetallePedidoFragment : Fragment() {
 
         binding.rvLista.layoutManager = LinearLayoutManager(requireContext())
 
-        viewModel.listaDetalle.observe(viewLifecycleOwner, Observer {
+        viewModel.listaDetalle.observe(viewLifecycleOwner) {
             binding.rvLista.adapter = it?.let { it1 -> ReporteDetallePedidoAdapter(it1) }
-        })
+        }
 
         viewModel.statusListaDetalle.observe(viewLifecycleOwner) {
             when(it) {
                 is EstadoRespuesta.Error -> {
                     binding.progressBar.isVisible = false
-                    UtilsMessage.showAlertOk(
-                        "ERROR", it.message, requireContext()
-                    )
+
+                    if(it.message.isNotEmpty())
+                        UtilsMessage.showAlertOk(
+                            "ERROR", it.message, requireContext()
+                        )
+
+                    it.message = ""
                 }
                 is EstadoRespuesta.Loading -> binding.progressBar.isVisible = true
                 is EstadoRespuesta.Success -> binding.progressBar.isVisible = false
             }
         }
 
-        viewModel.itemPedido.observe(viewLifecycleOwner, Observer {
-            if(viewModel.itemPedido.value != null) {
+        viewModel.itemPedido.observe(viewLifecycleOwner) {
+            if (viewModel.itemPedido.value != null) {
                 binding.tvPedido.text = "Pedido: ${viewModel.itemPedido.value?.id ?: 0}"
-                binding.tvImporte.text = UtilsCommon.formatearDoubleString(viewModel.itemPedido.value?.total ?: 0.0)
+                binding.tvImporte.text =
+                    UtilsCommon.formatearDoubleString(viewModel.itemPedido.value?.total ?: 0.0)
             }
-        })
+        }
 
         viewModel.listarDetalle(viewModel.itemPedido.value?.id ?: 0)
     }

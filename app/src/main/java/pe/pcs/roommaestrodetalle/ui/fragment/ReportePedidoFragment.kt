@@ -51,9 +51,13 @@ class ReportePedidoFragment : Fragment(), ReportePedidoAdapter.IOnClickListener 
             when(it) {
                 is EstadoRespuesta.Error -> {
                     binding.progressBar.isVisible = false
-                    UtilsMessage.showAlertOk(
-                        "ERROR", it.message, requireContext()
-                    )
+
+                    if(it.message.isNotEmpty())
+                        UtilsMessage.showAlertOk(
+                            "ERROR", it.message, requireContext()
+                        )
+
+                    it.message = ""
                 }
                 is EstadoRespuesta.Loading -> binding.progressBar.isVisible = true
                 is EstadoRespuesta.Success -> binding.progressBar.isVisible = false
@@ -64,9 +68,13 @@ class ReportePedidoFragment : Fragment(), ReportePedidoAdapter.IOnClickListener 
             when(it) {
                 is EstadoRespuesta.Error -> {
                     binding.progressBar.isVisible = false
-                    UtilsMessage.showAlertOk(
-                        "ERROR", it.message, requireContext()
-                    )
+
+                    if(it.message.isNotEmpty())
+                        UtilsMessage.showAlertOk(
+                            "ERROR", it.message, requireContext()
+                        )
+
+                    it.message = ""
                 }
                 is EstadoRespuesta.Loading -> binding.progressBar.isVisible = true
                 is EstadoRespuesta.Success -> {
@@ -97,18 +105,7 @@ class ReportePedidoFragment : Fragment(), ReportePedidoAdapter.IOnClickListener 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) { }
 
             override fun afterTextChanged(p0: Editable?) {
-                if(binding.etDesde.text.toString().isNotEmpty() &&
-                    binding.etHasta.text.toString().isNotEmpty()){
-
-                    if(flagRetorno) {
-                        flagRetorno = false
-                    } else {
-                        viewModel.listarPedido(
-                            binding.etDesde.text.toString(),
-                            binding.etHasta.text.toString()
-                        )
-                    }
-                }
+                buscarPorFechas()
             }
         })
 
@@ -118,18 +115,7 @@ class ReportePedidoFragment : Fragment(), ReportePedidoAdapter.IOnClickListener 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) { }
 
             override fun afterTextChanged(p0: Editable?) {
-                if(binding.etDesde.text.toString().isNotEmpty() &&
-                    binding.etHasta.text.toString().isNotEmpty()){
-
-                    if(flagRetorno) {
-                        flagRetorno = false
-                    } else {
-                        viewModel.listarPedido(
-                            binding.etDesde.text.toString(),
-                            binding.etHasta.text.toString()
-                        )
-                    }
-                }
+                buscarPorFechas()
             }
         })
 
@@ -141,6 +127,20 @@ class ReportePedidoFragment : Fragment(), ReportePedidoAdapter.IOnClickListener 
 
     companion object {
         private var flagRetorno = false
+    }
+
+    private fun buscarPorFechas() {
+        if (binding.etDesde.text.toString().isEmpty() &&
+            binding.etHasta.text.toString().isEmpty()
+        ) return
+
+        if(!flagRetorno)
+            viewModel.listarPedido(
+                binding.etDesde.text.toString(),
+                binding.etHasta.text.toString()
+            )
+
+        flagRetorno = false
     }
 
     override fun clickAnular(entidad: PedidoModel) {
