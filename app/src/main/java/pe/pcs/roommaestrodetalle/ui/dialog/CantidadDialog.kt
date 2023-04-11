@@ -39,7 +39,7 @@ class CantidadDialog: DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 
-        binding = CuadroCantidadBinding.inflate(LayoutInflater.from(requireContext()))
+        binding = CuadroCantidadBinding.inflate(onGetLayoutInflater(savedInstanceState))
 
         binding.etPrecio.inputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL
         binding.etPrecio.setText(UtilsCommon.formatearDoubleString(precio))
