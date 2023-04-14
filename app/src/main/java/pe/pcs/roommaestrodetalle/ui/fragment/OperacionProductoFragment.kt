@@ -34,7 +34,7 @@ class OperacionProductoFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.itemProducto.observe(viewLifecycleOwner, Observer {
-            if(it != null) {
+            if (it != null) {
                 binding.etDescripcion.setText(it.descripcion)
                 binding.etCosto.setText(it.costo.toString())
                 binding.etPrecio.setText(it.precio.toString())
@@ -42,12 +42,12 @@ class OperacionProductoFragment : Fragment() {
         })
 
         viewModel.statusInt.observe(viewLifecycleOwner) {
-            when(it) {
+            when (it) {
                 is EstadoRespuesta.Loading -> binding.progressBar.isVisible = true
                 is EstadoRespuesta.Error -> {
                     binding.progressBar.isVisible = false
 
-                    if(it.message.isNotEmpty())
+                    if (it.message.isNotEmpty())
                         UtilsMessage.showAlertOk(
                             "ERROR", it.message, requireContext()
                         )
@@ -56,17 +56,15 @@ class OperacionProductoFragment : Fragment() {
                 }
                 is EstadoRespuesta.Success -> {
                     binding.progressBar.isVisible = false
-                    if(it.data > 0) {
+
+                    if (it.data > 0) {
                         UtilsMessage.showToast("¡Felicidades, el registro fue grabado!")
                         UtilsCommon.limpiarEditText(requireView())
                         binding.etDescripcion.requestFocus()
                         viewModel.setItemProducto(null)
-                    } else if(it.data != -8)
-                        UtilsMessage.showAlertOk(
-                            "ERROR DESCONOCIDO", "No se puedo realizar la operacion", requireContext()
-                        )
+                    }
 
-                    it.data = -8
+                    it.data = 0
                 }
             }
         }
@@ -74,13 +72,15 @@ class OperacionProductoFragment : Fragment() {
         binding.fabGrabar.setOnClickListener {
             UtilsCommon.ocultarTeclado(it)
 
-            if(binding.etDescripcion.text.toString().isEmpty() ||
+            if (binding.etDescripcion.text.toString().isEmpty() ||
                 binding.etCosto.text.toString().isEmpty() ||
-                binding.etPrecio.text.toString().isEmpty()) {
+                binding.etPrecio.text.toString().isEmpty()
+            ) {
                 UtilsMessage.showAlertOk(
                     "ADVERTENCIA",
                     "Todos los datos son requeridos.",
-                requireContext())
+                    requireContext()
+                )
 
                 return@setOnClickListener
             }

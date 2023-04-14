@@ -48,11 +48,11 @@ class ReportePedidoFragment : Fragment(), ReportePedidoAdapter.IOnClickListener 
         }
 
         viewModel.statusListaPedido.observe(viewLifecycleOwner) {
-            when(it) {
+            when (it) {
                 is EstadoRespuesta.Error -> {
                     binding.progressBar.isVisible = false
 
-                    if(it.message.isNotEmpty())
+                    if (it.message.isNotEmpty())
                         UtilsMessage.showAlertOk(
                             "ERROR", it.message, requireContext()
                         )
@@ -65,11 +65,11 @@ class ReportePedidoFragment : Fragment(), ReportePedidoAdapter.IOnClickListener 
         }
 
         viewModel.statusInt.observe(viewLifecycleOwner) {
-            when(it) {
+            when (it) {
                 is EstadoRespuesta.Error -> {
                     binding.progressBar.isVisible = false
 
-                    if(it.message.isNotEmpty())
+                    if (it.message.isNotEmpty())
                         UtilsMessage.showAlertOk(
                             "ERROR", it.message, requireContext()
                         )
@@ -79,14 +79,11 @@ class ReportePedidoFragment : Fragment(), ReportePedidoAdapter.IOnClickListener 
                 is EstadoRespuesta.Loading -> binding.progressBar.isVisible = true
                 is EstadoRespuesta.Success -> {
                     binding.progressBar.isVisible = false
-                    if(it.data > 0)
-                        UtilsMessage.showToast("¡Felicidades, registro anulado correctamente!")
-                    else if(it.data != -8)
-                        UtilsMessage.showAlertOk(
-                            "ERROR DESCONOCIDO", "No se puedo realizar la operacion", requireContext()
-                        )
 
-                    it.data = -8
+                    if (it.data > 0)
+                        UtilsMessage.showToast("¡Felicidades, registro anulado correctamente!")
+
+                    it.data = 0
                 }
             }
         }
@@ -99,10 +96,10 @@ class ReportePedidoFragment : Fragment(), ReportePedidoAdapter.IOnClickListener 
             UtilsDate.mostrarCalendario(binding.etHasta, parentFragmentManager)
         }
 
-        binding.etDesde.addTextChangedListener(object : TextWatcher{
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) { }
+        binding.etDesde.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
 
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) { }
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
 
             override fun afterTextChanged(p0: Editable?) {
                 buscarPorFechas()
@@ -110,16 +107,16 @@ class ReportePedidoFragment : Fragment(), ReportePedidoAdapter.IOnClickListener 
         })
 
         binding.etHasta.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) { }
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
 
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) { }
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
 
             override fun afterTextChanged(p0: Editable?) {
                 buscarPorFechas()
             }
         })
 
-        if(!flagRetorno) {
+        if (!flagRetorno) {
             UtilsDate.mostrarFechaActual(binding.etDesde)
             UtilsDate.mostrarFechaActual(binding.etHasta)
         }
@@ -134,7 +131,7 @@ class ReportePedidoFragment : Fragment(), ReportePedidoAdapter.IOnClickListener 
             binding.etHasta.text.toString().isEmpty()
         ) return
 
-        if(!flagRetorno)
+        if (!flagRetorno)
             viewModel.listarPedido(
                 binding.etDesde.text.toString(),
                 binding.etHasta.text.toString()
@@ -144,7 +141,7 @@ class ReportePedidoFragment : Fragment(), ReportePedidoAdapter.IOnClickListener 
     }
 
     override fun clickAnular(entidad: PedidoModel) {
-        if(entidad.estado.trim().lowercase() == "anulado") {
+        if (entidad.estado.trim().lowercase() == "anulado") {
             UtilsMessage.showToast("El pedido ya esta anulado")
             return
         }
@@ -172,6 +169,7 @@ class ReportePedidoFragment : Fragment(), ReportePedidoAdapter.IOnClickListener 
     override fun clickDetalle(entidad: PedidoModel) {
         flagRetorno = true
         viewModel.setItem(entidad)
-        Navigation.findNavController(requireView()).navigate(R.id.action_nav_reporte_pedido_to_reporteDetallePedidoFragment)
+        Navigation.findNavController(requireView())
+            .navigate(R.id.action_nav_reporte_pedido_to_reporteDetallePedidoFragment)
     }
 }
