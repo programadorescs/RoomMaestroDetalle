@@ -4,15 +4,15 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import pe.pcs.roommaestrodetalle.core.UtilsCommon
-import pe.pcs.roommaestrodetalle.data.model.ReporteDetallePedidoModel
 import pe.pcs.roommaestrodetalle.databinding.ItemsDetallePedidoRealizadoBinding
+import pe.pcs.roommaestrodetalle.domain.model.ReporteDetallePedido
 
 class ReporteDetallePedidoAdapter(
-    private val lista: List<ReporteDetallePedidoModel>
+    private val lista: List<ReporteDetallePedido>
 ): RecyclerView.Adapter<ReporteDetallePedidoAdapter.BindViewHolder>() {
 
     inner class BindViewHolder(private val binding: ItemsDetallePedidoRealizadoBinding): RecyclerView.ViewHolder(binding.root) {
-        fun enlazar(entidad: ReporteDetallePedidoModel) {
+        fun enlazar(entidad: ReporteDetallePedido) {
             binding.tvDescripcion.text = entidad.descripcion
             binding.tvPrecio.text = UtilsCommon.formatearDoubleString(entidad.precio)
             binding.tvCantidad.text = "x ${entidad.cantidad}"

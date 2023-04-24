@@ -4,24 +4,24 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import pe.pcs.roommaestrodetalle.core.UtilsCommon
-import pe.pcs.roommaestrodetalle.data.model.DetallePedidoModel
 import pe.pcs.roommaestrodetalle.databinding.ItemsCarritoBinding
+import pe.pcs.roommaestrodetalle.domain.model.DetallePedido
 
 class CarritoAdapter(
     private val iOnClickListener: IOnClickListener
 ): RecyclerView.Adapter<CarritoAdapter.BindViewHolder>() {
 
-    private var lista: List<DetallePedidoModel> = listOf()
+    private var lista: List<DetallePedido> = listOf()
 
     interface  IOnClickListener {
-        fun clickMas(entidad: DetallePedidoModel)
-        fun clickMenos(entidad: DetallePedidoModel)
-        fun clickEliminar(entidad: DetallePedidoModel)
+        fun clickMas(entidad: DetallePedido)
+        fun clickMenos(entidad: DetallePedido)
+        fun clickEliminar(entidad: DetallePedido)
     }
 
     inner class BindViewHolder(private val binding: ItemsCarritoBinding): RecyclerView.ViewHolder(binding.root) {
 
-        fun enlazar(entidad: DetallePedidoModel) {
+        fun enlazar(entidad: DetallePedido) {
             binding.tvDescripcion.text = entidad.descripcion
             binding.tvCantidad.text = entidad.cantidad.toString()
             binding.tvImporte.text = UtilsCommon.formatearDoubleString(entidad.cantidad * entidad.precio)
@@ -49,7 +49,7 @@ class CarritoAdapter(
         return lista.size
     }
 
-    fun setData(_lista: List<DetallePedidoModel>) {
+    fun setData(_lista: List<DetallePedido>) {
         this.lista = _lista
         notifyDataSetChanged()
     }

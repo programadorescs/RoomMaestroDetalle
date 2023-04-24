@@ -6,67 +6,79 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import pe.pcs.roommaestrodetalle.data.EstadoRespuesta
-import pe.pcs.roommaestrodetalle.data.model.ProductoModel
-import pe.pcs.roommaestrodetalle.data.repository.ProductoRepository
+import pe.pcs.roommaestrodetalle.domain.ResponseStatus
+import pe.pcs.roommaestrodetalle.domain.model.Producto
+import pe.pcs.roommaestrodetalle.domain.usecase.producto.EliminarProductoUseCase
+import pe.pcs.roommaestrodetalle.domain.usecase.producto.ListarProductoUseCase
+import pe.pcs.roommaestrodetalle.domain.usecase.producto.GrabarProductoUseCase
 import javax.inject.Inject
 
 @HiltViewModel
 class ProductoViewModel @Inject constructor(
-    private val repository: ProductoRepository
+    private val listarUseCase: ListarProductoUseCase,
+    private val grabarProductoUseCase: GrabarProductoUseCase,
+    private val eliminarUseCase: EliminarProductoUseCase
 ) : ViewModel() {
 
-    var lista = MutableLiveData<List<ProductoModel>?>()
+    var lista = MutableLiveData<List<Producto>?>()
 
-    private var _itemProducto = MutableLiveData<ProductoModel?>()
-    val itemProducto: LiveData<ProductoModel?> = _itemProducto
+    private var _itemProducto = MutableLiveData<Producto?>()
+    val itemProducto: LiveData<Producto?> = _itemProducto
 
-    private val _status = MutableLiveData<EstadoRespuesta<List<ProductoModel>>>()
-    val status: LiveData<EstadoRespuesta<List<ProductoModel>>> = _status
+    private val _status = MutableLiveData<ResponseStatus<List<Producto>>?>()
+    val status: LiveData<ResponseStatus<List<Producto>>?> = _status
 
-    private val _statusInt = MutableLiveData<EstadoRespuesta<Int>>()
-    val statusInt: LiveData<EstadoRespuesta<Int>> = _statusInt
+    private val _statusInt = MutableLiveData<ResponseStatus<Int>?>()
+    val statusInt: LiveData<ResponseStatus<Int>?> = _statusInt
+
+    fun resetApiResponseStatus() {
+        _status.value = null
+    }
+
+    fun resetApiResponseStatusInt() {
+        _statusInt.value = null
+    }
 
 
     // Para el item seleccionado
-    fun setItemProducto(item: ProductoModel?) {
+    fun setItemProducto(item: Producto?) {
         _itemProducto.postValue(item)
     }
 
-    private fun handleResponseStatus(responseStatus: EstadoRespuesta<List<ProductoModel>>) {
-        if (responseStatus is EstadoRespuesta.Success) {
+    private fun handleResponseStatus(responseStatus: ResponseStatus<List<Producto>>) {
+        if (responseStatus is ResponseStatus.Success) {
             lista.value = responseStatus.data
         }
 
         _status.value = responseStatus
     }
 
-    private fun handleResponseStatusInt(responseStatus: EstadoRespuesta<Int>) {
+    private fun handleResponseStatusInt(responseStatus: ResponseStatus<Int>) {
         _statusInt.value = responseStatus
     }
 
     fun listar(dato: String) {
         viewModelScope.launch {
-            _status.value = EstadoRespuesta.Loading()
-            handleResponseStatus(repository.listarPorDescripcion(dato))
+            _status.value = ResponseStatus.Loading()
+            handleResponseStatus(listarUseCase(dato))
         }
     }
 
-    fun grabar(producto: ProductoModel) {
+    fun grabar(producto: Producto) {
         viewModelScope.launch {
-            _statusInt.value = EstadoRespuesta.Loading()
+            _statusInt.value = ResponseStatus.Loading()
 
-            handleResponseStatusInt(repository.grabar(producto))
-            handleResponseStatus(repository.listarTodo())
+            handleResponseStatusInt(grabarProductoUseCase(producto))
+            handleResponseStatus(listarUseCase(""))
         }
     }
 
-    fun eliminar(producto: ProductoModel) {
+    fun eliminar(producto: Producto) {
         viewModelScope.launch {
-            _status.value = EstadoRespuesta.Loading()
+            _status.value = ResponseStatus.Loading()
 
-            handleResponseStatusInt(repository.eliminar(producto))
-            handleResponseStatus(repository.listarTodo())
+            handleResponseStatusInt(eliminarUseCase(producto))
+            handleResponseStatus(listarUseCase(""))
         }
     }
 

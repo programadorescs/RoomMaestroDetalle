@@ -16,9 +16,9 @@ import dagger.hilt.android.AndroidEntryPoint
 import pe.pcs.roommaestrodetalle.R
 import pe.pcs.roommaestrodetalle.core.UtilsCommon
 import pe.pcs.roommaestrodetalle.core.UtilsMessage
-import pe.pcs.roommaestrodetalle.data.EstadoRespuesta
-import pe.pcs.roommaestrodetalle.data.model.ProductoModel
+import pe.pcs.roommaestrodetalle.domain.ResponseStatus
 import pe.pcs.roommaestrodetalle.databinding.FragmentProductoBinding
+import pe.pcs.roommaestrodetalle.domain.model.Producto
 import pe.pcs.roommaestrodetalle.ui.adapter.ProductoAdapter
 import pe.pcs.roommaestrodetalle.ui.viewmodel.ProductoViewModel
 
@@ -49,7 +49,7 @@ class ProductoFragment : Fragment(), ProductoAdapter.IOnClickListener {
 
         viewModel.status.observe(viewLifecycleOwner) {
             when (it) {
-                is EstadoRespuesta.Error -> {
+                is ResponseStatus.Error -> {
                     binding.progressBar.isVisible = false
 
                     if (it.message.isNotEmpty())
@@ -57,16 +57,18 @@ class ProductoFragment : Fragment(), ProductoAdapter.IOnClickListener {
                             "ERROR", it.message, requireContext()
                         )
 
-                    it.message = ""
+                    viewModel.resetApiResponseStatus()
                 }
-                is EstadoRespuesta.Loading -> binding.progressBar.isVisible = true
-                is EstadoRespuesta.Success -> binding.progressBar.isVisible = false
+
+                is ResponseStatus.Loading -> binding.progressBar.isVisible = true
+                is ResponseStatus.Success -> binding.progressBar.isVisible = false
+                else -> Unit
             }
         }
 
         viewModel.statusInt.observe(viewLifecycleOwner) {
             when (it) {
-                is EstadoRespuesta.Error -> {
+                is ResponseStatus.Error -> {
                     binding.progressBar.isVisible = false
 
                     if (it.message.isNotEmpty())
@@ -74,17 +76,20 @@ class ProductoFragment : Fragment(), ProductoAdapter.IOnClickListener {
                             "ERROR", it.message, requireContext()
                         )
 
-                    it.message = ""
+                    viewModel.resetApiResponseStatusInt()
                 }
-                is EstadoRespuesta.Loading -> binding.progressBar.isVisible = true
-                is EstadoRespuesta.Success -> {
+
+                is ResponseStatus.Loading -> binding.progressBar.isVisible = true
+                is ResponseStatus.Success -> {
                     binding.progressBar.isVisible = false
 
                     if (it.data > 0)
                         UtilsMessage.showToast("¡Felicidades, registro anulado correctamente!")
 
-                    it.data = 0
+                    viewModel.resetApiResponseStatusInt()
                 }
+
+                else -> binding.progressBar.isVisible = false //Unit
             }
         }
 
@@ -118,7 +123,7 @@ class ProductoFragment : Fragment(), ProductoAdapter.IOnClickListener {
             viewModel.listar(binding.etBuscar.text.toString().trim())
     }
 
-    override fun clickEliminar(entidad: ProductoModel) {
+    override fun clickEliminar(entidad: Producto) {
         UtilsCommon.ocultarTeclado(requireView())
 
         MaterialAlertDialogBuilder(requireContext()).apply {
@@ -137,7 +142,7 @@ class ProductoFragment : Fragment(), ProductoAdapter.IOnClickListener {
         }.create().show()
     }
 
-    override fun clickEditar(entidad: ProductoModel) {
+    override fun clickEditar(entidad: Producto) {
         UtilsCommon.ocultarTeclado(requireView())
         flagRetorno = true
         viewModel.setItemProducto(entidad)

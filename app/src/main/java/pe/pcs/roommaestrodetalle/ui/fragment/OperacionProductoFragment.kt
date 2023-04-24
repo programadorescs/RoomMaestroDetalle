@@ -11,9 +11,9 @@ import androidx.lifecycle.Observer
 import dagger.hilt.android.AndroidEntryPoint
 import pe.pcs.roommaestrodetalle.core.UtilsCommon
 import pe.pcs.roommaestrodetalle.core.UtilsMessage
-import pe.pcs.roommaestrodetalle.data.EstadoRespuesta
-import pe.pcs.roommaestrodetalle.data.model.ProductoModel
+import pe.pcs.roommaestrodetalle.domain.ResponseStatus
 import pe.pcs.roommaestrodetalle.databinding.FragmentOperacionProductoBinding
+import pe.pcs.roommaestrodetalle.domain.model.Producto
 import pe.pcs.roommaestrodetalle.ui.viewmodel.ProductoViewModel
 
 @AndroidEntryPoint
@@ -43,8 +43,8 @@ class OperacionProductoFragment : Fragment() {
 
         viewModel.statusInt.observe(viewLifecycleOwner) {
             when (it) {
-                is EstadoRespuesta.Loading -> binding.progressBar.isVisible = true
-                is EstadoRespuesta.Error -> {
+                is ResponseStatus.Loading -> binding.progressBar.isVisible = true
+                is ResponseStatus.Error -> {
                     binding.progressBar.isVisible = false
 
                     if (it.message.isNotEmpty())
@@ -52,9 +52,10 @@ class OperacionProductoFragment : Fragment() {
                             "ERROR", it.message, requireContext()
                         )
 
-                    it.message = ""
+                    viewModel.resetApiResponseStatusInt()
                 }
-                is EstadoRespuesta.Success -> {
+
+                is ResponseStatus.Success -> {
                     binding.progressBar.isVisible = false
 
                     if (it.data > 0) {
@@ -64,8 +65,10 @@ class OperacionProductoFragment : Fragment() {
                         viewModel.setItemProducto(null)
                     }
 
-                    it.data = 0
+                    viewModel.resetApiResponseStatusInt()
                 }
+
+                else -> Unit
             }
         }
 
@@ -85,7 +88,7 @@ class OperacionProductoFragment : Fragment() {
                 return@setOnClickListener
             }
 
-            val entidad = ProductoModel().apply {
+            val entidad = Producto().apply {
                 id = viewModel.itemProducto.value?.id ?: 0
                 descripcion = binding.etDescripcion.text.toString().trim()
                 costo = binding.etCosto.text.toString().toDouble()

@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import pe.pcs.roommaestrodetalle.core.UtilsCommon
 import pe.pcs.roommaestrodetalle.core.UtilsMessage
-import pe.pcs.roommaestrodetalle.data.EstadoRespuesta
+import pe.pcs.roommaestrodetalle.domain.ResponseStatus
 import pe.pcs.roommaestrodetalle.databinding.FragmentReporteDetallePedidoBinding
 import pe.pcs.roommaestrodetalle.ui.adapter.ReporteDetallePedidoAdapter
 import pe.pcs.roommaestrodetalle.ui.viewmodel.ReportePedidoViewModel
@@ -40,19 +40,21 @@ class ReporteDetallePedidoFragment : Fragment() {
         }
 
         viewModel.statusListaDetalle.observe(viewLifecycleOwner) {
-            when(it) {
-                is EstadoRespuesta.Error -> {
+            when (it) {
+                is ResponseStatus.Error -> {
                     binding.progressBar.isVisible = false
 
-                    if(it.message.isNotEmpty())
+                    if (it.message.isNotEmpty())
                         UtilsMessage.showAlertOk(
                             "ERROR", it.message, requireContext()
                         )
 
-                    it.message = ""
+                    viewModel.resetApiResponseStatusDetalle()
                 }
-                is EstadoRespuesta.Loading -> binding.progressBar.isVisible = true
-                is EstadoRespuesta.Success -> binding.progressBar.isVisible = false
+
+                is ResponseStatus.Loading -> binding.progressBar.isVisible = true
+                is ResponseStatus.Success -> binding.progressBar.isVisible = false
+                else -> Unit
             }
         }
 

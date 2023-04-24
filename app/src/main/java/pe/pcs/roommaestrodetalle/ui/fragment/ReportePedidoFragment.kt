@@ -16,9 +16,9 @@ import dagger.hilt.android.AndroidEntryPoint
 import pe.pcs.roommaestrodetalle.R
 import pe.pcs.roommaestrodetalle.core.UtilsDate
 import pe.pcs.roommaestrodetalle.core.UtilsMessage
-import pe.pcs.roommaestrodetalle.data.EstadoRespuesta
-import pe.pcs.roommaestrodetalle.data.model.PedidoModel
+import pe.pcs.roommaestrodetalle.domain.ResponseStatus
 import pe.pcs.roommaestrodetalle.databinding.FragmentReportePedidoBinding
+import pe.pcs.roommaestrodetalle.domain.model.Pedido
 import pe.pcs.roommaestrodetalle.ui.adapter.ReportePedidoAdapter
 import pe.pcs.roommaestrodetalle.ui.viewmodel.ReportePedidoViewModel
 
@@ -49,7 +49,7 @@ class ReportePedidoFragment : Fragment(), ReportePedidoAdapter.IOnClickListener 
 
         viewModel.statusListaPedido.observe(viewLifecycleOwner) {
             when (it) {
-                is EstadoRespuesta.Error -> {
+                is ResponseStatus.Error -> {
                     binding.progressBar.isVisible = false
 
                     if (it.message.isNotEmpty())
@@ -57,16 +57,18 @@ class ReportePedidoFragment : Fragment(), ReportePedidoAdapter.IOnClickListener 
                             "ERROR", it.message, requireContext()
                         )
 
-                    it.message = ""
+                    viewModel.resetApiResponseStatus()
                 }
-                is EstadoRespuesta.Loading -> binding.progressBar.isVisible = true
-                is EstadoRespuesta.Success -> binding.progressBar.isVisible = false
+
+                is ResponseStatus.Loading -> binding.progressBar.isVisible = true
+                is ResponseStatus.Success -> binding.progressBar.isVisible = false
+                else -> Unit
             }
         }
 
         viewModel.statusInt.observe(viewLifecycleOwner) {
             when (it) {
-                is EstadoRespuesta.Error -> {
+                is ResponseStatus.Error -> {
                     binding.progressBar.isVisible = false
 
                     if (it.message.isNotEmpty())
@@ -74,17 +76,20 @@ class ReportePedidoFragment : Fragment(), ReportePedidoAdapter.IOnClickListener 
                             "ERROR", it.message, requireContext()
                         )
 
-                    it.message = ""
+                    viewModel.resetApiResponseStatusInt()
                 }
-                is EstadoRespuesta.Loading -> binding.progressBar.isVisible = true
-                is EstadoRespuesta.Success -> {
+
+                is ResponseStatus.Loading -> binding.progressBar.isVisible = true
+                is ResponseStatus.Success -> {
                     binding.progressBar.isVisible = false
 
                     if (it.data > 0)
                         UtilsMessage.showToast("¡Felicidades, registro anulado correctamente!")
 
-                    it.data = 0
+                    viewModel.resetApiResponseStatusInt()
                 }
+
+                else -> binding.progressBar.isVisible = false //Unit
             }
         }
 
@@ -140,7 +145,7 @@ class ReportePedidoFragment : Fragment(), ReportePedidoAdapter.IOnClickListener 
         flagRetorno = false
     }
 
-    override fun clickAnular(entidad: PedidoModel) {
+    override fun clickAnular(entidad: Pedido) {
         if (entidad.estado.trim().lowercase() == "anulado") {
             UtilsMessage.showToast("El pedido ya esta anulado")
             return
@@ -166,7 +171,7 @@ class ReportePedidoFragment : Fragment(), ReportePedidoAdapter.IOnClickListener 
         }.create().show()
     }
 
-    override fun clickDetalle(entidad: PedidoModel) {
+    override fun clickDetalle(entidad: Pedido) {
         flagRetorno = true
         viewModel.setItem(entidad)
         Navigation.findNavController(requireView())

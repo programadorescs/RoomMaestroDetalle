@@ -6,29 +6,29 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import pe.pcs.roommaestrodetalle.core.UtilsCommon
-import pe.pcs.roommaestrodetalle.data.model.ProductoModel
 import pe.pcs.roommaestrodetalle.databinding.ItemsCatalogoBinding
+import pe.pcs.roommaestrodetalle.domain.model.Producto
 
 class CatalogoAdapter(
     private val iOnClickListener: IOnClickListener
-): ListAdapter<ProductoModel, CatalogoAdapter.BindViewHolder>(DiffCallback) {
+): ListAdapter<Producto, CatalogoAdapter.BindViewHolder>(DiffCallback) {
 
     interface IOnClickListener {
-        fun clickItem(entidad: ProductoModel)
+        fun clickItem(entidad: Producto)
     }
 
-    private object DiffCallback: DiffUtil.ItemCallback<ProductoModel>() {
-        override fun areItemsTheSame(oldItem: ProductoModel, newItem: ProductoModel): Boolean {
+    private object DiffCallback: DiffUtil.ItemCallback<Producto>() {
+        override fun areItemsTheSame(oldItem: Producto, newItem: Producto): Boolean {
             return oldItem.id == newItem.id
         }
 
-        override fun areContentsTheSame(oldItem: ProductoModel, newItem: ProductoModel): Boolean {
+        override fun areContentsTheSame(oldItem: Producto, newItem: Producto): Boolean {
             return oldItem == newItem
         }
     }
 
     inner class BindViewHolder(private val binding: ItemsCatalogoBinding): RecyclerView.ViewHolder(binding.root) {
-        fun enlazar(entidad: ProductoModel) {
+        fun enlazar(entidad: Producto) {
             binding.tvTitulo.text = entidad.descripcion
             binding.tvPrecio.text = UtilsCommon.formatearDoubleString(entidad.precio)
 

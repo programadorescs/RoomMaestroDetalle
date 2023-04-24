@@ -15,9 +15,9 @@ import dagger.hilt.android.AndroidEntryPoint
 import pe.pcs.roommaestrodetalle.R
 import pe.pcs.roommaestrodetalle.core.UtilsCommon
 import pe.pcs.roommaestrodetalle.core.UtilsMessage
-import pe.pcs.roommaestrodetalle.data.EstadoRespuesta
-import pe.pcs.roommaestrodetalle.data.model.ProductoModel
+import pe.pcs.roommaestrodetalle.domain.ResponseStatus
 import pe.pcs.roommaestrodetalle.databinding.FragmentCatalogoProductoBinding
+import pe.pcs.roommaestrodetalle.domain.model.Producto
 import pe.pcs.roommaestrodetalle.ui.adapter.CatalogoAdapter
 import pe.pcs.roommaestrodetalle.ui.dialog.CantidadDialog
 import pe.pcs.roommaestrodetalle.ui.viewmodel.PedidoViewModel
@@ -50,18 +50,20 @@ class CatalogoProductoFragment : Fragment(), CatalogoAdapter.IOnClickListener,
 
         viewModel.status.observe(viewLifecycleOwner) {
             when (it) {
-                is EstadoRespuesta.Error -> {
+                is ResponseStatus.Error -> {
                     binding.progressBar.isVisible = false
 
-                    if(it.message.isNotEmpty())
+                    if (it.message.isNotEmpty())
                         UtilsMessage.showAlertOk(
                             "ERROR", it.message, requireContext()
                         )
 
-                    it.message = ""
+                    viewModel.resetApiResponseStatus()
                 }
-                is EstadoRespuesta.Loading -> binding.progressBar.isVisible = true
-                is EstadoRespuesta.Success -> binding.progressBar.isVisible = false
+
+                is ResponseStatus.Loading -> binding.progressBar.isVisible = true
+                is ResponseStatus.Success -> binding.progressBar.isVisible = false
+                else -> Unit
             }
         }
 
@@ -120,7 +122,7 @@ class CatalogoProductoFragment : Fragment(), CatalogoAdapter.IOnClickListener,
         private var flagCantidad = false
     }
 
-    override fun clickItem(entidad: ProductoModel) {
+    override fun clickItem(entidad: Producto) {
         // Ocurre cuando presione agregar
 
         UtilsCommon.ocultarTeclado(requireView())

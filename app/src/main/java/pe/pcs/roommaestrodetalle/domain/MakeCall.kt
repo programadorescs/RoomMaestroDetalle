@@ -1,20 +1,20 @@
-package pe.pcs.roommaestrodetalle.data
+package pe.pcs.roommaestrodetalle.domain
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.net.UnknownHostException
 
-suspend fun <T> hacerLlamada(
+suspend fun <T> makeCall(
     call: suspend () -> T
-): EstadoRespuesta<T> {
+): ResponseStatus<T> {
     return withContext(Dispatchers.IO) {
         try{
-            EstadoRespuesta.Success(call())
+            ResponseStatus.Success(call())
         } catch (e: UnknownHostException) {
             // UnknownHostException -> Error de internet o red
-            EstadoRespuesta.Error(e.message.toString())
+            ResponseStatus.Error(e.message.toString())
         } catch (e: Exception) {
-            EstadoRespuesta.Error(e.message.toString())
+            ResponseStatus.Error(e.message.toString())
         }
     }
 }

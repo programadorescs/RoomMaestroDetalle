@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.PrimaryKey
+import pe.pcs.roommaestrodetalle.domain.model.Pedido
 
 @Entity(tableName = "pedido")
 data class PedidoModel(
@@ -14,4 +15,15 @@ data class PedidoModel(
     @ColumnInfo(name = "cliente") var cliente: String = "",
     @ColumnInfo(name = "estado") var estado: String = "",
     @Ignore var detalles: List<DetallePedidoModel>? = null
+)
+
+fun Pedido.toDatabase() = PedidoModel(
+    id = id,
+    fecha = fecha,
+    cliente = cliente,
+    estado = estado,
+    total = total,
+    detalles = detalles?.map {
+        it.toDatabase()
+    }
 )

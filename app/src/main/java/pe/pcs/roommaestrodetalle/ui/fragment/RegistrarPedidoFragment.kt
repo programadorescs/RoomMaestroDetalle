@@ -15,10 +15,10 @@ import pe.pcs.roommaestrodetalle.core.UtilsAdmob
 import pe.pcs.roommaestrodetalle.core.UtilsCommon
 import pe.pcs.roommaestrodetalle.core.UtilsDate
 import pe.pcs.roommaestrodetalle.core.UtilsMessage
-import pe.pcs.roommaestrodetalle.data.EstadoRespuesta
-import pe.pcs.roommaestrodetalle.data.model.DetallePedidoModel
-import pe.pcs.roommaestrodetalle.data.model.PedidoModel
+import pe.pcs.roommaestrodetalle.domain.ResponseStatus
 import pe.pcs.roommaestrodetalle.databinding.FragmentRegistrarPedidoBinding
+import pe.pcs.roommaestrodetalle.domain.model.DetallePedido
+import pe.pcs.roommaestrodetalle.domain.model.Pedido
 import pe.pcs.roommaestrodetalle.ui.adapter.CarritoAdapter
 import pe.pcs.roommaestrodetalle.ui.viewmodel.PedidoViewModel
 
@@ -53,8 +53,8 @@ class RegistrarPedidoFragment : Fragment(), CarritoAdapter.IOnClickListener {
 
         viewModel.statusInt.observe(viewLifecycleOwner) {
             when (it) {
-                is EstadoRespuesta.Loading -> binding.progressBar.isVisible = true
-                is EstadoRespuesta.Error -> {
+                is ResponseStatus.Loading -> binding.progressBar.isVisible = true
+                is ResponseStatus.Error -> {
                     binding.progressBar.isVisible = false
 
                     if (it.message.isNotEmpty())
@@ -62,9 +62,10 @@ class RegistrarPedidoFragment : Fragment(), CarritoAdapter.IOnClickListener {
                             "ERROR", it.message, requireContext()
                         )
 
-                    it.message = ""
+                    viewModel.resetApiResponseStatusInt()
                 }
-                is EstadoRespuesta.Success -> {
+
+                is ResponseStatus.Success -> {
                     binding.progressBar.isVisible = false
 
                     if (it.data > 0) {
@@ -89,8 +90,10 @@ class RegistrarPedidoFragment : Fragment(), CarritoAdapter.IOnClickListener {
                         }.create().show()
                     }
 
-                    it.data = 0
+                    viewModel.resetApiResponseStatusInt()
                 }
+
+                else -> Unit
             }
         }
 
@@ -98,7 +101,7 @@ class RegistrarPedidoFragment : Fragment(), CarritoAdapter.IOnClickListener {
             UtilsCommon.ocultarTeclado(it)
 
             if (!viewModel.listaCarrito.value.isNullOrEmpty()) {
-                val pedido = PedidoModel().apply {
+                val pedido = Pedido().apply {
                     fecha = UtilsDate.obtenerFechaActual()
                     total = viewModel.totalImporte.value!!
                     cliente = binding.etCliente.text.toString().trim().ifEmpty { "Publico general" }
@@ -119,15 +122,15 @@ class RegistrarPedidoFragment : Fragment(), CarritoAdapter.IOnClickListener {
         viewModel.listarCarrito()
     }
 
-    override fun clickMas(entidad: DetallePedidoModel) {
+    override fun clickMas(entidad: DetallePedido) {
         viewModel.setAumentarCantidadProducto(entidad)
     }
 
-    override fun clickMenos(entidad: DetallePedidoModel) {
+    override fun clickMenos(entidad: DetallePedido) {
         viewModel.setDisminuirCantidadProducto(entidad)
     }
 
-    override fun clickEliminar(entidad: DetallePedidoModel) {
+    override fun clickEliminar(entidad: DetallePedido) {
         MaterialAlertDialogBuilder(requireContext()).apply {
             setCancelable(false)
             setTitle("QUITAR")
