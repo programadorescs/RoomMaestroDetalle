@@ -23,7 +23,7 @@ Este es un ejemplo de implementación de un maestro-detalle usando la biblioteca
 
 ## Estructura del proyecto
 
-- core: Contiene las clases comunes para la implementación de mensajes, fechas, publicidad (admod) y demas utilidades.
+- core: Contiene las clases comunes para la implementación de mensajes, fechas, publicidad (admob) y demas utilidades.
 - data: Contiene las clases para la implementación de la base de datos y el repositorio.
 - di: Contiene las clases para la configuración de Dagger Hilt.
 - ui: Contiene las clases para la implementación de la interfaz de usuario, incluyendo los Fragments y los ViewModels.
