@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import pe.pcs.roommaestrodetalle.domain.ResponseStatus
+import pe.pcs.roommaestrodetalle.core.ResponseStatus
 import pe.pcs.roommaestrodetalle.domain.model.Producto
 import pe.pcs.roommaestrodetalle.domain.usecase.producto.EliminarProductoUseCase
 import pe.pcs.roommaestrodetalle.domain.usecase.producto.ListarProductoUseCase

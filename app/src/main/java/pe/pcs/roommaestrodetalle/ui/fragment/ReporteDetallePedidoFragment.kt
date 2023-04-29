@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import pe.pcs.roommaestrodetalle.core.UtilsCommon
 import pe.pcs.roommaestrodetalle.core.UtilsMessage
-import pe.pcs.roommaestrodetalle.domain.ResponseStatus
+import pe.pcs.roommaestrodetalle.core.ResponseStatus
 import pe.pcs.roommaestrodetalle.databinding.FragmentReporteDetallePedidoBinding
 import pe.pcs.roommaestrodetalle.ui.adapter.ReporteDetallePedidoAdapter
 import pe.pcs.roommaestrodetalle.ui.viewmodel.ReportePedidoViewModel

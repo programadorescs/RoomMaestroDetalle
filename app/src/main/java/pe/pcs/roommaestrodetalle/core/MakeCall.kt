@@ -1,4 +1,4 @@
-package pe.pcs.roommaestrodetalle.domain
+package pe.pcs.roommaestrodetalle.core
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

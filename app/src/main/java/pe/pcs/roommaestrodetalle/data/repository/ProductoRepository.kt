@@ -7,9 +7,6 @@ import javax.inject.Inject
 class ProductoRepository @Inject constructor(
     private val productoDao : ProductoDao
 ) {
-    suspend fun listarTodo(): List<ProductoModel> {
-        return  productoDao.listarTodo()
-    }
 
     suspend fun listarPorDescripcion(dato: String): List<ProductoModel> {
         return productoDao.listarPorDescripcion(dato)

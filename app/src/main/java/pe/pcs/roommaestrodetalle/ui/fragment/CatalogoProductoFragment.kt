@@ -15,7 +15,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import pe.pcs.roommaestrodetalle.R
 import pe.pcs.roommaestrodetalle.core.UtilsCommon
 import pe.pcs.roommaestrodetalle.core.UtilsMessage
-import pe.pcs.roommaestrodetalle.domain.ResponseStatus
+import pe.pcs.roommaestrodetalle.core.ResponseStatus
 import pe.pcs.roommaestrodetalle.databinding.FragmentCatalogoProductoBinding
 import pe.pcs.roommaestrodetalle.domain.model.Producto
 import pe.pcs.roommaestrodetalle.ui.adapter.CatalogoAdapter

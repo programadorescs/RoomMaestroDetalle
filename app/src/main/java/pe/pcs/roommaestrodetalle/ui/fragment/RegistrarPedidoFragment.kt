@@ -15,7 +15,7 @@ import pe.pcs.roommaestrodetalle.core.UtilsAdmob
 import pe.pcs.roommaestrodetalle.core.UtilsCommon
 import pe.pcs.roommaestrodetalle.core.UtilsDate
 import pe.pcs.roommaestrodetalle.core.UtilsMessage
-import pe.pcs.roommaestrodetalle.domain.ResponseStatus
+import pe.pcs.roommaestrodetalle.core.ResponseStatus
 import pe.pcs.roommaestrodetalle.databinding.FragmentRegistrarPedidoBinding
 import pe.pcs.roommaestrodetalle.domain.model.DetallePedido
 import pe.pcs.roommaestrodetalle.domain.model.Pedido

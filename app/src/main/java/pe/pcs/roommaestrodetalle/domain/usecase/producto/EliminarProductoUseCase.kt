@@ -1,8 +1,8 @@
 package pe.pcs.roommaestrodetalle.domain.usecase.producto
 
 import pe.pcs.roommaestrodetalle.data.model.toDatabase
-import pe.pcs.roommaestrodetalle.domain.ResponseStatus
-import pe.pcs.roommaestrodetalle.domain.makeCall
+import pe.pcs.roommaestrodetalle.core.ResponseStatus
+import pe.pcs.roommaestrodetalle.core.makeCall
 import pe.pcs.roommaestrodetalle.data.repository.ProductoRepository
 import pe.pcs.roommaestrodetalle.domain.model.Producto
 import javax.inject.Inject
