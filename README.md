@@ -11,9 +11,9 @@ Este es un ejemplo de implementación de un maestro-detalle usando la biblioteca
 
 ## Requisitos
 
-- Android Studio Flamingo | 2022.2.1 o superior.
-- Gradle 8.0.0 o superior.
-- Kotlin 1.8.10 o superior.
+- Android Studio Flamingo | 2022.2.1 Patch 1 o superior.
+- Gradle 8.0.1 o superior.
+- Kotlin 1.8.20 o superior.
 
 ## Dependencias
 
