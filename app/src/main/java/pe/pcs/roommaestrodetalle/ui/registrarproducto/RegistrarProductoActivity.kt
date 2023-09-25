@@ -1,4 +1,4 @@
-package pe.pcs.roommaestrodetalle.ui.activity.registrarproducto
+package pe.pcs.roommaestrodetalle.ui.registrarproducto
 
 import android.os.Bundle
 import androidx.activity.viewModels
@@ -32,8 +32,6 @@ class RegistrarProductoActivity : AppCompatActivity() {
         initListeners()
 
         viewModel.obtenerProducto(args.idProducto)
-
-        binding.tvSubtitulo.text = "Producto"
     }
 
     private fun initListeners() {

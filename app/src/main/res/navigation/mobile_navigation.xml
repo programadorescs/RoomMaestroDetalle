@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="pe.pcs.roommaestrodetalle.ui.fragment.CatalogoProductoFragment"
+        android:name="pe.pcs.roommaestrodetalle.ui.registrarpedido.CatalogoProductoFragment"
         android:label="Catalogo de productos"
         tools:layout="@layout/fragment_catalogo_producto" >
         <action
@@ -17,58 +17,55 @@
 
     <fragment
         android:id="@+id/registrarPedidoFragment"
-        android:name="pe.pcs.roommaestrodetalle.ui.fragment.RegistrarPedidoFragment"
+        android:name="pe.pcs.roommaestrodetalle.ui.registrarpedido.RegistrarPedidoFragment"
         android:label="Registrar pedido"
         tools:layout="@layout/fragment_registrar_pedido" />
 
     <fragment
         android:id="@+id/nav_producto"
-        android:name="pe.pcs.roommaestrodetalle.ui.fragment.ProductoFragment"
+        android:name="pe.pcs.roommaestrodetalle.ui.producto.ProductoFragment"
         android:label="@string/menu_producto"
         tools:layout="@layout/fragment_producto" >
-        <action
-            android:id="@+id/action_nav_producto_to_operacionProductoFragment"
-            app:destination="@id/operacionProductoFragment" />
         <action
             android:id="@+id/action_nav_producto_to_registrarProductoActivity"
             app:destination="@id/registrarProductoActivity" />
     </fragment>
 
     <fragment
-        android:id="@+id/operacionProductoFragment"
-        android:name="pe.pcs.roommaestrodetalle.ui.fragment.OperacionProductoFragment"
-        android:label="@string/registrar_actualizar"
-        tools:layout="@layout/fragment_operacion_producto" />
-
-    <fragment
         android:id="@+id/nav_reporte_pedido"
-        android:name="pe.pcs.roommaestrodetalle.ui.fragment.ReportePedidoFragment"
+        android:name="pe.pcs.roommaestrodetalle.ui.reportepedido.ReportePedidoFragment"
         android:label="Reporte de pedidos"
         tools:layout="@layout/fragment_reporte_pedido" >
         <action
-            android:id="@+id/action_nav_reporte_pedido_to_reporteDetallePedidoFragment"
-            app:destination="@id/reporteDetallePedidoFragment" />
+            android:id="@+id/action_nav_reporte_pedido_to_reporteDetallePedidoActivity"
+            app:destination="@id/reporteDetallePedidoActivity" />
     </fragment>
 
     <fragment
-        android:id="@+id/reporteDetallePedidoFragment"
-        android:name="pe.pcs.roommaestrodetalle.ui.fragment.ReporteDetallePedidoFragment"
-        android:label="Detalle del pedido"
-        tools:layout="@layout/fragment_reporte_detalle_pedido" />
-
-    <fragment
         android:id="@+id/nav_acerca_de"
-        android:name="pe.pcs.roommaestrodetalle.ui.fragment.AcercaDeFragment"
+        android:name="pe.pcs.roommaestrodetalle.ui.acercade.AcercaDeFragment"
         android:label="Acerca de"
         tools:layout="@layout/fragment_acerca_de" />
     <activity
         android:id="@+id/registrarProductoActivity"
-        android:name="pe.pcs.roommaestrodetalle.ui.activity.registrarproducto.RegistrarProductoActivity"
+        android:name="pe.pcs.roommaestrodetalle.ui.registrarproducto.RegistrarProductoActivity"
         android:label="@string/registrar_editar"
         tools:layout="@layout/activity_registrar_producto" >
         <argument
             android:name="id_producto"
             app:argType="integer" />
+    </activity>
+    <activity
+        android:id="@+id/reporteDetallePedidoActivity"
+        android:name="pe.pcs.roommaestrodetalle.ui.reportedetallepedido.ReporteDetallePedidoActivity"
+        android:label="@string/detalle_pedido"
+        tools:layout="@layout/activity_reporte_detalle_pedido" >
+        <argument
+            android:name="id_pedido"
+            app:argType="integer" />
+        <argument
+            android:name="tot_importe"
+            app:argType="float" />
     </activity>
 
 </navigation>

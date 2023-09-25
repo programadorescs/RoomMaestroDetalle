@@ -1,4 +1,4 @@
-package pe.pcs.roommaestrodetalle.ui.fragment
+package pe.pcs.roommaestrodetalle.ui.registrarpedido
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -20,7 +20,6 @@ import pe.pcs.roommaestrodetalle.databinding.FragmentRegistrarPedidoBinding
 import pe.pcs.roommaestrodetalle.domain.model.DetallePedido
 import pe.pcs.roommaestrodetalle.domain.model.Pedido
 import pe.pcs.roommaestrodetalle.ui.adapter.CarritoAdapter
-import pe.pcs.roommaestrodetalle.ui.viewmodel.PedidoViewModel
 
 @AndroidEntryPoint
 class RegistrarPedidoFragment : Fragment(), CarritoAdapter.IOnClickListener {
@@ -51,7 +50,7 @@ class RegistrarPedidoFragment : Fragment(), CarritoAdapter.IOnClickListener {
             binding.tvImporte.text = UtilsCommon.formatearDoubleString(it)
         }
 
-        viewModel.statusInt.observe(viewLifecycleOwner) {
+        viewModel.stateRegistrar.observe(viewLifecycleOwner) {
             when (it) {
                 is ResponseStatus.Loading -> binding.progressBar.isVisible = true
                 is ResponseStatus.Error -> {
@@ -61,8 +60,6 @@ class RegistrarPedidoFragment : Fragment(), CarritoAdapter.IOnClickListener {
                         UtilsMessage.showAlertOk(
                             "ERROR", it.message, requireContext()
                         )
-
-                    viewModel.resetApiResponseStatusInt()
                 }
 
                 is ResponseStatus.Success -> {
@@ -80,20 +77,17 @@ class RegistrarPedidoFragment : Fragment(), CarritoAdapter.IOnClickListener {
                                 // Carga un nuevo anuncio para el siguiente click
                                 UtilsAdmob.initInterstitial()
 
-                                viewModel.limpiarCarrito()
-
                                 binding.etCliente.setText("")
+
+                                viewModel.limpiarCarrito()
+                                viewModel.resetStateRegistrar()
 
                                 Navigation.findNavController(requireView()).popBackStack()
                                 dialog.cancel()
                             }
                         }.create().show()
                     }
-
-                    viewModel.resetApiResponseStatusInt()
                 }
-
-                else -> Unit
             }
         }
 
@@ -101,15 +95,15 @@ class RegistrarPedidoFragment : Fragment(), CarritoAdapter.IOnClickListener {
             UtilsCommon.ocultarTeclado(it)
 
             if (!viewModel.listaCarrito.value.isNullOrEmpty()) {
-                val pedido = Pedido().apply {
-                    fecha = UtilsDate.obtenerFechaActual()
-                    total = viewModel.totalImporte.value!!
-                    cliente = binding.etCliente.text.toString().trim().ifEmpty { "Publico general" }
-                    estado = "vigente"
-                    detalles = viewModel.listaCarrito.value!!
-                }
-
-                viewModel.registrarPedido(pedido)
+                viewModel.registrarPedido(
+                    Pedido().apply {
+                        fecha = UtilsDate.obtenerFechaActual()
+                        total = viewModel.totalImporte.value!!
+                        cliente = binding.etCliente.text.toString().trim().ifEmpty { "Publico general" }
+                        estado = "vigente"
+                        detalles = viewModel.listaCarrito.value!!
+                    }
+                )
             } else {
                 UtilsMessage.showAlertOk(
                     "ADVERTENCIA",

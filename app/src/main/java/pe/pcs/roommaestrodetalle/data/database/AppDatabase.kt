@@ -16,11 +16,11 @@ import pe.pcs.roommaestrodetalle.data.entity.ProductoEntity
     version = 1,
     exportSchema = false
 )
-abstract class AppDatabase: RoomDatabase() {
+abstract class AppDatabase : RoomDatabase() {
 
-    // Aqui estaran todas las funciones que engloban a las interfaces Dao
+    // Aqui estaran todas las funciones que engloban a las interface Dao
 
-    abstract fun productoDao() : ProductoDao
+    abstract fun productoDao(): ProductoDao
 
     abstract fun pedidoDao(): PedidoDao
 }

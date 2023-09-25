@@ -11,8 +11,3 @@ plugins {
     // Navegacion segura
     id ("androidx.navigation.safeargs.kotlin") version "2.7.1" apply false
 }
-
-/*
-task clean(type: Delete) {
-    delete rootProject.buildDir
-}*/

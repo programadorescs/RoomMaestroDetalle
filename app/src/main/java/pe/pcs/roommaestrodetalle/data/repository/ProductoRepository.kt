@@ -5,7 +5,7 @@ import pe.pcs.roommaestrodetalle.data.entity.ProductoEntity
 import javax.inject.Inject
 
 class ProductoRepository @Inject constructor(
-    private val productoDao : ProductoDao
+    private val productoDao: ProductoDao
 ) {
 
     suspend fun obtenerProductoPorId(id: Int): ProductoEntity? {
@@ -17,7 +17,7 @@ class ProductoRepository @Inject constructor(
     }
 
     suspend fun grabar(entity: ProductoEntity): Int {
-        return if(entity.id == 0)
+        return if (entity.id == 0)
             productoDao.insertar(entity).toInt()
         else
             productoDao.actualizar(entity)

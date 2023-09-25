@@ -1,32 +1,30 @@
-package pe.pcs.roommaestrodetalle.ui.fragment
+package pe.pcs.roommaestrodetalle.ui.reportepedido
 
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
-import androidx.fragment.app.activityViewModels
-import androidx.navigation.Navigation
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
-import pe.pcs.roommaestrodetalle.R
+import pe.pcs.roommaestrodetalle.core.ResponseStatus
 import pe.pcs.roommaestrodetalle.core.UtilsDate
 import pe.pcs.roommaestrodetalle.core.UtilsMessage
-import pe.pcs.roommaestrodetalle.core.ResponseStatus
 import pe.pcs.roommaestrodetalle.databinding.FragmentReportePedidoBinding
 import pe.pcs.roommaestrodetalle.domain.model.Pedido
 import pe.pcs.roommaestrodetalle.ui.adapter.ReportePedidoAdapter
-import pe.pcs.roommaestrodetalle.ui.viewmodel.ReportePedidoViewModel
 
 @AndroidEntryPoint
 class ReportePedidoFragment : Fragment(), ReportePedidoAdapter.IOnClickListener {
 
     private lateinit var binding: FragmentReportePedidoBinding
-    private val viewModel: ReportePedidoViewModel by activityViewModels()
+    private val viewModel: ReportePedidoViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,7 +45,7 @@ class ReportePedidoFragment : Fragment(), ReportePedidoAdapter.IOnClickListener 
             (binding.rvLista.adapter as ReportePedidoAdapter).submitList(it)
         }
 
-        viewModel.statusListaPedido.observe(viewLifecycleOwner) {
+        viewModel.stateListaPedido.observe(viewLifecycleOwner) {
             when (it) {
                 is ResponseStatus.Error -> {
                     binding.progressBar.isVisible = false
@@ -56,17 +54,14 @@ class ReportePedidoFragment : Fragment(), ReportePedidoAdapter.IOnClickListener 
                         UtilsMessage.showAlertOk(
                             "ERROR", it.message, requireContext()
                         )
-
-                    viewModel.resetApiResponseStatus()
                 }
 
                 is ResponseStatus.Loading -> binding.progressBar.isVisible = true
                 is ResponseStatus.Success -> binding.progressBar.isVisible = false
-                else -> Unit
             }
         }
 
-        viewModel.statusInt.observe(viewLifecycleOwner) {
+        viewModel.stateAnular.observe(viewLifecycleOwner) {
             when (it) {
                 is ResponseStatus.Error -> {
                     binding.progressBar.isVisible = false
@@ -75,8 +70,6 @@ class ReportePedidoFragment : Fragment(), ReportePedidoAdapter.IOnClickListener 
                         UtilsMessage.showAlertOk(
                             "ERROR", it.message, requireContext()
                         )
-
-                    viewModel.resetApiResponseStatusInt()
                 }
 
                 is ResponseStatus.Loading -> binding.progressBar.isVisible = true
@@ -85,11 +78,7 @@ class ReportePedidoFragment : Fragment(), ReportePedidoAdapter.IOnClickListener 
 
                     if (it.data > 0)
                         UtilsMessage.showToast("¡Felicidades, registro anulado correctamente!")
-
-                    viewModel.resetApiResponseStatusInt()
                 }
-
-                else -> binding.progressBar.isVisible = false //Unit
             }
         }
 
@@ -121,14 +110,8 @@ class ReportePedidoFragment : Fragment(), ReportePedidoAdapter.IOnClickListener 
             }
         })
 
-        if (!flagRetorno) {
-            UtilsDate.mostrarFechaActual(binding.etDesde)
-            UtilsDate.mostrarFechaActual(binding.etHasta)
-        }
-    }
-
-    companion object {
-        private var flagRetorno = false
+        UtilsDate.mostrarFechaActual(binding.etDesde)
+        UtilsDate.mostrarFechaActual(binding.etHasta)
     }
 
     private fun buscarPorFechas() {
@@ -136,13 +119,10 @@ class ReportePedidoFragment : Fragment(), ReportePedidoAdapter.IOnClickListener 
             binding.etHasta.text.toString().isEmpty()
         ) return
 
-        if (!flagRetorno)
-            viewModel.listarPedido(
-                binding.etDesde.text.toString(),
-                binding.etHasta.text.toString()
-            )
-
-        flagRetorno = false
+        viewModel.listarPedido(
+            binding.etDesde.text.toString(),
+            binding.etHasta.text.toString()
+        )
     }
 
     override fun clickAnular(entidad: Pedido) {
@@ -172,9 +152,10 @@ class ReportePedidoFragment : Fragment(), ReportePedidoAdapter.IOnClickListener 
     }
 
     override fun clickDetalle(entidad: Pedido) {
-        flagRetorno = true
-        viewModel.setItem(entidad)
-        Navigation.findNavController(requireView())
-            .navigate(R.id.action_nav_reporte_pedido_to_reporteDetallePedidoFragment)
+        findNavController().navigate(
+            ReportePedidoFragmentDirections.actionNavReportePedidoToReporteDetallePedidoActivity(
+                entidad.id, entidad.total.toFloat()
+            )
+        )
     }
 }

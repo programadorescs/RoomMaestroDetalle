@@ -1,4 +1,4 @@
-package pe.pcs.roommaestrodetalle.ui.activity.registrarproducto
+package pe.pcs.roommaestrodetalle.ui.registrarproducto
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

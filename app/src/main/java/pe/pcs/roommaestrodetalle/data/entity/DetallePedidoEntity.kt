@@ -1,9 +1,13 @@
 package pe.pcs.roommaestrodetalle.data.entity
 
-import androidx.room.*
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.ForeignKey
+import androidx.room.PrimaryKey
 import pe.pcs.roommaestrodetalle.domain.model.DetallePedido
 
-@Entity(tableName = "detalle_pedido",
+@Entity(
+    tableName = "detalle_pedido",
     foreignKeys = [
         ForeignKey(
             entity = PedidoEntity::class,
