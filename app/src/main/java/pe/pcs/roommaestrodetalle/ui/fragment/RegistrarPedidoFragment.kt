@@ -1,21 +1,21 @@
 package pe.pcs.roommaestrodetalle.ui.fragment
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
+import pe.pcs.roommaestrodetalle.core.ResponseStatus
 import pe.pcs.roommaestrodetalle.core.UtilsAdmob
 import pe.pcs.roommaestrodetalle.core.UtilsCommon
 import pe.pcs.roommaestrodetalle.core.UtilsDate
 import pe.pcs.roommaestrodetalle.core.UtilsMessage
-import pe.pcs.roommaestrodetalle.core.ResponseStatus
 import pe.pcs.roommaestrodetalle.databinding.FragmentRegistrarPedidoBinding
 import pe.pcs.roommaestrodetalle.domain.model.DetallePedido
 import pe.pcs.roommaestrodetalle.domain.model.Pedido
@@ -106,7 +106,7 @@ class RegistrarPedidoFragment : Fragment(), CarritoAdapter.IOnClickListener {
                     total = viewModel.totalImporte.value!!
                     cliente = binding.etCliente.text.toString().trim().ifEmpty { "Publico general" }
                     estado = "vigente"
-                    detalles = viewModel.listaCarrito.value
+                    detalles = viewModel.listaCarrito.value!!
                 }
 
                 viewModel.registrarPedido(pedido)

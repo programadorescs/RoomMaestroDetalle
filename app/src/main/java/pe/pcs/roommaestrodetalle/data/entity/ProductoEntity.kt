@@ -1,4 +1,4 @@
-package pe.pcs.roommaestrodetalle.data.model
+package pe.pcs.roommaestrodetalle.data.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -10,7 +10,7 @@ import pe.pcs.roommaestrodetalle.domain.model.Producto
     tableName = "producto",
     indices = [Index(value = ["descripcion"], unique = true)]
 )
-data class ProductoModel(
+data class ProductoEntity(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id") var id: Int = 0,
     @ColumnInfo(name = "descripcion") var descripcion: String = "",
@@ -18,7 +18,7 @@ data class ProductoModel(
     @ColumnInfo(name = "precio") var precio: Double = 0.0
 )
 
-fun Producto.toDatabase() = ProductoModel(
+fun Producto.toDatabase() = ProductoEntity(
     id = id,
     descripcion = descripcion,
     costo = costo,

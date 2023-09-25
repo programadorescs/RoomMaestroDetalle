@@ -1,17 +1,16 @@
 package pe.pcs.roommaestrodetalle.ui.fragment
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
 import dagger.hilt.android.AndroidEntryPoint
+import pe.pcs.roommaestrodetalle.core.ResponseStatus
 import pe.pcs.roommaestrodetalle.core.UtilsCommon
 import pe.pcs.roommaestrodetalle.core.UtilsMessage
-import pe.pcs.roommaestrodetalle.core.ResponseStatus
 import pe.pcs.roommaestrodetalle.databinding.FragmentOperacionProductoBinding
 import pe.pcs.roommaestrodetalle.domain.model.Producto
 import pe.pcs.roommaestrodetalle.ui.viewmodel.ProductoViewModel
@@ -33,13 +32,13 @@ class OperacionProductoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.itemProducto.observe(viewLifecycleOwner, Observer {
+        viewModel.itemProducto.observe(viewLifecycleOwner) {
             if (it != null) {
                 binding.etDescripcion.setText(it.descripcion)
                 binding.etCosto.setText(it.costo.toString())
                 binding.etPrecio.setText(it.precio.toString())
             }
-        })
+        }
 
         viewModel.statusInt.observe(viewLifecycleOwner) {
             when (it) {
@@ -51,8 +50,6 @@ class OperacionProductoFragment : Fragment() {
                         UtilsMessage.showAlertOk(
                             "ERROR", it.message, requireContext()
                         )
-
-                    viewModel.resetApiResponseStatusInt()
                 }
 
                 is ResponseStatus.Success -> {
@@ -64,11 +61,7 @@ class OperacionProductoFragment : Fragment() {
                         binding.etDescripcion.requestFocus()
                         viewModel.setItemProducto(null)
                     }
-
-                    viewModel.resetApiResponseStatusInt()
                 }
-
-                else -> Unit
             }
         }
 
@@ -88,14 +81,14 @@ class OperacionProductoFragment : Fragment() {
                 return@setOnClickListener
             }
 
-            val entidad = Producto().apply {
-                id = viewModel.itemProducto.value?.id ?: 0
-                descripcion = binding.etDescripcion.text.toString().trim()
-                costo = binding.etCosto.text.toString().toDouble()
-                precio = binding.etPrecio.text.toString().toDouble()
-            }
-
-            viewModel.grabar(entidad)
+            viewModel.grabar(
+                Producto().apply {
+                    id = viewModel.itemProducto.value?.id ?: 0
+                    descripcion = binding.etDescripcion.text.toString().trim()
+                    costo = binding.etCosto.text.toString().toDouble()
+                    precio = binding.etPrecio.text.toString().toDouble()
+                }
+            )
         }
     }
 }

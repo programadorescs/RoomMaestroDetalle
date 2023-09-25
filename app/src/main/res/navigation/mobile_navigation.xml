@@ -29,6 +29,9 @@
         <action
             android:id="@+id/action_nav_producto_to_operacionProductoFragment"
             app:destination="@id/operacionProductoFragment" />
+        <action
+            android:id="@+id/action_nav_producto_to_registrarProductoActivity"
+            app:destination="@id/registrarProductoActivity" />
     </fragment>
 
     <fragment
@@ -58,5 +61,14 @@
         android:name="pe.pcs.roommaestrodetalle.ui.fragment.AcercaDeFragment"
         android:label="Acerca de"
         tools:layout="@layout/fragment_acerca_de" />
+    <activity
+        android:id="@+id/registrarProductoActivity"
+        android:name="pe.pcs.roommaestrodetalle.ui.activity.registrarproducto.RegistrarProductoActivity"
+        android:label="@string/registrar_editar"
+        tools:layout="@layout/activity_registrar_producto" >
+        <argument
+            android:name="id_producto"
+            app:argType="integer" />
+    </activity>
 
 </navigation>

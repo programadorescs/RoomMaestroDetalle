@@ -4,15 +4,15 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import pe.pcs.roommaestrodetalle.data.dao.PedidoDao
 import pe.pcs.roommaestrodetalle.data.dao.ProductoDao
-import pe.pcs.roommaestrodetalle.data.model.DetallePedidoModel
-import pe.pcs.roommaestrodetalle.data.model.PedidoModel
-import pe.pcs.roommaestrodetalle.data.model.ProductoModel
+import pe.pcs.roommaestrodetalle.data.entity.DetallePedidoEntity
+import pe.pcs.roommaestrodetalle.data.entity.PedidoEntity
+import pe.pcs.roommaestrodetalle.data.entity.ProductoEntity
 
 @Database(
     entities = [
-        ProductoModel::class,
-        PedidoModel::class,
-        DetallePedidoModel::class],
+        ProductoEntity::class,
+        PedidoEntity::class,
+        DetallePedidoEntity::class],
     version = 1,
     exportSchema = false
 )

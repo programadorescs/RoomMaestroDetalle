@@ -1,6 +1,6 @@
-package pe.pcs.roommaestrodetalle.data.model
+package pe.pcs.roommaestrodetalle.data.entity
 
-data class ReporteDetallePedidoModel(
+data class ReporteDetallePedidoEntity(
     var descripcion: String = "",
     var cantidad: Int = 0,
     var precio: Double = 0.0,

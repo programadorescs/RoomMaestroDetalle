@@ -9,8 +9,8 @@ import kotlinx.coroutines.launch
 import pe.pcs.roommaestrodetalle.core.ResponseStatus
 import pe.pcs.roommaestrodetalle.domain.model.Producto
 import pe.pcs.roommaestrodetalle.domain.usecase.producto.EliminarProductoUseCase
-import pe.pcs.roommaestrodetalle.domain.usecase.producto.ListarProductoUseCase
 import pe.pcs.roommaestrodetalle.domain.usecase.producto.GrabarProductoUseCase
+import pe.pcs.roommaestrodetalle.domain.usecase.producto.ListarProductoUseCase
 import javax.inject.Inject
 
 @HiltViewModel
@@ -25,20 +25,11 @@ class ProductoViewModel @Inject constructor(
     private var _itemProducto = MutableLiveData<Producto?>()
     val itemProducto: LiveData<Producto?> = _itemProducto
 
-    private val _status = MutableLiveData<ResponseStatus<List<Producto>>?>()
-    val status: LiveData<ResponseStatus<List<Producto>>?> = _status
+    private val _status = MutableLiveData<ResponseStatus<List<Producto>>>()
+    val status: LiveData<ResponseStatus<List<Producto>>> = _status
 
-    private val _statusInt = MutableLiveData<ResponseStatus<Int>?>()
-    val statusInt: LiveData<ResponseStatus<Int>?> = _statusInt
-
-    fun resetApiResponseStatus() {
-        _status.value = null
-    }
-
-    fun resetApiResponseStatusInt() {
-        _statusInt.value = null
-    }
-
+    private val _statusInt = MutableLiveData<ResponseStatus<Int>>()
+    val statusInt: LiveData<ResponseStatus<Int>> = _statusInt
 
     // Para el item seleccionado
     fun setItemProducto(item: Producto?) {
