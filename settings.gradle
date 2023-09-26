@@ -13,4 +13,4 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "RoomMaestroDetalle"
-include ':app'
+include(":app")

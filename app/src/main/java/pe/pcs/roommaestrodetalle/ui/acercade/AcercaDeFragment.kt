@@ -1,4 +1,4 @@
-package pe.pcs.roommaestrodetalle.ui.fragment
+package pe.pcs.roommaestrodetalle.ui.acercade
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

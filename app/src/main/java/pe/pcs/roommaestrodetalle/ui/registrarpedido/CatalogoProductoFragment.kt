@@ -1,4 +1,4 @@
-package pe.pcs.roommaestrodetalle.ui.fragment
+package pe.pcs.roommaestrodetalle.ui.registrarpedido
 
 import android.os.Bundle
 import android.text.Editable
@@ -20,7 +20,6 @@ import pe.pcs.roommaestrodetalle.databinding.FragmentCatalogoProductoBinding
 import pe.pcs.roommaestrodetalle.domain.model.Producto
 import pe.pcs.roommaestrodetalle.ui.adapter.CatalogoAdapter
 import pe.pcs.roommaestrodetalle.ui.dialog.CantidadDialog
-import pe.pcs.roommaestrodetalle.ui.viewmodel.PedidoViewModel
 
 @AndroidEntryPoint
 class CatalogoProductoFragment : Fragment(), CatalogoAdapter.IOnClickListener,
@@ -40,15 +39,16 @@ class CatalogoProductoFragment : Fragment(), CatalogoAdapter.IOnClickListener,
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.rvLista.layoutManager = LinearLayoutManager(requireContext())
-
-        binding.rvLista.adapter = CatalogoAdapter(this)
+        binding.rvLista.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = CatalogoAdapter(this@CatalogoProductoFragment)
+        }
 
         viewModel.listaProducto.observe(viewLifecycleOwner) {
             (binding.rvLista.adapter as CatalogoAdapter).submitList(it)
         }
 
-        viewModel.status.observe(viewLifecycleOwner) {
+        viewModel.stateListaProducto.observe(viewLifecycleOwner) {
             when (it) {
                 is ResponseStatus.Error -> {
                     binding.progressBar.isVisible = false
@@ -57,13 +57,10 @@ class CatalogoProductoFragment : Fragment(), CatalogoAdapter.IOnClickListener,
                         UtilsMessage.showAlertOk(
                             "ERROR", it.message, requireContext()
                         )
-
-                    viewModel.resetApiResponseStatus()
                 }
 
                 is ResponseStatus.Loading -> binding.progressBar.isVisible = true
                 is ResponseStatus.Success -> binding.progressBar.isVisible = false
-                else -> Unit
             }
         }
 

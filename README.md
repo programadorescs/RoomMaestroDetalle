@@ -11,14 +11,15 @@ Este es un ejemplo de implementación de un maestro-detalle usando la biblioteca
 
 ## Requisitos
 
-- Android Studio Flamingo | 2022.2.1 Patch 2 o superior.
-- Gradle 8.0.2 o superior.
-- Kotlin 1.8.20 o superior.
+- Android Studio Giraffe | 2022.3.1 Patch 1 o superior.
+- Android Gradle Plugin Version 8.1.1
+- Gradle Version 8.0.
+- Kotlin 1.9.10 o superior.
 
 ## Dependencias
 
 - Room: Para la implementación de la base de datos.
-- ViewModel y LiveData: Para la implementación del patrón MVVM.
+- ViewModel, LiveData y StateFlow: Para la implementación del patrón MVVM.
 - Dagger Hilt: Para la inyección de dependencias.
 
 ## Estructura del proyecto
@@ -26,7 +27,8 @@ Este es un ejemplo de implementación de un maestro-detalle usando la biblioteca
 - core: Contiene las clases comunes para la implementación de mensajes, fechas, publicidad (admob) y demas utilidades.
 - data: Contiene las clases para la implementación de la base de datos y el repositorio.
 - di: Contiene las clases para la configuración de Dagger Hilt.
-- ui: Contiene las clases para la implementación de la interfaz de usuario, incluyendo los Fragments y los ViewModels.
+- domain: Contiene los modelos de datos y los Use Case.
+- ui: Contiene las clases para la implementación de la interfaz de usuario, incluyendo los Fragment, Activity y los ViewModels.
 
 ## Implementación
 ### Base de datos

@@ -1,6 +1,6 @@
 package pe.pcs.roommaestrodetalle.domain.model
 
-import pe.pcs.roommaestrodetalle.data.model.DetallePedidoModel
+import pe.pcs.roommaestrodetalle.data.entity.DetallePedidoEntity
 
 data class DetallePedido(
     var id: Int = 0,
@@ -13,7 +13,7 @@ data class DetallePedido(
     var descripcion: String = ""
 )
 
-fun DetallePedidoModel.toDomain() = DetallePedido(
+fun DetallePedidoEntity.toDomain() = DetallePedido(
     id = id,
     cantidad = cantidad,
     precio = precio,

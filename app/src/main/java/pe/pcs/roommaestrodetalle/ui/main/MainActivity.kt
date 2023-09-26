@@ -1,4 +1,4 @@
-package pe.pcs.roommaestrodetalle.ui.activity
+package pe.pcs.roommaestrodetalle.ui.main
 
 import android.os.Bundle
 import com.google.android.material.navigation.NavigationView

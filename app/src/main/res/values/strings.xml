@@ -9,7 +9,7 @@
 
     <!-- ESte es un id de prueba para la publicidad -->
     <string name="id_admob_intersticial">ca-app-pub-3940256099942544/1033173712</string>
-    <string name="app_version">v1.2.3</string>
+    <string name="app_version">v1.2.2</string>
 
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
@@ -47,4 +47,7 @@
     <string name="titulo">TITULO</string>
     <string name="contentDescription">-</string>
     <string name="_1">1</string>
+    <string name="subtitulo">Subtitulo</string>
+    <string name="producto">Producto</string>
+    <string name="detalle_pedido">Detalle Pedido</string>
 </resources>

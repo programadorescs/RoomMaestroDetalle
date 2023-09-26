@@ -6,7 +6,7 @@ import com.google.android.gms.ads.MobileAds
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
-class RoomMaestroDetalleApp: Application() {
+class RoomMaestroDetalleApp : Application() {
 
     companion object {
         private var instancia: RoomMaestroDetalleApp? = null

@@ -1,4 +1,4 @@
-package pe.pcs.roommaestrodetalle.ui.viewmodel
+package pe.pcs.roommaestrodetalle.ui.registrarpedido
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -18,7 +18,7 @@ import javax.inject.Inject
 class PedidoViewModel @Inject constructor(
     private val registarPedidoUseCase: RegistrarPedidoUseCase,
     private val listarProductoUseCase: ListarProductoUseCase
-): ViewModel() {
+) : ViewModel() {
 
     var listaProducto = MutableLiveData<List<Producto>?>()
 
@@ -34,11 +34,11 @@ class PedidoViewModel @Inject constructor(
     private var _itemProducto = MutableLiveData<Producto?>()
     val itemProducto: LiveData<Producto?> = _itemProducto
 
-    private val _status = MutableLiveData<ResponseStatus<List<Producto>>?>()
-    val status: LiveData<ResponseStatus<List<Producto>>?> = _status
+    private val _stateListaProducto = MutableLiveData<ResponseStatus<List<Producto>>>()
+    val stateListaProducto: LiveData<ResponseStatus<List<Producto>>> = _stateListaProducto
 
-    private val _statusInt = MutableLiveData<ResponseStatus<Int>?>()
-    val statusInt: LiveData<ResponseStatus<Int>?> = _statusInt
+    private val _stateRegistrar = MutableLiveData<ResponseStatus<Int>>()
+    val stateRegistrar: LiveData<ResponseStatus<Int>> = _stateRegistrar
 
     private val _mensaje = MutableLiveData<String>()
     val mensaje: LiveData<String> = _mensaje
@@ -47,12 +47,8 @@ class PedidoViewModel @Inject constructor(
         _listaCarrito.value = mutableListOf()
     }
 
-    fun resetApiResponseStatus() {
-        _status.value = null
-    }
-
-    fun resetApiResponseStatusInt() {
-        _statusInt.value = null
+    fun resetStateRegistrar() {
+        _stateRegistrar.value = ResponseStatus.Success(0)
     }
 
     fun setLimpiarMensaje() {
@@ -131,7 +127,7 @@ class PedidoViewModel @Inject constructor(
 
     fun setAumentarCantidadProducto(item: DetallePedido) {
         _listaCarrito.value?.forEach {
-            if(it.idproducto == item.idproducto) {
+            if (it.idproducto == item.idproducto) {
                 it.cantidad++
                 it.importe = it.cantidad * it.precio
             }
@@ -151,7 +147,7 @@ class PedidoViewModel @Inject constructor(
     fun setDisminuirCantidadProducto(item: DetallePedido) {
         // Recorre la lista para disminuir la cantidad del producto seleccionado
         _listaCarrito.value?.forEach {
-            if(it.idproducto == item.idproducto && it.cantidad > 1) {
+            if (it.idproducto == item.idproducto && it.cantidad > 1) {
                 it.cantidad--
                 it.importe = it.cantidad * it.precio
             }
@@ -170,29 +166,28 @@ class PedidoViewModel @Inject constructor(
         listaCarrito.postValue(_listaCarrito.value)
     }
 
-    private fun handleResponseStatus(responseStatus: ResponseStatus<List<Producto>>) {
-        if (responseStatus is ResponseStatus.Success) {
+    private fun handleStateListaProducto(responseStatus: ResponseStatus<List<Producto>>) {
+        if (responseStatus is ResponseStatus.Success)
             listaProducto.value = responseStatus.data
-        }
 
-        _status.value = responseStatus
+        _stateListaProducto.value = responseStatus
     }
 
-    private fun handleResponseStatusInt(responseStatus: ResponseStatus<Int>) {
-        _statusInt.value = responseStatus
+    private fun handleStateRegistrar(responseStatus: ResponseStatus<Int>) {
+        _stateRegistrar.value = responseStatus
     }
 
     fun listarProducto(dato: String) {
         viewModelScope.launch {
-            _status.value = ResponseStatus.Loading()
-            handleResponseStatus(listarProductoUseCase(dato))
+            _stateListaProducto.value = ResponseStatus.Loading()
+            handleStateListaProducto(listarProductoUseCase(dato))
         }
     }
 
     fun registrarPedido(pedido: Pedido) {
         viewModelScope.launch {
-            _statusInt.value = ResponseStatus.Loading()
-            handleResponseStatusInt(registarPedidoUseCase(pedido))
+            _stateRegistrar.value = ResponseStatus.Loading()
+            handleStateRegistrar(registarPedidoUseCase(pedido))
         }
     }
 
