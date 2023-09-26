@@ -22,7 +22,7 @@ class PedidoViewModel @Inject constructor(
 
     var listaProducto = MutableLiveData<List<Producto>?>()
 
-    private var _listaCarrito = MutableLiveData<MutableList<DetallePedido>>()
+    private var _listaCarrito = MutableLiveData<MutableList<DetallePedido>>(mutableListOf())
     var listaCarrito: MutableLiveData<MutableList<DetallePedido>> = _listaCarrito
 
     private var _totalItem = MutableLiveData<Int>()
@@ -42,10 +42,6 @@ class PedidoViewModel @Inject constructor(
 
     private val _mensaje = MutableLiveData<String>()
     val mensaje: LiveData<String> = _mensaje
-
-    init {
-        _listaCarrito.value = mutableListOf()
-    }
 
     fun resetStateRegistrar() {
         _stateRegistrar.value = ResponseStatus.Success(0)

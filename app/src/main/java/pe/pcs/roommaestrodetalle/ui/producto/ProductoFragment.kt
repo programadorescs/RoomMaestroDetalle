@@ -76,8 +76,10 @@ class ProductoFragment : Fragment(), ProductoAdapter.IOnClickListener {
                 is ResponseStatus.Success -> {
                     binding.progressBar.isVisible = false
 
-                    if (it.data > 0)
-                        UtilsMessage.showToast("¡Felicidades, registro anulado correctamente!")
+                    if (it.data < 1) return@observe
+
+                    UtilsMessage.showToast("¡Felicidades, registro anulado correctamente!")
+                    viewModel.resetStateDelete()
                 }
             }
         }

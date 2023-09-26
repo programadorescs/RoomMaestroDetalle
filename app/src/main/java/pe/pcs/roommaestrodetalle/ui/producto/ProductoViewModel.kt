@@ -38,6 +38,10 @@ class ProductoViewModel @Inject constructor(
         _stateDelete.value = responseStatus
     }
 
+    fun resetStateDelete() {
+        _stateDelete.value = ResponseStatus.Success(0)
+    }
+
     fun listar(dato: String) {
         viewModelScope.launch {
             _stateList.value = ResponseStatus.Loading()

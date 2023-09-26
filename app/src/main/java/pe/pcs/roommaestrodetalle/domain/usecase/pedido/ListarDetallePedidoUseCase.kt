@@ -2,9 +2,8 @@ package pe.pcs.roommaestrodetalle.domain.usecase.pedido
 
 import pe.pcs.roommaestrodetalle.core.ResponseStatus
 import pe.pcs.roommaestrodetalle.core.makeCall
-import pe.pcs.roommaestrodetalle.data.repository.PedidoRepository
 import pe.pcs.roommaestrodetalle.domain.model.ReporteDetallePedido
-import pe.pcs.roommaestrodetalle.domain.model.toDomain
+import pe.pcs.roommaestrodetalle.domain.repository.PedidoRepository
 import javax.inject.Inject
 
 class ListarDetallePedidoUseCase @Inject constructor(private val repository: PedidoRepository) {
@@ -12,9 +11,7 @@ class ListarDetallePedidoUseCase @Inject constructor(private val repository: Ped
     suspend operator fun invoke(idPedido: Int): ResponseStatus<List<ReporteDetallePedido>> {
 
         return makeCall {
-            repository.listarDetallePedido(idPedido).map {
-                it.toDomain()
-            }
+            repository.listarDetallePedido(idPedido)
         }
 
     }
