@@ -22,8 +22,8 @@ android {
         applicationId = "pe.pcs.roommaestrodetalle"
         minSdk = 23
         targetSdk = 34
-        versionCode = 18
-        versionName = "1.2.2"
+        versionCode = 20
+        versionName = "1.2.3"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }

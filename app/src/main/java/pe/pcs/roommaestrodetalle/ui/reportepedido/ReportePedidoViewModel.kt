@@ -18,7 +18,7 @@ class ReportePedidoViewModel @Inject constructor(
     private val listarPedidoPorFechaUseCase: ListarPedidoPorFechaUseCase
 ) : ViewModel() {
 
-    private val _listaPedido = MutableLiveData<List<Pedido>?>()
+    private val _listaPedido = MutableLiveData<List<Pedido>?>(mutableListOf())
     val listaPedido: LiveData<List<Pedido>?> = _listaPedido
 
     private val _stateListaPedido = MutableLiveData<ResponseStatus<List<Pedido>>>()
@@ -26,10 +26,6 @@ class ReportePedidoViewModel @Inject constructor(
 
     private val _stateAnular = MutableLiveData<ResponseStatus<Int>>()
     val stateAnular: LiveData<ResponseStatus<Int>> = _stateAnular
-
-    init {
-        _listaPedido.value = mutableListOf()
-    }
 
     private fun handleStateListaPedido(responseStatus: ResponseStatus<List<Pedido>>) {
         if (responseStatus is ResponseStatus.Success)
@@ -40,6 +36,10 @@ class ReportePedidoViewModel @Inject constructor(
 
     private fun handleStateAnular(responseStatus: ResponseStatus<Int>) {
         _stateAnular.value = responseStatus
+    }
+
+    fun resetStateAnular() {
+        _stateAnular.value = ResponseStatus.Success(0)
     }
 
     fun anularPedido(id: Int, desde: String, hasta: String) {

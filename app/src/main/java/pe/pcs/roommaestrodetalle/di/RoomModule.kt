@@ -10,6 +10,10 @@ import dagger.hilt.components.SingletonComponent
 import pe.pcs.roommaestrodetalle.data.dao.PedidoDao
 import pe.pcs.roommaestrodetalle.data.dao.ProductoDao
 import pe.pcs.roommaestrodetalle.data.database.AppDatabase
+import pe.pcs.roommaestrodetalle.data.repository.PedidoRepositoryImpl
+import pe.pcs.roommaestrodetalle.data.repository.ProductoRepositoryImpl
+import pe.pcs.roommaestrodetalle.domain.repository.PedidoRepository
+import pe.pcs.roommaestrodetalle.domain.repository.ProductoRepository
 import javax.inject.Singleton
 
 @Module
@@ -21,8 +25,10 @@ object RoomModule {
     @Singleton
     @Provides
     fun provideRoom(@ApplicationContext context: Context): AppDatabase {
-        return Room.databaseBuilder(context, AppDatabase::class.java , DATABASE_NAME).build()
+        return Room.databaseBuilder(context, AppDatabase::class.java, DATABASE_NAME).build()
     }
+
+    // *** Proveer los Dao *** //
 
     @Singleton
     @Provides
@@ -35,4 +41,19 @@ object RoomModule {
     fun providePedidoDao(db: AppDatabase): PedidoDao {
         return db.pedidoDao()
     }
+
+    // *** Proveer los repositorios del dominio *** //
+
+    @Singleton
+    @Provides
+    fun provideProductoRepository(productoDao: ProductoDao): ProductoRepository {
+        return ProductoRepositoryImpl(productoDao)
+    }
+
+    @Singleton
+    @Provides
+    fun providePedidoRepository(pedidoDao: PedidoDao): PedidoRepository {
+        return PedidoRepositoryImpl(pedidoDao)
+    }
+
 }

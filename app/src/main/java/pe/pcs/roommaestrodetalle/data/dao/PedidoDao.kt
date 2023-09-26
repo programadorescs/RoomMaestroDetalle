@@ -18,10 +18,13 @@ interface PedidoDao {
     suspend fun insertarDetallePedido(detallePedidoEntity: DetallePedidoEntity): Long
 
     @Transaction
-    suspend fun insertarTransaccion(pedido: PedidoEntity): Int {
+    suspend fun insertarTransaccion(
+        pedido: PedidoEntity,
+        detalles: List<DetallePedidoEntity>
+    ): Int {
         val _id = insertarPedido(pedido)
 
-        pedido.detalles.forEach {
+        detalles.forEach {
             it.idpedido = _id.toInt()
             insertarDetallePedido(it)
         }
