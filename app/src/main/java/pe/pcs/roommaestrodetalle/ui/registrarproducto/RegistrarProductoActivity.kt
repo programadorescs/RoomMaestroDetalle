@@ -10,9 +10,9 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.navArgs
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import pe.pcs.roommaestrodetalle.core.ResponseStatus
-import pe.pcs.roommaestrodetalle.core.UtilsCommon
-import pe.pcs.roommaestrodetalle.core.UtilsMessage
+import pe.pcs.roommaestrodetalle.ui.core.ResponseStatus
+import pe.pcs.roommaestrodetalle.ui.core.UtilsCommon
+import pe.pcs.roommaestrodetalle.ui.core.UtilsMessage
 import pe.pcs.roommaestrodetalle.databinding.ActivityRegistrarProductoBinding
 import pe.pcs.roommaestrodetalle.domain.model.Producto
 

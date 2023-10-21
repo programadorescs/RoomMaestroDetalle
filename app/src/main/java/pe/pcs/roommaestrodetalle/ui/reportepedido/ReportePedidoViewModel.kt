@@ -6,10 +6,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import pe.pcs.roommaestrodetalle.core.ResponseStatus
+import pe.pcs.roommaestrodetalle.ui.core.ResponseStatus
 import pe.pcs.roommaestrodetalle.domain.model.Pedido
 import pe.pcs.roommaestrodetalle.domain.usecase.pedido.AnularPedidoUseCase
 import pe.pcs.roommaestrodetalle.domain.usecase.pedido.ListarPedidoPorFechaUseCase
+import pe.pcs.roommaestrodetalle.ui.core.makeCall
 import javax.inject.Inject
 
 @HiltViewModel
@@ -46,8 +47,13 @@ class ReportePedidoViewModel @Inject constructor(
         viewModelScope.launch {
             _stateAnular.value = ResponseStatus.Loading()
 
-            handleStateAnular(anularPedidoUseCase(id))
-            handleStateListaPedido(listarPedidoPorFechaUseCase(desde, hasta))
+            handleStateAnular(
+                makeCall { anularPedidoUseCase(id) }
+            )
+
+            handleStateListaPedido(
+                makeCall { listarPedidoPorFechaUseCase(desde, hasta) }
+            )
         }
     }
 
@@ -55,7 +61,9 @@ class ReportePedidoViewModel @Inject constructor(
         viewModelScope.launch {
             _stateListaPedido.value = ResponseStatus.Loading()
 
-            handleStateListaPedido(listarPedidoPorFechaUseCase(desde, hasta))
+            handleStateListaPedido(
+                makeCall { listarPedidoPorFechaUseCase(desde, hasta) }
+            )
         }
     }
 }

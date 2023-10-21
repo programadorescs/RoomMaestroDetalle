@@ -1,4 +1,4 @@
-package pe.pcs.roommaestrodetalle.core
+package pe.pcs.roommaestrodetalle.ui.core
 
 import android.content.Context
 import android.view.View

@@ -11,9 +11,9 @@ import androidx.navigation.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import pe.pcs.roommaestrodetalle.core.ResponseStatus
-import pe.pcs.roommaestrodetalle.core.UtilsCommon
-import pe.pcs.roommaestrodetalle.core.UtilsMessage
+import pe.pcs.roommaestrodetalle.ui.core.ResponseStatus
+import pe.pcs.roommaestrodetalle.ui.core.UtilsCommon
+import pe.pcs.roommaestrodetalle.ui.core.UtilsMessage
 import pe.pcs.roommaestrodetalle.databinding.ActivityReporteDetallePedidoBinding
 import pe.pcs.roommaestrodetalle.ui.adapter.ReporteDetallePedidoAdapter
 

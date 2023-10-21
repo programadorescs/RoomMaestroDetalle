@@ -6,10 +6,11 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import pe.pcs.roommaestrodetalle.core.ResponseStatus
+import pe.pcs.roommaestrodetalle.ui.core.ResponseStatus
 import pe.pcs.roommaestrodetalle.domain.model.Producto
 import pe.pcs.roommaestrodetalle.domain.usecase.producto.GrabarProductoUseCase
 import pe.pcs.roommaestrodetalle.domain.usecase.producto.ObtenerProductoUseCase
+import pe.pcs.roommaestrodetalle.ui.core.makeCall
 import javax.inject.Inject
 
 @HiltViewModel
@@ -28,6 +29,17 @@ class RegistrarProductoViewModel @Inject constructor(
         MutableStateFlow<ResponseStatus<Producto?>>(ResponseStatus.Loading())
     val uiStateProducto: StateFlow<ResponseStatus<Producto?>> = _uiStateProducto
 
+    private fun handleUiStateProducto(responseStatus: ResponseStatus<Producto?>) {
+        if (responseStatus is ResponseStatus.Success)
+            _item.value = responseStatus.data
+
+        _uiStateProducto.value = responseStatus
+    }
+
+    private fun handleUiState(responseStatus: ResponseStatus<Int>) {
+        _uiState.value = responseStatus
+    }
+
     fun resetItem() {
         _item.value = null
     }
@@ -36,12 +48,9 @@ class RegistrarProductoViewModel @Inject constructor(
         viewModelScope.launch {
             _uiStateProducto.value = ResponseStatus.Loading()
 
-            obtenerProductoUseCase(id).let {
-                if (it is ResponseStatus.Success)
-                    _item.value = it.data
-
-                _uiStateProducto.value = it
-            }
+            handleUiStateProducto(
+                makeCall { obtenerProductoUseCase(id) }
+            )
         }
     }
 
@@ -49,9 +58,9 @@ class RegistrarProductoViewModel @Inject constructor(
         viewModelScope.launch {
             _uiState.value = ResponseStatus.Loading()
 
-            grabarProductoUseCase(entidad).let {
-                _uiState.value = it
-            }
+            handleUiState(
+                makeCall { grabarProductoUseCase(entidad) }
+            )
         }
     }
 

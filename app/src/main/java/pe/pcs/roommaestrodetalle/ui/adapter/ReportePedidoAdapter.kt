@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import pe.pcs.roommaestrodetalle.core.UtilsCommon
+import pe.pcs.roommaestrodetalle.ui.core.UtilsCommon
 import pe.pcs.roommaestrodetalle.databinding.ItemsPedidoBinding
 import pe.pcs.roommaestrodetalle.domain.model.Pedido
 
