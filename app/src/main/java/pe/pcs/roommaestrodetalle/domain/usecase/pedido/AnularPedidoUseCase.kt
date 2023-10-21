@@ -1,17 +1,13 @@
 package pe.pcs.roommaestrodetalle.domain.usecase.pedido
 
-import pe.pcs.roommaestrodetalle.core.ResponseStatus
-import pe.pcs.roommaestrodetalle.core.makeCall
 import pe.pcs.roommaestrodetalle.domain.repository.PedidoRepository
 import javax.inject.Inject
 
 class AnularPedidoUseCase @Inject constructor(private val repository: PedidoRepository) {
 
-    suspend operator fun invoke(idPedido: Int): ResponseStatus<Int> {
+    suspend operator fun invoke(idPedido: Int): Int {
 
-        return makeCall {
-            repository.anularPedido(idPedido)
-        }
+        return repository.anularPedido(idPedido)
 
     }
 

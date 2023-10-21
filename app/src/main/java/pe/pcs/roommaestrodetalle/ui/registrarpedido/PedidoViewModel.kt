@@ -6,12 +6,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import pe.pcs.roommaestrodetalle.core.ResponseStatus
+import pe.pcs.roommaestrodetalle.ui.core.ResponseStatus
 import pe.pcs.roommaestrodetalle.domain.model.DetallePedido
 import pe.pcs.roommaestrodetalle.domain.model.Pedido
 import pe.pcs.roommaestrodetalle.domain.model.Producto
 import pe.pcs.roommaestrodetalle.domain.usecase.pedido.RegistrarPedidoUseCase
 import pe.pcs.roommaestrodetalle.domain.usecase.producto.ListarProductoUseCase
+import pe.pcs.roommaestrodetalle.ui.core.makeCall
 import javax.inject.Inject
 
 @HiltViewModel
@@ -176,14 +177,18 @@ class PedidoViewModel @Inject constructor(
     fun listarProducto(dato: String) {
         viewModelScope.launch {
             _stateListaProducto.value = ResponseStatus.Loading()
-            handleStateListaProducto(listarProductoUseCase(dato))
+            handleStateListaProducto(
+                makeCall { listarProductoUseCase(dato) }
+            )
         }
     }
 
     fun registrarPedido(pedido: Pedido) {
         viewModelScope.launch {
             _stateRegistrar.value = ResponseStatus.Loading()
-            handleStateRegistrar(registarPedidoUseCase(pedido))
+            handleStateRegistrar(
+                makeCall { registarPedidoUseCase(pedido) }
+            )
         }
     }
 

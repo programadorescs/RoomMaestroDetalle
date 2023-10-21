@@ -11,11 +11,11 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
-import pe.pcs.roommaestrodetalle.core.ResponseStatus
-import pe.pcs.roommaestrodetalle.core.UtilsAdmob
-import pe.pcs.roommaestrodetalle.core.UtilsCommon
-import pe.pcs.roommaestrodetalle.core.UtilsDate
-import pe.pcs.roommaestrodetalle.core.UtilsMessage
+import pe.pcs.roommaestrodetalle.ui.core.ResponseStatus
+import pe.pcs.roommaestrodetalle.ui.core.UtilsAdmob
+import pe.pcs.roommaestrodetalle.ui.core.UtilsCommon
+import pe.pcs.roommaestrodetalle.ui.core.UtilsDate
+import pe.pcs.roommaestrodetalle.ui.core.UtilsMessage
 import pe.pcs.roommaestrodetalle.databinding.FragmentRegistrarPedidoBinding
 import pe.pcs.roommaestrodetalle.domain.model.DetallePedido
 import pe.pcs.roommaestrodetalle.domain.model.Pedido

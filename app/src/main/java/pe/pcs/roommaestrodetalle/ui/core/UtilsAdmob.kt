@@ -1,4 +1,4 @@
-package pe.pcs.roommaestrodetalle.core
+package pe.pcs.roommaestrodetalle.ui.core
 
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.LoadAdError

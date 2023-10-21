@@ -1,4 +1,4 @@
-package pe.pcs.roommaestrodetalle.core
+package pe.pcs.roommaestrodetalle.ui.core
 
 import android.widget.EditText
 import androidx.fragment.app.FragmentManager
