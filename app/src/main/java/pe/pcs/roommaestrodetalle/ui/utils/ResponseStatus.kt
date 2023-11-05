@@ -1,4 +1,4 @@
-package pe.pcs.roommaestrodetalle.ui.core
+package pe.pcs.roommaestrodetalle.ui.utils
 
 // <T> funciona para cualquier tipo de datos que metamos aqui
 sealed class ResponseStatus<T> {

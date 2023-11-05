@@ -13,9 +13,9 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import pe.pcs.roommaestrodetalle.R
-import pe.pcs.roommaestrodetalle.ui.core.UtilsCommon
-import pe.pcs.roommaestrodetalle.ui.core.UtilsMessage
-import pe.pcs.roommaestrodetalle.ui.core.ResponseStatus
+import pe.pcs.roommaestrodetalle.ui.utils.UtilsCommon
+import pe.pcs.roommaestrodetalle.ui.utils.UtilsMessage
+import pe.pcs.roommaestrodetalle.ui.utils.ResponseStatus
 import pe.pcs.roommaestrodetalle.databinding.FragmentCatalogoProductoBinding
 import pe.pcs.roommaestrodetalle.domain.model.Producto
 import pe.pcs.roommaestrodetalle.ui.adapter.CatalogoAdapter
