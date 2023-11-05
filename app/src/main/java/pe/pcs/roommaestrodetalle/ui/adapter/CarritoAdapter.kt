@@ -3,7 +3,7 @@ package pe.pcs.roommaestrodetalle.ui.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import pe.pcs.roommaestrodetalle.ui.core.UtilsCommon
+import pe.pcs.roommaestrodetalle.ui.utils.UtilsCommon
 import pe.pcs.roommaestrodetalle.databinding.ItemsCarritoBinding
 import pe.pcs.roommaestrodetalle.domain.model.DetallePedido
 

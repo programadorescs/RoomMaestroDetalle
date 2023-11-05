@@ -1,4 +1,4 @@
-package pe.pcs.roommaestrodetalle.ui.core
+package pe.pcs.roommaestrodetalle.ui.utils
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

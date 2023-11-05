@@ -1,4 +1,4 @@
-package pe.pcs.roommaestrodetalle.data.module
+package pe.pcs.roommaestrodetalle.di
 
 import android.content.Context
 import androidx.room.Room

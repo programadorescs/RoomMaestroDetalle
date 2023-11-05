@@ -11,9 +11,9 @@ import androidx.navigation.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import pe.pcs.roommaestrodetalle.ui.core.ResponseStatus
-import pe.pcs.roommaestrodetalle.ui.core.UtilsCommon
-import pe.pcs.roommaestrodetalle.ui.core.UtilsMessage
+import pe.pcs.roommaestrodetalle.ui.utils.ResponseStatus
+import pe.pcs.roommaestrodetalle.ui.utils.UtilsCommon
+import pe.pcs.roommaestrodetalle.ui.utils.UtilsMessage
 import pe.pcs.roommaestrodetalle.databinding.ActivityReporteDetallePedidoBinding
 import pe.pcs.roommaestrodetalle.ui.adapter.ReporteDetallePedidoAdapter
 
@@ -40,7 +40,7 @@ class ReporteDetallePedidoActivity : AppCompatActivity() {
     }
 
     private fun initListener() {
-        binding.btAtras.setOnClickListener { onBackPressed() }
+        binding.btAtras.setOnClickListener { onBackPressedDispatcher.onBackPressed() }
     }
 
     private fun initAdapter() {

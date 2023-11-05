@@ -6,10 +6,10 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import pe.pcs.roommaestrodetalle.ui.core.ResponseStatus
+import pe.pcs.roommaestrodetalle.ui.utils.ResponseStatus
 import pe.pcs.roommaestrodetalle.domain.model.ReporteDetallePedido
 import pe.pcs.roommaestrodetalle.domain.usecase.pedido.ListarDetallePedidoUseCase
-import pe.pcs.roommaestrodetalle.ui.core.makeCall
+import pe.pcs.roommaestrodetalle.ui.utils.makeCall
 import javax.inject.Inject
 
 @HiltViewModel

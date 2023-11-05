@@ -13,9 +13,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
-import pe.pcs.roommaestrodetalle.ui.core.ResponseStatus
-import pe.pcs.roommaestrodetalle.ui.core.UtilsDate
-import pe.pcs.roommaestrodetalle.ui.core.UtilsMessage
+import pe.pcs.roommaestrodetalle.ui.utils.ResponseStatus
+import pe.pcs.roommaestrodetalle.ui.utils.UtilsDate
+import pe.pcs.roommaestrodetalle.ui.utils.UtilsMessage
 import pe.pcs.roommaestrodetalle.databinding.FragmentReportePedidoBinding
 import pe.pcs.roommaestrodetalle.domain.model.Pedido
 import pe.pcs.roommaestrodetalle.ui.adapter.ReportePedidoAdapter

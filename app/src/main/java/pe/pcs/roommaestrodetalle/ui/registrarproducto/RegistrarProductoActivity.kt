@@ -10,9 +10,9 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.navArgs
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import pe.pcs.roommaestrodetalle.ui.core.ResponseStatus
-import pe.pcs.roommaestrodetalle.ui.core.UtilsCommon
-import pe.pcs.roommaestrodetalle.ui.core.UtilsMessage
+import pe.pcs.roommaestrodetalle.ui.utils.ResponseStatus
+import pe.pcs.roommaestrodetalle.ui.utils.UtilsCommon
+import pe.pcs.roommaestrodetalle.ui.utils.UtilsMessage
 import pe.pcs.roommaestrodetalle.databinding.ActivityRegistrarProductoBinding
 import pe.pcs.roommaestrodetalle.domain.model.Producto
 
@@ -36,7 +36,7 @@ class RegistrarProductoActivity : AppCompatActivity() {
 
     private fun initListeners() {
 
-        binding.btAtras.setOnClickListener { onBackPressed() }
+        binding.btAtras.setOnClickListener { onBackPressedDispatcher.onBackPressed() }
 
         binding.fabGrabar.setOnClickListener {
             UtilsCommon.ocultarTeclado(it)

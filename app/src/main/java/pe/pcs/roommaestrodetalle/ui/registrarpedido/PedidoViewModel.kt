@@ -6,13 +6,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import pe.pcs.roommaestrodetalle.ui.core.ResponseStatus
+import pe.pcs.roommaestrodetalle.ui.utils.ResponseStatus
 import pe.pcs.roommaestrodetalle.domain.model.DetallePedido
 import pe.pcs.roommaestrodetalle.domain.model.Pedido
 import pe.pcs.roommaestrodetalle.domain.model.Producto
 import pe.pcs.roommaestrodetalle.domain.usecase.pedido.RegistrarPedidoUseCase
 import pe.pcs.roommaestrodetalle.domain.usecase.producto.ListarProductoUseCase
-import pe.pcs.roommaestrodetalle.ui.core.makeCall
+import pe.pcs.roommaestrodetalle.ui.utils.makeCall
 import javax.inject.Inject
 
 @HiltViewModel

@@ -11,7 +11,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import dagger.hilt.android.AndroidEntryPoint
 import pe.pcs.roommaestrodetalle.R
-import pe.pcs.roommaestrodetalle.ui.core.UtilsAdmob
+import pe.pcs.roommaestrodetalle.ui.utils.UtilsAdmob
 import pe.pcs.roommaestrodetalle.databinding.ActivityMainBinding
 
 @AndroidEntryPoint

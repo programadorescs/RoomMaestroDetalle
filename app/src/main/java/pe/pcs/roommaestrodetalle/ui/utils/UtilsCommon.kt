@@ -1,17 +1,12 @@
-package pe.pcs.roommaestrodetalle.ui.core
+package pe.pcs.roommaestrodetalle.ui.utils
 
 import android.content.Context
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.widget.CheckBox
 import android.widget.EditText
 import pe.pcs.roommaestrodetalle.RoomMaestroDetalleApp
-import java.math.BigDecimal
-import java.math.RoundingMode
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
-import kotlin.math.pow
-import kotlin.math.roundToLong
 
 object UtilsCommon {
 
