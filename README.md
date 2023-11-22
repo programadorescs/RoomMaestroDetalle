@@ -11,9 +11,9 @@ Este es un ejemplo de implementación de un maestro-detalle usando la biblioteca
 
 ## Requisitos
 
-- Android Studio Giraffe | 2022.3.1 Patch 2 o superior.
-- Android Gradle Plugin Version 8.1.2
-- Gradle Version 8.0.
+- Android Studio Giraffe | 2022.3.1 Patch 4 o superior.
+- Android Gradle Plugin Version 8.1.4
+- Gradle Version 8.0
 - Kotlin 1.9.10 o superior.
 
 ## Dependencias
