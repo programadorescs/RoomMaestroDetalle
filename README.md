@@ -11,9 +11,9 @@ Este es un ejemplo de implementación de un maestro-detalle usando la biblioteca
 
 ## Requisitos
 
-- Android Studio Giraffe | 2022.3.1 Patch 4 o superior.
-- Android Gradle Plugin Version 8.1.4
-- Gradle Version 8.0
+- Android Studio Hedgehog | 2023.1.1 o superior.
+- Android Gradle Plugin Version 8.2.0
+- Gradle Version 8.2
 - Kotlin 1.9.10 o superior.
 
 ## Dependencias
@@ -25,7 +25,8 @@ Este es un ejemplo de implementación de un maestro-detalle usando la biblioteca
 
 ## Estructura del proyecto
 
-- data: Contiene las clases para la implementación de la base de datos, entidades, dao, modulo (provee room mediante dagger hilt) y el repositorio.
+- data: Contiene las clases para la implementación de la base de datos, entidades, dao y el repositorio.
+- di: Inyecta el modulo (provee room mediante dagger hilt).
 - domain: Contiene los modelos de datos, el repositorio y los Use Case.
 - ui: Contiene las clases para la implementación de la interfaz de usuario, incluyendo los Fragment, Activity y los ViewModels. Además estará el core de la ui que implementa las utilidades para manejar mensajes, fechas, publicidad (admob) entre otras utilidades.
 

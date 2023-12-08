@@ -22,8 +22,8 @@ android {
         applicationId = "pe.pcs.roommaestrodetalle"
         minSdk = 23
         targetSdk = 34
-        versionCode = 23
-        versionName = "1.2.7"
+        versionCode = 24
+        versionName = "1.2.8"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -62,8 +62,8 @@ dependencies {
     implementation("androidx.navigation:navigation-ui-ktx:2.7.5")
 
     //Room
-    implementation("androidx.room:room-ktx:2.6.0")
-    ksp("androidx.room:room-compiler:2.6.0")
+    implementation("androidx.room:room-ktx:2.6.1")
+    ksp("androidx.room:room-compiler:2.6.1")
 
     // AdMob
     implementation("com.google.android.gms:play-services-ads:22.5.0")
