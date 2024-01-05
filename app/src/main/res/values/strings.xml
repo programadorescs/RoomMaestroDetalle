@@ -18,7 +18,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="menu_producto">Productos</string>
     <string name="contentDescripcion">-</string>
-    <string name="fecha_hora_digito">2022-07-07 12.12.12</string>
+    <string name="fecha_hora_digito">2022.07.07 12.12.12</string>
     <string name="buscar">Buscar</string>
     <string name="costo">Costo</string>
     <string name="descripcion">Descripcion</string>
