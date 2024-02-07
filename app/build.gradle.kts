@@ -22,7 +22,7 @@ android {
         applicationId = "pe.pcs.roommaestrodetalle"
         minSdk = 23
         targetSdk = 34
-        versionCode = 27
+        versionCode = 28
         versionName = "1.2.10"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
